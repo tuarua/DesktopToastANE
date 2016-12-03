@@ -1,5 +1,3 @@
-// C:\Users\Eoin Landy\AppData\Roaming\Microsoft\Windows\Start Menu\Programs
-
 #include "DesktopToastANE.h"
 #include <sstream>
 #include <iostream>
