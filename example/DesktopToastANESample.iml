@@ -44,7 +44,9 @@
         <CLASSES>
           <root url="jar://$DOCUMENTS$/DesktopToastANE/native_extension/ane/DesktopToastANE.ane!/" />
         </CLASSES>
-        <JAVADOC />
+        <JAVADOC>
+          <root url="https://tuarua.github.io/DesktopToastANE/native_extension/docs/asdocs/" />
+        </JAVADOC>
         <SOURCES />
       </library>
     </orderEntry>
