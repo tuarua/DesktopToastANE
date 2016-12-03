@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:4f762648d24923ddde850b64313198f1:9c7340e837c41ceb821ed6532891bf39:cde709370900f12288f3449eded86f07$ -->
+<TextureAtlas imagePath="atlas.png" width="862" height="584">
+    <SubTexture name="actions1" x="501" y="472" width="360" height="104"/>
+    <SubTexture name="actions2" x="501" y="324" width="360" height="144"/>
+    <SubTexture name="air_rocks" x="1" y="1" width="360" height="283"/>
+    <SubTexture name="fira-sans-semi-bold-13" x="1" y="288" width="132" height="194"/>
+    <SubTexture name="reminder1" x="137" y="288" width="360" height="168"/>
+    <SubTexture name="selection1" x="501" y="172" width="360" height="148"/>
+    <SubTexture name="textinput1" x="501" y="1" width="360" height="167"/>
+    <SubTexture name="textinput2" x="137" y="460" width="360" height="123"/>
+</TextureAtlas>
