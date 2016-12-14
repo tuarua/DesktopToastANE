@@ -1,14 +1,13 @@
 # DesktopToastANE
 
-Adobe Air Native Extension written in ActionScript 3 and C++ for displaying adaptive and interactive toast notifications in Windows 10.
+Adobe Air Native Extension written in ActionScript 3 and C++ for displaying adaptive and interactive toast notifications in Windows 8, Windows 10.
 Sample client included
 
 ![alt tag](https://raw.githubusercontent.com/tuarua/DesktopToastANE/master/screenshots/screenshot1.png)
 
 ### Features  
- - Adaptive and interactive toast notifications are new features added in Version 1607 of Windows 10
- - Windows 8.1 is not supported as this ANE was compiled with Windows 10 libraries. This may be provided at a later date.
-
+ - Adaptive and interactive toast notifications are new features added in Version 1607 of Windows 10.
+ - Interactive toasts for Windows 8.1.
 ### Tech
 
 DesktopToastANE uses the following libraries:  

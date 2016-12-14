@@ -1,11 +1,14 @@
 package com.tuarua {
-import com.tuarua.toast.Toast;
-import com.tuarua.toast.ToastAction;
 import com.tuarua.toast.ToastEvent;
-import com.tuarua.toast.ToastImage;
-import com.tuarua.toast.ToastInput;
-import com.tuarua.toast.ToastText;
+import com.tuarua.toast.osx.ToastOSX;
+
 import com.tuarua.toast.constants.ToastInputSelection;
+import com.tuarua.toast.windows10.Toast10;
+import com.tuarua.toast.windows10.ToastAction;
+import com.tuarua.toast.windows.ToastImage;
+import com.tuarua.toast.windows.ToastText;
+import com.tuarua.toast.windows8.Toast8;
+import com.tuarua.toast.windows8.ToastCommand;
 
 import flash.events.EventDispatcher;
 import flash.events.StatusEvent;
@@ -20,27 +23,55 @@ public class DesktopToastANE extends EventDispatcher {
     private var _xmlAsString:String;
     private var isInited:Boolean = false;
     private var _isSupported:Boolean = false;
+    osx var _toast:ToastOSX;
 
     public function DesktopToastANE() {
         initiate();
     }
-	/**
-	 * 
-	 * @param appId 
-	 * @param appName
-	 * 
-	 */
-    public function init(appId:String, appName:String):void {
+    /**
+     *
+     *
+     *
+     */
+    osx function init():void {
+        trace("OSX namespace");
+        if(_isSupported)
+            extensionContext.call("init");
+    }
+    /**
+     *
+     *
+     *
+     */
+    windows10 function init(appId:String, appName:String):void {
+        trace("Windows 10 namespace");
+        if(_isSupported)
+            extensionContext.call("init", appId, appName);
+    }
+    /**
+     *
+     *
+     *
+     */
+    windows8 function init(appId:String, appName:String):void {
+        trace("Windows 8 namespace");
         if(_isSupported)
             extensionContext.call("init", appId, appName);
     }
 
+
     protected function initiate():void {
         isInited = true;
-        _isSupported = (Capabilities.os.toLowerCase() == "windows 10");
+
+        if(Capabilities.os.toLowerCase() == "windows 10"){
+            _isSupported = true;
+        }else if(Capabilities.os.toLowerCase().indexOf("mac os") > -1){
+            _isSupported = true;
+        }else if(Capabilities.os.toLowerCase() == "windows 8"){
+            _isSupported = true;
+        }
 
         if(_isSupported){
-            trace("We are on Windows 10 so supported");
             trace("["+name+"] Initalizing ANE...");
             try {
                 extensionContext = ExtensionContext.createExtensionContext("com.tuarua.DesktopToastANE", null);
@@ -49,7 +80,7 @@ public class DesktopToastANE extends EventDispatcher {
                 trace("["+name+"] ANE Not loaded properly.  Future calls will fail.");
             }
         }else{
-            trace("["+name+"] Can't initialize. Only Windows 8 and Windows 10 are supported");
+            trace("["+name+"] Can't initialize. Windows 8, 10 and OSX are supported");
         }
 
     }
@@ -87,15 +118,103 @@ public class DesktopToastANE extends EventDispatcher {
 	 * @param xml
 	 * 
 	 */
-    public function createFromXML(xml:XML):void {
+
+    osx function createFromToast(toast:ToastOSX):void {
+        use namespace osx;
+        _toast = toast;
+    }
+
+    windows10 function createFromXML(xml:XML):void {
         _xmlAsString = xml.toString();
     }
-	/**
-	 * 
-	 * @param toast
-	 * 
-	 */
-    public function createFromToast(toast:Toast):void {
+
+    windows8 function createFromXML(xml:XML):void {
+        _xmlAsString = xml.toString();
+    }
+
+    windows8 function createFromToast(toast:Toast8):void {
+        use namespace windows8;
+        var toastNode:XML = <toast/>;
+        var visualNode:XML = <visual/>;
+        var bindingNode:XML = <binding/>;
+        var commandsNode:XML = <commands/>;
+        var audioNode:XML = <audio/>;
+
+        if (toast.visual.language)
+            visualNode.@lang = toast.visual.language;
+        visualNode.@baseUri = toast.visual.baseUri;
+        visualNode.@addImageQuery = toast.visual.addImageQuery;
+
+        bindingNode.@template = toast.binding.template;
+        if (toast.binding.language)
+            bindingNode.@lang = toast.binding.language;
+        bindingNode.@baseUri = toast.binding.baseUri;
+        bindingNode.@addImageQuery = toast.binding.addImageQuery;
+
+
+        if (toast.audio) {
+            audioNode.@src = toast.audio.src;
+            audioNode.@loop = toast.audio.loop;
+            audioNode.@silent = toast.audio.silent;
+            toastNode = toastNode.appendChild(audioNode);
+        }
+
+        var numLines:int = 0;
+
+        for each (var t:ToastText in toast.texts) {
+            var textNode:XML = <text/>;
+            textNode = textNode.appendChild(t.content);
+            if (t.language)
+                textNode.@lang = t.language;
+            if (t.id > 0)
+                textNode.@id = t.id;
+            bindingNode = bindingNode.appendChild(textNode);
+            numLines++;
+            if(numLines > 4) break;
+        }
+
+        var hasImage:Boolean = false;
+        for each (var i:ToastImage in toast.images) {
+            var imageNode:XML = <image/>;
+            imageNode.@src = i.src;
+            imageNode.@id = i.id;
+            if (i.alt)
+                imageNode.@alt = i.alt;
+            imageNode.@addImageQuery = i.addImageQuery;
+            bindingNode = bindingNode.appendChild(imageNode);
+            hasImage = true;
+        }
+
+        if(hasImage)
+            bindingNode.@template = "ToastImageAndText0"+numLines.toString();
+        else
+            bindingNode.@template = "ToastText0"+numLines.toString();
+
+        visualNode = visualNode.appendChild(bindingNode);
+        toastNode = toastNode.appendChild(visualNode);
+
+        if(toast.commands && toast.commands.scenario){
+            commandsNode.@scenario = toast.commands.scenario;
+            for each (var c:ToastCommand in toast.commands.commands) {
+                var commandNode:XML = <command />;
+                if (c.arguments)
+                    commandNode.@arguments = c.arguments;
+                if (c.id)
+                    commandNode.@id = c.id;
+                commandsNode = commandsNode.appendChild(commandNode);
+            }
+            toastNode = toastNode.appendChild(commandsNode);
+        }
+
+
+        _xmlAsString = toastNode.toString();
+
+
+
+    }
+
+    windows10 function createFromToast(toast:Toast10):void {
+        use namespace windows10
         var toastNode:XML = <toast/>;
         var visualNode:XML = <visual/>;
         var bindingNode:XML = <binding/>;
@@ -213,7 +332,23 @@ public class DesktopToastANE extends EventDispatcher {
 	 * 
 	 * 
 	 */
-    public function show():void {
+    osx function show():void {
+        use namespace osx;
+        if (isInited)
+            extensionContext.call("show",_toast);
+        else
+            trace("You forgot to call .init() first");
+    }
+
+    windows8 function show():void {
+        trace(_xmlAsString);
+        if (isInited)
+            extensionContext.call("show", _xmlAsString);
+        else
+            trace("You forgot to call .init() first");
+    }
+
+    windows10 function show():void {
         if (isInited)
             extensionContext.call("show", _xmlAsString);
         else

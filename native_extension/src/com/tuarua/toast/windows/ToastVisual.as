@@ -1,8 +1,8 @@
 /**
  * Created by Eoin Landy on 30/11/2016.
  */
-package com.tuarua.toast {
-internal class ToastVisual {
+package com.tuarua.toast.windows {
+public class ToastVisual {
 	/**
 	 * 
 	 */	

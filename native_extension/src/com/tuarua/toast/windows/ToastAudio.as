@@ -1,7 +1,7 @@
 /**
  * Created by Eoin Landy on 30/11/2016.
  */
-package com.tuarua.toast {
+package com.tuarua.toast.windows {
 /**
  * 
  * @author Eoin Landy

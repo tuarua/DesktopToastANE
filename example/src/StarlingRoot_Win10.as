@@ -1,13 +1,7 @@
 package {
 
 import com.tuarua.DesktopToastANE;
-import com.tuarua.toast.Toast;
-import com.tuarua.toast.ToastAction;
-import com.tuarua.toast.ToastAudio;
 import com.tuarua.toast.ToastEvent;
-import com.tuarua.toast.ToastImage;
-import com.tuarua.toast.ToastInput;
-import com.tuarua.toast.ToastText;
 import com.tuarua.toast.constants.ToastActivationType;
 import com.tuarua.toast.constants.ToastAudioSrc;
 import com.tuarua.toast.constants.ToastHintCrop;
@@ -15,6 +9,13 @@ import com.tuarua.toast.constants.ToastInputSelection;
 import com.tuarua.toast.constants.ToastInputType;
 import com.tuarua.toast.constants.ToastPlacement;
 import com.tuarua.toast.constants.ToastScenario;
+import com.tuarua.toast.windows.ToastAudio;
+import com.tuarua.toast.windows.ToastImage;
+import com.tuarua.toast.windows.ToastText;
+import com.tuarua.toast.windows10.ToastAction;
+import com.tuarua.toast.windows10.ToastInput;
+import com.tuarua.toast.windows10.Toast10;
+import com.tuarua.windows10;
 
 import flash.desktop.NativeApplication;
 import flash.events.Event;
@@ -42,7 +43,7 @@ import views.ScrollableContent;
 
 
 //https://gist.github.com/CalvinLinTrend/8701312744f94bcd8701 -
-public class StarlingRoot extends Sprite {
+public class StarlingRoot_Win10 extends Sprite {
     private var dtANE:DesktopToastANE = new DesktopToastANE();
     private var image1:Image = new Image(Assets.getAtlas().getTexture("air_rocks"));
     private var image2:Image = new Image(Assets.getAtlas().getTexture("actions1"));
@@ -54,7 +55,8 @@ public class StarlingRoot extends Sprite {
     private var list:ScrollableContent;
     private var holder:Sprite = new Sprite();
     private var callbackTxt:TextField;
-    public function StarlingRoot() {
+    use namespace windows10;
+    public function StarlingRoot_Win10() {
         super();
         TextField.registerBitmapFont(Fonts.getFont("fira-sans-semi-bold-13"));
     }
@@ -162,11 +164,7 @@ public class StarlingRoot extends Sprite {
         trace(event);
 
         NativeApplication.nativeApplication.activate();
-        //trace(NativeApplication.nativeApplication.activeWindow)
-        //trace(NativeApplication.nativeApplication.activeWindow.visible);
 
-
-        trace(NativeApplication.nativeApplication.applicationID);
 
         callbackTxt.text = "Toast Clicked - arguments: " + event.params.arguments;
         if(event.params.data){
@@ -209,18 +207,19 @@ public class StarlingRoot extends Sprite {
 
     private function onImage1Touch(event:TouchEvent):void {
         var touch:Touch = event.getTouch(image1);
+
         if (touch != null && touch.phase == TouchPhase.ENDED) {
-            var toast:Toast = new Toast("rocks");
+            var toast:Toast10 = new Toast10("rocks");
             toast.addText(new ToastText("Adobe AIR rocks"));
             toast.addText(new ToastText("Trigger Toasts in Windows 10"));
             toast.addText(new ToastText("with this AIR Native Extension"));
 
             var toastImage2:ToastImage = new ToastImage();
-            toastImage2.src = File.applicationDirectory.resolvePath("air-icon.png").nativePath;
+            toastImage2.src = File.applicationDirectory.resolvePath("imgs/air-icon.png").nativePath;
             toastImage2.placement = ToastPlacement.APP_LOGO_OVERRIDE;
             toastImage2.hintCrop = ToastHintCrop.CIRCLE;
 
-            toast.addImage(new ToastImage(File.applicationDirectory.resolvePath("air.png").nativePath));
+            toast.addImage(new ToastImage(File.applicationDirectory.resolvePath("imgs/air.png").nativePath));
             toast.addImage(toastImage2);
 
             toast.addAudio(new ToastAudio(ToastAudioSrc.IM));
@@ -248,7 +247,7 @@ public class StarlingRoot extends Sprite {
                </actions>
              </toast>
              );
-            var toast:Toast = new Toast("app-defined-string");
+            var toast:Toast10 = new Toast10("app-defined-string");
             toast.addText(new ToastText("Microsoft Company Store"));
             toast.addText(new ToastText("New Halo game is back in stock!"));
 
@@ -287,7 +286,7 @@ public class StarlingRoot extends Sprite {
                </actions>
              </toast>
             );
-            var toast:Toast = new Toast("app-defined-string");
+            var toast:Toast10 = new Toast10("app-defined-string");
             toast.addText(new ToastText("Restaurant suggestion..."));
             toast.addText(new ToastText("We noticed that you are near Wasaki. Thomas left a 5 star rating after his last visit, do you want to try it?"));
 
@@ -328,7 +327,7 @@ public class StarlingRoot extends Sprite {
                </actions>
              </toast>
             );
-            var toast:Toast = new Toast("developer-defined-string");
+            var toast:Toast10 = new Toast10("developer-defined-string");
             toast.addText(new ToastText("Andrew B."));
             toast.addText(new ToastText("Shall we meet up at 8?"));
 
@@ -381,12 +380,12 @@ public class StarlingRoot extends Sprite {
                </actions>
              </toast>
             );
-            var toast:Toast = new Toast("developer-defined-string");
+            var toast:Toast10 = new Toast10("developer-defined-string");
             toast.addText(new ToastText("Andrew B."));
             toast.addText(new ToastText("Shall we meet up at 8?"));
 
             var toastImage1:ToastImage = new ToastImage();
-            toastImage1.src = File.applicationDirectory.resolvePath("app-icon.jpg").nativePath;
+            toastImage1.src = File.applicationDirectory.resolvePath("imgs/app-icon.jpg").nativePath;
             toastImage1.placement = ToastPlacement.APP_LOGO_OVERRIDE;
             toastImage1.hintCrop = ToastHintCrop.CIRCLE;
 
@@ -400,7 +399,7 @@ public class StarlingRoot extends Sprite {
             toastAction1.content = "Reply";
             toastAction1.arguments = "reply";
             toastAction1.hintInputId = "message";
-            toastAction1.imageUri = File.applicationDirectory.resolvePath("send.png").nativePath;
+            toastAction1.imageUri = File.applicationDirectory.resolvePath("imgs/send.png").nativePath;
 
             toast.addImage(toastImage1);
             toast.addInput(toastInput);
@@ -434,7 +433,7 @@ public class StarlingRoot extends Sprite {
                </actions>
              </toast>
             );
-            var toast:Toast = new Toast("developer-defined-string");
+            var toast:Toast10 = new Toast10("developer-defined-string");
             toast.addText(new ToastText("Spicy Heaven"));
             toast.addText(new ToastText("When do you plan to come in tomorrow?"));
 
@@ -492,7 +491,7 @@ public class StarlingRoot extends Sprite {
                </actions>
              </toast>
             );
-            var toast:Toast = new Toast();
+            var toast:Toast10 = new Toast10();
             toast.launch = "action=viewEvent&amp;eventId=1983";
             toast.scenario = ToastScenario.REMINDER;
 

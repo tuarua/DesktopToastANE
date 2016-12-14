@@ -1,7 +1,7 @@
 /**
  * Created by Eoin Landy on 01/12/2016.
  */
-package com.tuarua.toast {
+package com.tuarua.toast.windows10 {
 import com.tuarua.toast.constants.ToastInputSelection;
 import com.tuarua.toast.constants.ToastInputType;
 

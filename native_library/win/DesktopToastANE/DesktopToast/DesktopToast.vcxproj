@@ -22,7 +22,7 @@
     <ProjectGuid>{8161C194-25D6-4DC7-817A-AE5FFDFB7D6D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>DesktopToast</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
     <ProjectName>DesktopToastANE</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
