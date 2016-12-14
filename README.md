@@ -5,6 +5,8 @@ Sample client included
 
 ![alt tag](https://raw.githubusercontent.com/tuarua/DesktopToastANE/master/screenshots/screenshot1.png)
 
+![alt tag](https://raw.githubusercontent.com/tuarua/DesktopToastANE/master/screenshots/screenshot2.jpg)
+
 ### Features  
  - Adaptive and interactive toast notifications are new features added in Version 1607 of Windows 10.
  - Interactive toasts for Windows 8.1.
