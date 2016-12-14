@@ -1,6 +1,6 @@
 # DesktopToastANE
 
-Adobe Air Native Extension written in ActionScript 3 and C++ for displaying adaptive and interactive toast notifications in Windows 8, Windows 10.
+Adobe Air Native Extension written in ActionScript 3 and C++ for displaying adaptive and interactive toast notifications in Windows 8, Windows 10 and UserNotificiations on OSX 10.12.1.
 Sample client included
 
 ![alt tag](https://raw.githubusercontent.com/tuarua/DesktopToastANE/master/screenshots/screenshot1.png)
@@ -8,6 +8,9 @@ Sample client included
 ### Features  
  - Adaptive and interactive toast notifications are new features added in Version 1607 of Windows 10.
  - Interactive toasts for Windows 8.1.
+ - User notifications on OSX.
+
+
 ### Tech
 
 DesktopToastANE uses the following libraries:  
@@ -21,7 +24,7 @@ You will need
  - Flash Builder 4.7 or IntelliJ IDEA
  - AIR 23 SDK
  - MS Visual Studio 2015 if you wish to modify the ANE code on Windows
-
+ - Xcode or AppCode if you wish to modify the ANE code on OSX
 
 ### Known Issues
 You should use a different appName when debugging. The required .lnk file created in \AppData\Roaming\Microsoft\Windows\Start Menu\Programs will point to adl initially.
