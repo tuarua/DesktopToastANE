@@ -11,6 +11,9 @@
             <entry library-name="starling" library-level="project">
               <dependency linkage="Merged" />
             </entry>
+            <entry library-name="DesktopToastANE" library-level="project">
+              <dependency linkage="Merged" />
+            </entry>
             <entry library-name="FiraSansSemiBold" library-level="project">
               <dependency linkage="Merged" />
             </entry>
@@ -23,7 +26,7 @@
           </map>
         </compiler-options>
         <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/DesktopToastANESample-app.xml" package-file-name="DesktopToastANESample">
-          <AirSigningOptions keystore-path="$DOCUMENTS$/tuaruaWin.p12" use-temp-certificate="false" />
+          <AirSigningOptions keystore-path="$DOCUMENTS$/tuaruaWin.p12" />
         </packaging-air-desktop>
         <packaging-android />
         <packaging-ios />
@@ -52,5 +55,6 @@
     </orderEntry>
     <orderEntry type="library" exported="" name="starling" level="project" />
     <orderEntry type="library" exported="" name="FiraSansSemiBold" level="project" />
+    <orderEntry type="library" exported="" name="DesktopToastANE" level="project" />
   </component>
 </module>
