@@ -1,5 +1,7 @@
 # DesktopToastANE
 
+[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=tuarua&url=https%3A%2F%2Fgithub.com%2Ftuarua%2FDesktopToastANE&title=DesktopToastANE&language=en_GB&tags=github&category=software)
+
 Adobe Air Native Extension written in ActionScript 3 and C++ for displaying adaptive and interactive toast notifications in Windows 8, Windows 10 and UserNotificiations on OSX 10.12.1.
 Sample client included
 
