@@ -77,8 +77,6 @@ import Foundation
         let toast:Dictionary<String, AnyObject> = aneHelper.getIdObjectFromFREObject(freObject: inFRE)
             as! Dictionary<String, AnyObject>
         
-        Swift.debugPrint(toast)
-        
         let notification = NSUserNotification.init()
         
         if let title = toast["title"] {
