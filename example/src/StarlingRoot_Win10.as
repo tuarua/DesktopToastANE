@@ -58,7 +58,7 @@ public class StarlingRoot_Win10 extends Sprite {
     use namespace windows10;
     public function StarlingRoot_Win10() {
         super();
-        TextField.registerBitmapFont(Fonts.getFont("fira-sans-semi-bold-13"));
+        TextField.registerCompositor(Fonts.getFont("fira-sans-semi-bold-13"), "Fira Sans Semi-Bold 13");
     }
 
     public function start():void {
@@ -203,14 +203,12 @@ public class StarlingRoot_Win10 extends Sprite {
         callbackTxt.text = "Toast Timed Out";
     }
 
-
-
     private function onImage1Touch(event:TouchEvent):void {
         var touch:Touch = event.getTouch(image1);
 
         if (touch != null && touch.phase == TouchPhase.ENDED) {
             var toast:Toast10 = new Toast10("rocks");
-            toast.addText(new ToastText("Adobe AIR rocks"));
+            toast.addText(new ToastText("Adobe Air Rocks"));
             toast.addText(new ToastText("Trigger Toasts in Windows 10"));
             toast.addText(new ToastText("with this AIR Native Extension"));
 

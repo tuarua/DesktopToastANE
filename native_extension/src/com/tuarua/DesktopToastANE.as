@@ -341,7 +341,6 @@ public class DesktopToastANE extends EventDispatcher {
     }
 
     windows8 function show():void {
-        trace(_xmlAsString);
         if (isInited)
             extensionContext.call("show", _xmlAsString);
         else

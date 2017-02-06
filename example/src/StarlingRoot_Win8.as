@@ -55,7 +55,7 @@ public class StarlingRoot_Win8 extends Sprite {
     use namespace windows8;
     public function StarlingRoot_Win8() {
         super();
-        TextField.registerBitmapFont(Fonts.getFont("fira-sans-semi-bold-13"));
+        TextField.registerCompositor(Fonts.getFont("fira-sans-semi-bold-13"), "Fira Sans Semi-Bold 13");
     }
 
     public function start():void {

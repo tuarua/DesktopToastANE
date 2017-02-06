@@ -1,39 +1,36 @@
 #include "DesktopToastANE.h"
 #include <sstream>
-#include <iostream>
 #include <windows.h>
 #include <conio.h>
 
-#include "FlashRuntimeExtensions.h"
-bool isSupportedInOS = true;
-std::string pathSlash = "\\";
-
 #include "../include/ANEhelper.h"
-#include <string>
-#include <vector>
+ANEHelper aneHelper = ANEHelper();
+
+bool isSupportedInOS = true;
+string pathSlash = "\\";
+
 #include "json.hpp"
-//wchar_t const* AppId_t;
 wchar_t const* appShortcut;
 DWORD windowID;
 HWND _hwnd;
 HWND _hEdit;
 FREContext dllContext;
 
-std::wstring s2ws(const std::string& s) {
+wstring s2ws(const string& s) {
 	int len;
-	int slength = (int)s.length() + 1;
-	len = MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, 0, 0);
-	wchar_t* buf = new wchar_t[len];
-	MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, buf, len);
-	std::wstring r(buf);
+	auto slength = int(s.length()) + 1;
+	len = MultiByteToWideChar(CP_UTF8, 0, s.c_str(), slength, 0, 0);
+	auto buf = new wchar_t[len];
+	MultiByteToWideChar(CP_UTF8, 0, s.c_str(), slength, buf, len);
+	wstring r(buf);
 	delete[] buf;
 	return r;
 }
 
-std::string wcharToString(const wchar_t* arg) {
+string wcharToString(const wchar_t* arg) {
 	using namespace std;
-	std::wstring ws(arg);
-	std::string str(ws.begin(), ws.end());
+	wstring ws(arg);
+	string str(ws.begin(), ws.end());
 	return str;
 }
 
@@ -255,7 +252,8 @@ void UnregisterActivator() {
 _Use_decl_annotations_
 HRESULT CreateToastXml(_Outptr_ IXmlDocument** inputXml, const wchar_t *xmlString) {
 	HStringReference toastXML(xmlString);
-	ComPtr<ABI::Windows::Data::Xml::Dom::IXmlDocumentIO> xmlDocument;
+
+	ComPtr<IXmlDocumentIO> xmlDocument;
 	HRESULT hr = Windows::Foundation::ActivateInstance(StringReferenceWrapper(RuntimeClass_Windows_Data_Xml_Dom_XmlDocument).Get(), &xmlDocument);
 	if (SUCCEEDED(hr)) {
 		hr = xmlDocument->LoadXml(toastXML.Get());
@@ -399,19 +397,17 @@ extern "C" {
 
 	FREObject show(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[]) {
 		using namespace std;
-		string xmlStr = getStringFromFREObject(argv[0]);
-
+		string xmlStr = aneHelper.getString(argv[0]);
 		wstring widestr = s2ws(xmlStr);
 		const wchar_t* xmlString = widestr.c_str();
-
-		int ret = DisplayToast(xmlString);
+		DisplayToast(xmlString);
 		return NULL;
 	}
 
 	FREObject init(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[]) {
 		using namespace std;
-		string appIdStr = getStringFromFREObject(argv[0]);
-		string appNameStr = getStringFromFREObject(argv[1]);
+		string appIdStr = aneHelper.getString(argv[0]);
+		string appNameStr = aneHelper.getString(argv[1]);
 		string appShortcutStr = "\\Microsoft\\Windows\\Start Menu\\Programs\\" + appNameStr + ".lnk";
 		wstring widestr = s2ws(appShortcutStr);
 		appShortcut = widestr.c_str();

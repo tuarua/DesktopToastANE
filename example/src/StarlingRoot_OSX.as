@@ -36,7 +36,7 @@ public class StarlingRoot_OSX extends Sprite {
     private var callbackTxt:TextField;
     use namespace osx;
     public function StarlingRoot_OSX() {
-        TextField.registerBitmapFont(Fonts.getFont("fira-sans-semi-bold-13"));
+        TextField.registerCompositor(Fonts.getFont("fira-sans-semi-bold-13"), "Fira Sans Semi-Bold 13");
     }
     public function start():void {
         NativeApplication.nativeApplication.addEventListener(flash.events.Event.EXITING, onExiting);
