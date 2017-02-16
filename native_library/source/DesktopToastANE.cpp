@@ -1,3 +1,25 @@
+/*@copyright The code is licensed under the[MIT
+License](http://opensource.org/licenses/MIT):
+
+Copyright © 2015 - 2017 Tua Rua Ltd.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files(the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions :
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.*/
 #include "DesktopToastANE.h"
 #include <sstream>
 #include <windows.h>
@@ -7,7 +29,7 @@
 ANEHelper aneHelper = ANEHelper();
 
 bool isSupportedInOS = true;
-string pathSlash = "\\";
+std::string pathSlash = "\\";
 
 #include "json.hpp"
 wchar_t const* appShortcut;
@@ -16,7 +38,8 @@ HWND _hwnd;
 HWND _hEdit;
 FREContext dllContext;
 
-wstring s2ws(const string& s) {
+std::wstring s2ws(const std::string& s) {
+	using namespace std;
 	int len;
 	auto slength = int(s.length()) + 1;
 	len = MultiByteToWideChar(CP_UTF8, 0, s.c_str(), slength, 0, 0);
@@ -27,7 +50,7 @@ wstring s2ws(const string& s) {
 	return r;
 }
 
-string wcharToString(const wchar_t* arg) {
+std::string wcharToString(const wchar_t* arg) {
 	using namespace std;
 	wstring ws(arg);
 	string str(ws.begin(), ws.end());
@@ -39,16 +62,14 @@ string wcharToString(const wchar_t* arg) {
 #pragma comment(linker,"\"/manifestdependency:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
 #include <SDKDDKVer.h>
-#include <Windows.h>
 #include <Psapi.h>
 #include <strsafe.h>
 #include <ShObjIdl.h>
 #include <Shlobj.h>
 #include <Pathcch.h>
-#include <propvarutil.h>
 #include <propkey.h>
 #include <wrl.h>
-#include <wrl\wrappers\corewrappers.h>
+#include <wrl/wrappers/corewrappers.h>
 #include <windows.ui.notifications.h>
 #include "NotificationActivationCallback_TR.h"
 #include "StringReferenceWrapper.h"
@@ -63,12 +84,12 @@ EXTERN_C const PROPERTYKEY DECLSPEC_SELECTANY PKEY_AppUserModel_ToastActivatorCL
 using namespace ABI::Windows::Data::Xml::Dom;
 using namespace ABI::Windows::UI::Notifications;
 using namespace Microsoft::WRL;
-using namespace Microsoft::WRL::Wrappers;
+using namespace Wrappers;
 
 struct CoTaskMemStringTraits {
 	typedef PWSTR Type;
-	inline static bool Close(_In_ Type h) throw() { ::CoTaskMemFree(h); return true; }
-	inline static Type GetInvalidValue() throw() { return nullptr; }
+	static bool Close(_In_ Type h) throw() { ::CoTaskMemFree(h); return true; }
+	static Type GetInvalidValue() throw() { return nullptr; }
 };
 typedef HandleT<CoTaskMemStringTraits> CoTaskMemString;
 
@@ -85,7 +106,7 @@ class DECLSPEC_UUID("23A5B06E-20BB-4E7E-A0AC-6982ED6A6041") NotificationActivato
 	: public RuntimeClass < RuntimeClassFlags<ClassicCom>,
 	INotificationActivationCallback > WrlFinal*/
 class DECLSPEC_UUID("23A5B06E-20BB-4E7E-A0AC-6982ED6A6041") NotificationActivator
-	WrlFinal : public Microsoft::WRL::RuntimeClass<Microsoft::WRL::RuntimeClassFlags<Microsoft::WRL::ClassicCom>, INotificationActivationCallback, FtmBase>
+	WrlFinal : public RuntimeClass< RuntimeClassFlags< ClassicCom>, INotificationActivationCallback, FtmBase>
 {
 public:
 	virtual HRESULT STDMETHODCALLTYPE Activate(
@@ -108,17 +129,15 @@ public:
 					j3["key"] = wcharToString(data[i].Key);
 					j3["value"] = wcharToString(data[i].Value);
 					j2.push_back(j3);
-
 				}
 			}
 			j["data"] = j2;
 
 			std::string evnt = "Toast.Clicked";
-			FREDispatchStatusEventAsync(dllContext, (uint8_t*)j.dump().c_str(), (const uint8_t*)evnt.c_str());
+			aneHelper.dispatchEvent(dllContext, j.dump(), evnt);
 		}
 
-		LRESULT result = ::SendMessage(_hEdit, WM_SETTEXT, reinterpret_cast<WPARAM>(nullptr), reinterpret_cast<LPARAM>(L"The user clicked on the toast."));
-
+		::SendMessage(_hEdit, WM_SETTEXT, reinterpret_cast<WPARAM>(nullptr), reinterpret_cast<LPARAM>(L"The user clicked on the toast."));
 
 		return S_OK;
 	}
@@ -128,11 +147,10 @@ public:
 };
 CoCreatableClass(NotificationActivator);
 
-
 _Use_decl_annotations_
 HRESULT InstallShortcut(PCWSTR shortcutPath, PCWSTR exePath) {
 	ComPtr<IShellLink> shellLink;
-	HRESULT hr = CoCreateInstance(CLSID_ShellLink, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&shellLink));
+	auto hr = CoCreateInstance(CLSID_ShellLink, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&shellLink));
 	if (SUCCEEDED(hr)) {
 		hr = shellLink->SetPath(exePath);
 		if (SUCCEEDED(hr)) {
@@ -169,7 +187,7 @@ _Use_decl_annotations_
 HRESULT RegisterComServer(PCWSTR exePath) {
 	// We don't need to worry about overflow here as ::GetModuleFileName won't
 	// return anything bigger than the max file system path (much fewer than max of DWORD).
-	DWORD dataSize = static_cast<DWORD>((::wcslen(exePath) + 1)  * sizeof(WCHAR));
+	auto dataSize = static_cast<DWORD>((::wcslen(exePath) + 1)  * sizeof(WCHAR));
 
 	// In this sample, the app UI is registered to launch when the COM callback is needed.
 	// Other options might be to launch a background process instead that then decides to launch
@@ -200,11 +218,11 @@ HRESULT RegisterComServer(PCWSTR exePath) {
 HRESULT RegisterAppForNotificationSupport() {
 	CoTaskMemString appData;
 	wchar_t shortcutPath[MAX_PATH];
-	DWORD charWritten = GetEnvironmentVariable(L"APPDATA", shortcutPath, MAX_PATH);
-	HRESULT hr = charWritten > 0 ? S_OK : E_INVALIDARG;
+	auto charWritten = GetEnvironmentVariable(L"APPDATA", shortcutPath, MAX_PATH);
+	auto hr = charWritten > 0 ? S_OK : E_INVALIDARG;
 
 	if (SUCCEEDED(hr)) {
-		errno_t concatError = wcscat_s(shortcutPath, ARRAYSIZE(shortcutPath), appShortcut);
+		auto concatError = wcscat_s(shortcutPath, ARRAYSIZE(shortcutPath), appShortcut);
 		hr = concatError == 0 ? S_OK : E_INVALIDARG;
 		if (SUCCEEDED(hr)) {
 			DWORD attributes = ::GetFileAttributes(shortcutPath);
@@ -254,7 +272,7 @@ HRESULT CreateToastXml(_Outptr_ IXmlDocument** inputXml, const wchar_t *xmlStrin
 	HStringReference toastXML(xmlString);
 
 	ComPtr<IXmlDocumentIO> xmlDocument;
-	HRESULT hr = Windows::Foundation::ActivateInstance(StringReferenceWrapper(RuntimeClass_Windows_Data_Xml_Dom_XmlDocument).Get(), &xmlDocument);
+	auto hr = Windows::Foundation::ActivateInstance(StringReferenceWrapper(RuntimeClass_Windows_Data_Xml_Dom_XmlDocument).Get(), &xmlDocument);
 	if (SUCCEEDED(hr)) {
 		hr = xmlDocument->LoadXml(toastXML.Get());
 		if (SUCCEEDED(hr))
@@ -268,7 +286,7 @@ HRESULT CreateToastXml(_Outptr_ IXmlDocument** inputXml, const wchar_t *xmlStrin
 _Use_decl_annotations_
 HRESULT CreateToast(IToastNotificationManagerStatics* toastManager, IXmlDocument* xml) {
 	ComPtr<IToastNotifier> notifier;
-	HRESULT hr = toastManager->CreateToastNotifierWithId(HStringReference(AppId).Get(), &notifier);
+	auto hr = toastManager->CreateToastNotifierWithId(HStringReference(AppId).Get(), &notifier);
 	if (SUCCEEDED(hr)) {
 		ComPtr<IToastNotificationFactory> factory;
 		hr = Windows::Foundation::GetActivationFactory(
@@ -286,7 +304,6 @@ HRESULT CreateToast(IToastNotificationManagerStatics* toastManager, IXmlDocument
 				EventRegistrationToken activatedToken, dismissedToken, failedToken;
 
 				using namespace ABI::Windows::Foundation;
-
 
 				hr = toast->add_Activated(Callback < Implements < RuntimeClassFlags<ClassicCom>,
 					ITypedEventHandler<ToastNotification*, IInspectable* >> >(
@@ -334,9 +351,7 @@ HRESULT CreateToast(IToastNotificationManagerStatics* toastManager, IXmlDocument
 								evnt = "Toast.NotActivated";
 								break;
 							}
-
-							FREDispatchStatusEventAsync(dllContext, (uint8_t*)msg.c_str(), (const uint8_t*)evnt.c_str());
-
+							aneHelper.dispatchEvent(dllContext, msg, evnt);
 						}
 						return S_OK;
 					}).Get(),
@@ -349,7 +364,7 @@ HRESULT CreateToast(IToastNotificationManagerStatics* toastManager, IXmlDocument
 
 							std::string evnt = "Toast.Error";
 							std::string msg = "";
-							FREDispatchStatusEventAsync(dllContext, (uint8_t*)msg.c_str(), (const uint8_t*)evnt.c_str());
+							aneHelper.dispatchEvent(dllContext, msg, evnt);
 							return S_OK;
 						}).Get(),
 							&failedToken);
@@ -370,7 +385,7 @@ HRESULT CreateToast(IToastNotificationManagerStatics* toastManager, IXmlDocument
 // display the toast using the new C++ /ZW options (using handles, COM wrappers, etc.)
 HRESULT DisplayToast(const wchar_t *xmlString) {
 	ComPtr<IToastNotificationManagerStatics> toastStatics;
-	HRESULT hr = Windows::Foundation::GetActivationFactory(HStringReference(RuntimeClass_Windows_UI_Notifications_ToastNotificationManager).Get(),&toastStatics);
+	auto hr = Windows::Foundation::GetActivationFactory(HStringReference(RuntimeClass_Windows_UI_Notifications_ToastNotificationManager).Get(),&toastStatics);
 
 	if (SUCCEEDED(hr)) {
 		ComPtr<IXmlDocument> toastXml;
@@ -392,34 +407,34 @@ extern "C" {
 	int logLevel = 1;
 	extern void trace(std::string msg) {
 		//if (logLevel > 0)
-			FREDispatchStatusEventAsync(dllContext, (uint8_t*)msg.c_str(), (const uint8_t*) "TRACE");
+			aneHelper.dispatchEvent(dllContext, msg, "TRACE");
 	}
 
 	FREObject show(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[]) {
 		using namespace std;
-		string xmlStr = aneHelper.getString(argv[0]);
-		wstring widestr = s2ws(xmlStr);
-		const wchar_t* xmlString = widestr.c_str();
+		auto xmlStr = aneHelper.getString(argv[0]);
+		auto widestr = s2ws(xmlStr);
+		auto xmlString = widestr.c_str();
 		DisplayToast(xmlString);
-		return NULL;
+		return nullptr;
 	}
 
 	FREObject init(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[]) {
 		using namespace std;
-		string appIdStr = aneHelper.getString(argv[0]);
-		string appNameStr = aneHelper.getString(argv[1]);
-		string appShortcutStr = "\\Microsoft\\Windows\\Start Menu\\Programs\\" + appNameStr + ".lnk";
-		wstring widestr = s2ws(appShortcutStr);
+		auto appIdStr = aneHelper.getString(argv[0]);
+		auto appNameStr = aneHelper.getString(argv[1]);
+		auto appShortcutStr = "\\Microsoft\\Windows\\Start Menu\\Programs\\" + appNameStr + ".lnk";
+		auto widestr = s2ws(appShortcutStr);
 		appShortcut = widestr.c_str();
 
-		wstring widestr1 = s2ws(appNameStr);
-		std::copy(std::begin(widestr1), std::end(widestr1), AppId);
+		auto widestr1 = s2ws(appNameStr);
+		copy(begin(widestr1), end(widestr1), AppId);
 
-		HRESULT hr = RegisterAppForNotificationSupport();
+		auto hr = RegisterAppForNotificationSupport();
 		if (SUCCEEDED(hr))
 			hr = RegisterActivator();
 
-		return NULL;
+		return nullptr;
 	}
 	
 	BOOL CALLBACK EnumProc(HWND hwnd, LPARAM lParam) {
@@ -437,8 +452,8 @@ extern "C" {
 		EnumWindows(EnumProc, processID);
 
 		static FRENamedFunction extensionFunctions[] = {
-			{ (const uint8_t*) "init",NULL, &init }
-			,{ (const uint8_t*) "show",NULL, &show }
+			{ reinterpret_cast<const uint8_t*>("init"),nullptr, &init }
+			,{ reinterpret_cast<const uint8_t*>("show"),nullptr, &show }
 
 		};
 
@@ -449,7 +464,6 @@ extern "C" {
 
 
 	void contextFinalizer(FREContext ctx) {
-		return;
 	}
 
 	void TRDTTExtInizer(void** extData, FREContextInitializer* ctxInitializer, FREContextFinalizer* ctxFinalizer) {
@@ -462,6 +476,5 @@ extern "C" {
 		nullCTX = 0;
 		UnregisterActivator();
 		contextFinalizer(nullCTX);
-		return;
 	}
 }
