@@ -19,6 +19,8 @@ import com.tuarua.toast.windows8.ToastCommands;
 import com.tuarua.windows8;
 
 import flash.desktop.NativeApplication;
+import flash.display.NativeWindow;
+import flash.display.NativeWindowDisplayState;
 import flash.events.Event;
 
 import flash.filesystem.File;
@@ -35,6 +37,7 @@ import starling.text.TextFormat;
 import starling.utils.Align;
 
 import views.ScrollableContent;
+
 // https://gist.github.com/kirancheraku/512f658da1847044a7b6
 // https://msdn.microsoft.com/en-us/library/windows/desktop/mt643715(v=vs.85).aspx
 // https://blogs.msdn.microsoft.com/tiles_and_toasts/2015/07/02/adaptive-and-interactive-toast-notifications-for-windows-10/
@@ -52,7 +55,9 @@ public class StarlingRoot_Win8 extends Sprite {
     private var list:ScrollableContent;
     private var holder:Sprite = new Sprite();
     private var callbackTxt:TextField;
+
     use namespace windows8;
+
     public function StarlingRoot_Win8() {
         super();
         TextField.registerCompositor(Fonts.getFont("fira-sans-semi-bold-13"), "Fira Sans Semi-Bold 13");
@@ -62,23 +67,20 @@ public class StarlingRoot_Win8 extends Sprite {
 
         NativeApplication.nativeApplication.addEventListener(flash.events.Event.EXITING, onExiting);
 
-        dtANE.init(NativeApplication.nativeApplication.applicationID,"Toast ANE Sample");
-        dtANE.addEventListener(ToastEvent.TOAST_CLICKED,onToastClicked);
-        dtANE.addEventListener(ToastEvent.TOAST_DISMISSED,onToastDismissed);
-        dtANE.addEventListener(ToastEvent.TOAST_ERROR,onToastError);
-        dtANE.addEventListener(ToastEvent.TOAST_HIDDEN,onToastHidden);
-        dtANE.addEventListener(ToastEvent.TOAST_NOT_ACTIVATED,onToastNotActivated);
-        dtANE.addEventListener(ToastEvent.TOAST_TIMED_OUT,onToastTimedOut);
+        dtANE.init(NativeApplication.nativeApplication.applicationID, "Toast ANE Sample");
+        dtANE.addEventListener(ToastEvent.TOAST_CLICKED, onToastClicked);
+        dtANE.addEventListener(ToastEvent.TOAST_DISMISSED, onToastDismissed);
+        dtANE.addEventListener(ToastEvent.TOAST_ERROR, onToastError);
+        dtANE.addEventListener(ToastEvent.TOAST_HIDDEN, onToastHidden);
+        dtANE.addEventListener(ToastEvent.TOAST_NOT_ACTIVATED, onToastNotActivated);
+        dtANE.addEventListener(ToastEvent.TOAST_TIMED_OUT, onToastTimedOut);
 
         image1.addEventListener(TouchEvent.TOUCH, onImage1Touch);
         image1.useHandCursor = true;
         holder.addChild(image1);
         holder.addChild(createLbl("Notification with rich visual contents\nYou can have multiple lines of text, an " +
                 "optional small image to override the application logo, and an optional inline image thumbnail in " +
-                "a toast.",400,0));
-
-
-
+                "a toast.", 400, 0));
 
 
         image7.addEventListener(TouchEvent.TOUCH, onImage7Touch);
@@ -86,9 +88,9 @@ public class StarlingRoot_Win8 extends Sprite {
         image7.y = image1.y + image1.height + 20;
         holder.addChild(image7);
         holder.addChild(createLbl("Reminder Notification\nINotifications with scenario “reminder” will appear " +
-                "pre-expanded and remain on the user’s screen till dismissed or interacted with.",400,image7.y));
+                "pre-expanded and remain on the user’s screen till dismissed or interacted with.", 400, image7.y));
 
-        list = new ScrollableContent(840,600,holder);
+        list = new ScrollableContent(840, 600, holder);
         list.x = 50;
         list.y = 90;
         list.fullHeight = holder.height;
@@ -97,8 +99,8 @@ public class StarlingRoot_Win8 extends Sprite {
 
         var tf:TextFormat = new TextFormat()
 
-        callbackTxt = new TextField(600,200,"Callback text will appear here");
-        callbackTxt.format.setTo("Fira Sans Semi-Bold 13",13);
+        callbackTxt = new TextField(600, 200, "Callback text will appear here");
+        callbackTxt.format.setTo("Fira Sans Semi-Bold 13", 13);
         callbackTxt.format.horizontalAlign = Align.LEFT;
         callbackTxt.format.verticalAlign = Align.TOP;
         callbackTxt.format.color = 0x666666;
@@ -114,8 +116,8 @@ public class StarlingRoot_Win8 extends Sprite {
 
 
     private function createLbl(txt:String, x:int, y:int):TextField {
-        var lbl:TextField = new TextField(360,200,txt);
-        lbl.format.setTo("Fira Sans Semi-Bold 13",13);
+        var lbl:TextField = new TextField(360, 200, txt);
+        lbl.format.setTo("Fira Sans Semi-Bold 13", 13);
         lbl.format.horizontalAlign = Align.LEFT;
         lbl.format.verticalAlign = Align.TOP;
         lbl.format.color = 0x666666;
@@ -128,21 +130,26 @@ public class StarlingRoot_Win8 extends Sprite {
     private function onToastClicked(event:ToastEvent):void {
         trace(event);
 
-        NativeApplication.nativeApplication.activate();
+        var window:NativeWindow = stage.starling.nativeStage.nativeWindow;
+        if (window.displayState == NativeWindowDisplayState.MINIMIZED) {
+            window.restore();
+        }
+
+        window.visible = true;
 
 
         callbackTxt.text = "Toast Clicked - arguments: " + event.params.arguments;
-        if(event.params.data){
-            for each(var kvp:Object in event.params.data){
-                callbackTxt.text += "\nkey: "+kvp.key;
-                callbackTxt.text += "\nvalue: "+kvp.value;
+        if (event.params.data) {
+            for each(var kvp:Object in event.params.data) {
+                callbackTxt.text += "\nkey: " + kvp.key;
+                callbackTxt.text += "\nvalue: " + kvp.value;
             }
         }
 
         //handle protocol
-        if(event.params.arguments){
+        if (event.params.arguments) {
             var argsStr:String = event.params.arguments as String;
-            if(argsStr.indexOf("protocol") == 0)
+            if (argsStr.indexOf("protocol") == 0)
                 navigateToURL(new URLRequest(argsStr.split("|")[1]));
         }
 
@@ -169,7 +176,6 @@ public class StarlingRoot_Win8 extends Sprite {
     }
 
 
-
     private function onImage1Touch(event:TouchEvent):void {
         var touch:Touch = event.getTouch(image1);
 
@@ -190,7 +196,6 @@ public class StarlingRoot_Win8 extends Sprite {
     }
 
 
-
     private function onImage7Touch(event:TouchEvent):void {
         var touch:Touch = event.getTouch(image7);
         if (touch != null && touch.phase == TouchPhase.ENDED) {
@@ -199,8 +204,8 @@ public class StarlingRoot_Win8 extends Sprite {
             toast.duration = ToastDuration.LONG;
 
 
-            toast.addText(new ToastText("Alarms Notifications SDK Sample App",null,0,1));
-            toast.addText(new ToastText("alarmName",null,0,2));
+            toast.addText(new ToastText("Alarms Notifications SDK Sample App", null, 0, 1));
+            toast.addText(new ToastText("alarmName", null, 0, 2));
 
             var commands:ToastCommands = new ToastCommands("alarm");
             var command1:ToastCommand = new ToastCommand("snooze");

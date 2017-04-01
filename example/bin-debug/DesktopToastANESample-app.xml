@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <application xmlns="http://ns.adobe.com/air/application/23.0">
   <!-- Adobe AIR Application Descriptor File Template.
 
@@ -230,4 +229,3 @@
     <extensionID>com.tuarua.DesktopToastANE</extensionID>
   </extensions>
 </application>
-

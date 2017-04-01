@@ -18,6 +18,8 @@ import com.tuarua.toast.windows10.Toast10;
 import com.tuarua.windows10;
 
 import flash.desktop.NativeApplication;
+import flash.display.NativeWindow;
+import flash.display.NativeWindowDisplayState;
 import flash.events.Event;
 
 import flash.filesystem.File;
@@ -34,6 +36,7 @@ import starling.text.TextFormat;
 import starling.utils.Align;
 
 import views.ScrollableContent;
+
 // https://gist.github.com/kirancheraku/512f658da1847044a7b6
 // https://msdn.microsoft.com/en-us/library/windows/desktop/mt643715(v=vs.85).aspx
 // https://blogs.msdn.microsoft.com/tiles_and_toasts/2015/07/02/adaptive-and-interactive-toast-notifications-for-windows-10/
@@ -55,7 +58,9 @@ public class StarlingRoot_Win10 extends Sprite {
     private var list:ScrollableContent;
     private var holder:Sprite = new Sprite();
     private var callbackTxt:TextField;
+
     use namespace windows10;
+
     public function StarlingRoot_Win10() {
         super();
         TextField.registerCompositor(Fonts.getFont("fira-sans-semi-bold-13"), "Fira Sans Semi-Bold 13");
@@ -65,41 +70,41 @@ public class StarlingRoot_Win10 extends Sprite {
 
         NativeApplication.nativeApplication.addEventListener(flash.events.Event.EXITING, onExiting);
 
-        dtANE.init(NativeApplication.nativeApplication.applicationID,"Toast ANE Sample");
-        dtANE.addEventListener(ToastEvent.TOAST_CLICKED,onToastClicked);
-        dtANE.addEventListener(ToastEvent.TOAST_DISMISSED,onToastDismissed);
-        dtANE.addEventListener(ToastEvent.TOAST_ERROR,onToastError);
-        dtANE.addEventListener(ToastEvent.TOAST_HIDDEN,onToastHidden);
-        dtANE.addEventListener(ToastEvent.TOAST_NOT_ACTIVATED,onToastNotActivated);
-        dtANE.addEventListener(ToastEvent.TOAST_TIMED_OUT,onToastTimedOut);
+        dtANE.init(NativeApplication.nativeApplication.applicationID, "Toast ANE Sample");
+        dtANE.addEventListener(ToastEvent.TOAST_CLICKED, onToastClicked);
+        dtANE.addEventListener(ToastEvent.TOAST_DISMISSED, onToastDismissed);
+        dtANE.addEventListener(ToastEvent.TOAST_ERROR, onToastError);
+        dtANE.addEventListener(ToastEvent.TOAST_HIDDEN, onToastHidden);
+        dtANE.addEventListener(ToastEvent.TOAST_NOT_ACTIVATED, onToastNotActivated);
+        dtANE.addEventListener(ToastEvent.TOAST_TIMED_OUT, onToastTimedOut);
 
         image1.addEventListener(TouchEvent.TOUCH, onImage1Touch);
         image1.useHandCursor = true;
         holder.addChild(image1);
         holder.addChild(createLbl("Notification with rich visual contents\nYou can have multiple lines of text, an " +
                 "optional small image to override the application logo, and an optional inline image thumbnail in " +
-                "a toast.",400,0));
+                "a toast.", 400, 0));
 
         image2.addEventListener(TouchEvent.TOUCH, onImage2Touch);
         image2.useHandCursor = true;
         image2.y = image1.height + 20;
         holder.addChild(image2);
 
-        holder.addChild(createLbl("Notification with actions (sample 1)",400,image2.y));
+        holder.addChild(createLbl("Notification with actions (sample 1)", 400, image2.y));
 
         image3.addEventListener(TouchEvent.TOUCH, onImage3Touch);
         image3.useHandCursor = true;
         image3.y = image2.y + image2.height + 20;
         holder.addChild(image3);
         holder.addChild(createLbl("Notification with actions (sample 2)\nIn this sample you can open a browser url or " +
-                "app url",400,image3.y));
+                "app url", 400, image3.y));
 
         image4.addEventListener(TouchEvent.TOUCH, onImage4Touch);
         image4.useHandCursor = true;
         image4.y = image3.y + image3.height + 20;
         holder.addChild(image4);
         holder.addChild(createLbl("Notification with text input and actions (sample 1)\nIn this sample, you can add " +
-                "a textbox that allows the user to input text.",400,image4.y));
+                "a textbox that allows the user to input text.", 400, image4.y));
 
         image5.addEventListener(TouchEvent.TOUCH, onImage5Touch);
         image5.useHandCursor = true;
@@ -107,23 +112,23 @@ public class StarlingRoot_Win10 extends Sprite {
         holder.addChild(image5);
         holder.addChild(createLbl("Notification with text input and actions (sample 2)\nIf allowing user to reply " +
                 "with text input is the only scenario you care about, you can also use the below layout. This only " +
-                "works if your action specifies an image icon.",400,image5.y));
+                "works if your action specifies an image icon.", 400, image5.y));
 
         image6.addEventListener(TouchEvent.TOUCH, onImage6Touch);
         image6.useHandCursor = true;
         image6.y = image5.y + image5.height + 20;
         holder.addChild(image6);
         holder.addChild(createLbl("Notification with selection input and actions\nIn this sample, you can add a " +
-                "dropdown list with pre-defined selections for the user to select.",400,image6.y));
+                "dropdown list with pre-defined selections for the user to select.", 400, image6.y));
 
         image7.addEventListener(TouchEvent.TOUCH, onImage7Touch);
         image7.useHandCursor = true;
         image7.y = image6.y + image6.height + 20;
         holder.addChild(image7);
         holder.addChild(createLbl("Reminder Notification\nINotifications with scenario “reminder” will appear " +
-                "pre-expanded and remain on the user’s screen till dismissed or interacted with.",400,image7.y));
+                "pre-expanded and remain on the user’s screen till dismissed or interacted with.", 400, image7.y));
 
-        list = new ScrollableContent(840,600,holder);
+        list = new ScrollableContent(840, 600, holder);
         list.x = 50;
         list.y = 90;
         list.fullHeight = holder.height;
@@ -132,8 +137,8 @@ public class StarlingRoot_Win10 extends Sprite {
 
         var tf:TextFormat = new TextFormat()
 
-        callbackTxt = new TextField(600,200,"Callback text will appear here");
-        callbackTxt.format.setTo("Fira Sans Semi-Bold 13",13);
+        callbackTxt = new TextField(600, 200, "Callback text will appear here");
+        callbackTxt.format.setTo("Fira Sans Semi-Bold 13", 13);
         callbackTxt.format.horizontalAlign = Align.LEFT;
         callbackTxt.format.verticalAlign = Align.TOP;
         callbackTxt.format.color = 0x666666;
@@ -149,8 +154,8 @@ public class StarlingRoot_Win10 extends Sprite {
 
 
     private function createLbl(txt:String, x:int, y:int):TextField {
-        var lbl:TextField = new TextField(360,200,txt);
-        lbl.format.setTo("Fira Sans Semi-Bold 13",13);
+        var lbl:TextField = new TextField(360, 200, txt);
+        lbl.format.setTo("Fira Sans Semi-Bold 13", 13);
         lbl.format.horizontalAlign = Align.LEFT;
         lbl.format.verticalAlign = Align.TOP;
         lbl.format.color = 0x666666;
@@ -163,21 +168,28 @@ public class StarlingRoot_Win10 extends Sprite {
     private function onToastClicked(event:ToastEvent):void {
         trace(event);
 
+        var window:NativeWindow = stage.starling.nativeStage.nativeWindow;
+        if (window.displayState == NativeWindowDisplayState.MINIMIZED) {
+            window.restore();
+        }
+
+        window.visible = true;
+
         NativeApplication.nativeApplication.activate();
 
 
         callbackTxt.text = "Toast Clicked - arguments: " + event.params.arguments;
-        if(event.params.data){
-            for each(var kvp:Object in event.params.data){
-                callbackTxt.text += "\nkey: "+kvp.key;
-                callbackTxt.text += "\nvalue: "+kvp.value;
+        if (event.params.data) {
+            for each(var kvp:Object in event.params.data) {
+                callbackTxt.text += "\nkey: " + kvp.key;
+                callbackTxt.text += "\nvalue: " + kvp.value;
             }
         }
 
         //handle protocol
-        if(event.params.arguments){
+        if (event.params.arguments) {
             var argsStr:String = event.params.arguments as String;
-            if(argsStr.indexOf("protocol") == 0)
+            if (argsStr.indexOf("protocol") == 0)
                 navigateToURL(new URLRequest(argsStr.split("|")[1]));
         }
 
@@ -232,19 +244,19 @@ public class StarlingRoot_Win10 extends Sprite {
     private function onImage2Touch(event:TouchEvent):void {
         var touch:Touch = event.getTouch(image2);
         if (touch != null && touch.phase == TouchPhase.ENDED) {
-             var xml:XML = XML(<toast launch="app-defined-string">
-               <visual>
-                 <binding template="ToastGeneric">
-                   <text>Microsoft Company Store</text>
-                   <text>New Halo game is back in stock!</text>
-                 </binding>
-               </visual>
-               <actions>
-                 <action activationType="foreground" content="See more details" arguments="details"/>
-                 <action activationType="background" content="Remind me later" arguments="later"/>
-               </actions>
-             </toast>
-             );
+            var xml:XML = XML(<toast launch="app-defined-string">
+                        <visual>
+                            <binding template="ToastGeneric">
+                                <text>Microsoft Company Store</text>
+                                <text>New Halo game is back in stock!</text>
+                            </binding>
+                        </visual>
+                        <actions>
+                            <action activationType="foreground" content="See more details" arguments="details"/>
+                            <action activationType="background" content="Remind me later" arguments="later"/>
+                        </actions>
+                    </toast>
+            );
             var toast:Toast10 = new Toast10("app-defined-string");
             toast.addText(new ToastText("Microsoft Company Store"));
             toast.addText(new ToastText("New Halo game is back in stock!"));
@@ -271,18 +283,21 @@ public class StarlingRoot_Win10 extends Sprite {
         var touch:Touch = event.getTouch(image3);
         if (touch != null && touch.phase == TouchPhase.ENDED) {
             var xml:XML = XML(
-             <toast launch="app-defined-string">
-               <visual>
-                 <binding template="ToastGeneric">
-                   <text>Restaurant suggestion...</text>
-                   <text>We noticed that you are near Wasaki. Thomas left a 5 star rating after his last visit, do you want to try it?</text>
-                 </binding>
-               </visual>
-               <actions>
-                 <action activationType="foreground" content="Reviews" arguments="reviews" />
-                 <action activationType="protocol" content="Show map" arguments="protocol|bingmaps:?q=sushi" />
-               </actions>
-             </toast>
+                    <toast launch="app-defined-string">
+                        <visual>
+                            <binding template="ToastGeneric">
+                                <text>Restaurant suggestion...</text>
+                                <text>We noticed that you are near Wasaki. Thomas left a 5 star rating after his last
+                                    visit, do you want to try it?
+                                </text>
+                            </binding>
+                        </visual>
+                        <actions>
+                            <action activationType="foreground" content="Reviews" arguments="reviews"/>
+                            <action activationType="protocol" content="Show map"
+                                    arguments="protocol|bingmaps:?q=sushi"/>
+                        </actions>
+                    </toast>
             );
             var toast:Toast10 = new Toast10("app-defined-string");
             toast.addText(new ToastText("Restaurant suggestion..."));
@@ -310,20 +325,20 @@ public class StarlingRoot_Win10 extends Sprite {
         var touch:Touch = event.getTouch(image4);
         if (touch != null && touch.phase == TouchPhase.ENDED) {
             var xml:XML = XML(
-             <toast launch="developer-defined-string">
-               <visual>
-                 <binding template="ToastGeneric">
-                   <text>Andrew B.</text>
-                   <text>Shall we meet up at 8?</text>
-                   <image placement="appLogoOverride" src="" hint-crop="circle" />
-                 </binding>
-               </visual>
-               <actions>
-                 <input id="message" type="text" placeHolderContent="Type a reply" />
-                 <action activationType="background" content="Reply" arguments="reply" />
-                 <action activationType="foreground" content="Video call" arguments="video" />
-               </actions>
-             </toast>
+                    <toast launch="developer-defined-string">
+                        <visual>
+                            <binding template="ToastGeneric">
+                                <text>Andrew B.</text>
+                                <text>Shall we meet up at 8?</text>
+                                <image placement="appLogoOverride" src="" hint-crop="circle"/>
+                            </binding>
+                        </visual>
+                        <actions>
+                            <input id="message" type="text" placeHolderContent="Type a reply"/>
+                            <action activationType="background" content="Reply" arguments="reply"/>
+                            <action activationType="foreground" content="Video call" arguments="video"/>
+                        </actions>
+                    </toast>
             );
             var toast:Toast10 = new Toast10("developer-defined-string");
             toast.addText(new ToastText("Andrew B."));
@@ -364,19 +379,21 @@ public class StarlingRoot_Win10 extends Sprite {
         var touch:Touch = event.getTouch(image5);
         if (touch != null && touch.phase == TouchPhase.ENDED) {
             var xml:XML = new XML(
-             <toast launch="developer-defined-string">
-               <visual>
-                 <binding template="ToastGeneric">
-                   <text>Andrew B.</text>
-                   <text>Shall we meet up at 8?</text>
-                   <image placement="appLogoOverride" src="D:\dev\flash\DesktopToastANE\example\src\app-icon.jpg" hint-crop="circle" />
-                 </binding>
-               </visual>
-               <actions>
-                 <input id="message" type="text" placeHolderContent="Type a reply" />
-                 <action activationType="background" content="Reply" arguments="reply" hint-inputId="message" imageUri="D:\dev\flash\DesktopToastANE\example\src\send.png"/>
-               </actions>
-             </toast>
+                    <toast launch="developer-defined-string">
+                        <visual>
+                            <binding template="ToastGeneric">
+                                <text>Andrew B.</text>
+                                <text>Shall we meet up at 8?</text>
+                                <image placement="appLogoOverride"
+                                       src="D:\dev\flash\DesktopToastANE\example\src\app-icon.jpg" hint-crop="circle"/>
+                            </binding>
+                        </visual>
+                        <actions>
+                            <input id="message" type="text" placeHolderContent="Type a reply"/>
+                            <action activationType="background" content="Reply" arguments="reply" hint-inputId="message"
+                                    imageUri="D:\dev\flash\DesktopToastANE\example\src\send.png"/>
+                        </actions>
+                    </toast>
             );
             var toast:Toast10 = new Toast10("developer-defined-string");
             toast.addText(new ToastText("Andrew B."));
@@ -413,23 +430,23 @@ public class StarlingRoot_Win10 extends Sprite {
         var touch:Touch = event.getTouch(image6);
         if (touch != null && touch.phase == TouchPhase.ENDED) {
             var xml:XML = XML(
-             <toast launch="developer-defined-string">
-               <visual>
-                 <binding template="ToastGeneric">
-                   <text>Spicy Heaven</text>
-                   <text>When do you plan to come in tomorrow?</text>
-                 </binding>
-               </visual>
-               <actions>
-                 <input id="time" type="selection" defaultInput="2" >
-                   <selection id="1" content="Breakfast" />
-                   <selection id="2" content="Lunch" />
-                   <selection id="3" content="Dinner" />
-                 </input>
-                 <action activationType="background" content="Reserve" arguments="reserve" />
-                 <action activationType="foreground" content="Call Restaurant" arguments="call" />
-               </actions>
-             </toast>
+                    <toast launch="developer-defined-string">
+                        <visual>
+                            <binding template="ToastGeneric">
+                                <text>Spicy Heaven</text>
+                                <text>When do you plan to come in tomorrow?</text>
+                            </binding>
+                        </visual>
+                        <actions>
+                            <input id="time" type="selection" defaultInput="2">
+                                <selection id="1" content="Breakfast"/>
+                                <selection id="2" content="Lunch"/>
+                                <selection id="3" content="Dinner"/>
+                            </input>
+                            <action activationType="background" content="Reserve" arguments="reserve"/>
+                            <action activationType="foreground" content="Call Restaurant" arguments="call"/>
+                        </actions>
+                    </toast>
             );
             var toast:Toast10 = new Toast10("developer-defined-string");
             toast.addText(new ToastText("Spicy Heaven"));
@@ -440,9 +457,9 @@ public class StarlingRoot_Win10 extends Sprite {
             toastInput.defaultInput = "2";
             toastInput.id = "time";
 
-            toastInput.addSelection(new ToastInputSelection("1","Breakfast"));
-            toastInput.addSelection(new ToastInputSelection("2","Lunch"));
-            toastInput.addSelection(new ToastInputSelection("3","Dinner"));
+            toastInput.addSelection(new ToastInputSelection("1", "Breakfast"));
+            toastInput.addSelection(new ToastInputSelection("2", "Lunch"));
+            toastInput.addSelection(new ToastInputSelection("3", "Dinner"));
 
             var toastAction1:ToastAction = new ToastAction();
             toastAction1.activationType = ToastActivationType.BACKGROUND;
@@ -468,26 +485,26 @@ public class StarlingRoot_Win10 extends Sprite {
         var touch:Touch = event.getTouch(image7);
         if (touch != null && touch.phase == TouchPhase.ENDED) {
             var xml:XML = XML(
-             <toast scenario="reminder" launch="action=viewEvent&amp;eventId=1983">
-               <visual>
-                 <binding template="ToastGeneric">
-                   <text>Adaptive Tiles Meeting</text>
-                   <text>Conf Room 2001 / Building 135</text>
-                   <text>10:00 AM - 10:30 AM</text>
-                 </binding>
-               </visual>
-               <actions>
-                 <input id="snoozeTime" type="selection" defaultInput="15">
-                   <selection id="1" content="1 minute"/>
-                   <selection id="15" content="15 minutes"/>
-                   <selection id="60" content="1 hour"/>
-                   <selection id="240" content="4 hours"/>
-                   <selection id="1440" content="1 day"/>
-                 </input>
-                 <action activationType="system" arguments="snooze" hint-inputId="snoozeTime" content="" />
-                 <action activationType="system" arguments="dismiss" content=""/>
-               </actions>
-             </toast>
+                    <toast scenario="reminder" launch="action=viewEvent&amp;eventId=1983">
+                        <visual>
+                            <binding template="ToastGeneric">
+                                <text>Adaptive Tiles Meeting</text>
+                                <text>Conf Room 2001 / Building 135</text>
+                                <text>10:00 AM - 10:30 AM</text>
+                            </binding>
+                        </visual>
+                        <actions>
+                            <input id="snoozeTime" type="selection" defaultInput="15">
+                                <selection id="1" content="1 minute"/>
+                                <selection id="15" content="15 minutes"/>
+                                <selection id="60" content="1 hour"/>
+                                <selection id="240" content="4 hours"/>
+                                <selection id="1440" content="1 day"/>
+                            </input>
+                            <action activationType="system" arguments="snooze" hint-inputId="snoozeTime" content=""/>
+                            <action activationType="system" arguments="dismiss" content=""/>
+                        </actions>
+                    </toast>
             );
             var toast:Toast10 = new Toast10();
             toast.launch = "action=viewEvent&amp;eventId=1983";
@@ -502,11 +519,11 @@ public class StarlingRoot_Win10 extends Sprite {
             toastInput.defaultInput = "15";
             toastInput.id = "snoozeTime";
 
-            toastInput.addSelection(new ToastInputSelection("1","1 minute"));
-            toastInput.addSelection(new ToastInputSelection("15","15 minutes"));
-            toastInput.addSelection(new ToastInputSelection("60","1 hour"));
-            toastInput.addSelection(new ToastInputSelection("240","4 hours"));
-            toastInput.addSelection(new ToastInputSelection("1440","1 day"));
+            toastInput.addSelection(new ToastInputSelection("1", "1 minute"));
+            toastInput.addSelection(new ToastInputSelection("15", "15 minutes"));
+            toastInput.addSelection(new ToastInputSelection("60", "1 hour"));
+            toastInput.addSelection(new ToastInputSelection("240", "4 hours"));
+            toastInput.addSelection(new ToastInputSelection("1440", "1 day"));
 
             var toastAction1:ToastAction = new ToastAction();
             toastAction1.activationType = ToastActivationType.SYSTEM;

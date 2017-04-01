@@ -9,6 +9,8 @@ import com.tuarua.toast.ToastEvent;
 import com.tuarua.toast.osx.ToastOSX;
 
 import flash.desktop.NativeApplication;
+import flash.display.NativeWindow;
+import flash.display.NativeWindowDisplayState;
 import flash.events.Event;
 import flash.filesystem.File;
 import flash.net.URLRequest;
@@ -34,21 +36,24 @@ public class StarlingRoot_OSX extends Sprite {
     private var list:ScrollableContent;
     private var holder:Sprite = new Sprite();
     private var callbackTxt:TextField;
+
     use namespace osx;
+
     public function StarlingRoot_OSX() {
         TextField.registerCompositor(Fonts.getFont("fira-sans-semi-bold-13"), "Fira Sans Semi-Bold 13");
     }
+
     public function start():void {
         NativeApplication.nativeApplication.addEventListener(flash.events.Event.EXITING, onExiting);
 
 
         dtANE.init();
-        dtANE.addEventListener(ToastEvent.TOAST_CLICKED,onToastClicked);
+        dtANE.addEventListener(ToastEvent.TOAST_CLICKED, onToastClicked);
 
         image1.addEventListener(TouchEvent.TOUCH, onImage1Touch);
         image1.useHandCursor = true;
         holder.addChild(image1);
-        holder.addChild(createLbl("Notification with Reply button and response",400,0));
+        holder.addChild(createLbl("Notification with Reply button and response", 400, 0));
 
 
         image2.addEventListener(TouchEvent.TOUCH, onImage2Touch);
@@ -56,10 +61,10 @@ public class StarlingRoot_OSX extends Sprite {
         image2.y = image1.height + 20;
         holder.addChild(image2);
 
-        holder.addChild(createLbl("Notification with title, subtitle, informative text and image",400,image2.y));
+        holder.addChild(createLbl("Notification with title, subtitle, informative text and image", 400, image2.y));
 
 
-        list = new ScrollableContent(840,600,holder);
+        list = new ScrollableContent(840, 600, holder);
         list.x = 50;
         list.y = 150;
         list.fullHeight = holder.height;
@@ -68,8 +73,8 @@ public class StarlingRoot_OSX extends Sprite {
 
         var tf:TextFormat = new TextFormat()
 
-        callbackTxt = new TextField(600,200,"Callback text will appear here");
-        callbackTxt.format.setTo("Fira Sans Semi-Bold 13",13);
+        callbackTxt = new TextField(600, 200, "Callback text will appear here");
+        callbackTxt.format.setTo("Fira Sans Semi-Bold 13", 13);
         callbackTxt.format.horizontalAlign = Align.LEFT;
         callbackTxt.format.verticalAlign = Align.TOP;
         callbackTxt.format.color = 0x666666;
@@ -82,14 +87,15 @@ public class StarlingRoot_OSX extends Sprite {
         addChild(callbackTxt);
 
     }
+
     private function onExiting(event:Event):void {
         trace("exiting app");
         dtANE.dispose();
     }
 
     private function createLbl(txt:String, x:int, y:int):TextField {
-        var lbl:TextField = new TextField(360,200,txt);
-        lbl.format.setTo("Fira Sans Semi-Bold 13",13);
+        var lbl:TextField = new TextField(360, 200, txt);
+        lbl.format.setTo("Fira Sans Semi-Bold 13", 13);
         lbl.format.horizontalAlign = Align.LEFT;
         lbl.format.verticalAlign = Align.TOP;
         lbl.format.color = 0x666666;
@@ -140,20 +146,27 @@ public class StarlingRoot_OSX extends Sprite {
     private function onToastClicked(event:ToastEvent):void {
         trace(event);
 
+        var window:NativeWindow = stage.starling.nativeStage.nativeWindow;
+        if (window.displayState == NativeWindowDisplayState.MINIMIZED) {
+            window.restore();
+        }
+
+        window.visible = true;
+
         NativeApplication.nativeApplication.activate();
 
         callbackTxt.text = "Toast Clicked - arguments: " + event.params.arguments;
-        if(event.params.data){
-            for each(var kvp:Object in event.params.data){
-                callbackTxt.text += "\nkey: "+kvp.key;
-                callbackTxt.text += "\nvalue: "+kvp.value;
+        if (event.params.data) {
+            for each(var kvp:Object in event.params.data) {
+                callbackTxt.text += "\nkey: " + kvp.key;
+                callbackTxt.text += "\nvalue: " + kvp.value;
             }
         }
 
         //handle protocol
-        if(event.params.arguments){
+        if (event.params.arguments) {
             var argsStr:String = event.params.arguments as String;
-            if(argsStr.indexOf("protocol") == 0)
+            if (argsStr.indexOf("protocol") == 0)
                 navigateToURL(new URLRequest(argsStr.split("|")[1]));
         }
 
