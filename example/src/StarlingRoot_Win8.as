@@ -49,7 +49,7 @@ import views.ScrollableContent;
 
 //https://gist.github.com/CalvinLinTrend/8701312744f94bcd8701 -
 public class StarlingRoot_Win8 extends Sprite {
-    private var dtANE:DesktopToastANE = new DesktopToastANE();
+    private var dtANE:DesktopToastANE;
     private var image1:Image = new Image(Assets.getAtlas().getTexture("air_rocks"));
     private var image7:Image = new Image(Assets.getAtlas().getTexture("reminder1"));
     private var list:ScrollableContent;
@@ -63,8 +63,8 @@ public class StarlingRoot_Win8 extends Sprite {
         TextField.registerCompositor(Fonts.getFont("fira-sans-semi-bold-13"), "Fira Sans Semi-Bold 13");
     }
 
-    public function start():void {
-
+    public function start(dtANE:DesktopToastANE):void {
+		this.dtANE = dtANE;
         NativeApplication.nativeApplication.addEventListener(flash.events.Event.EXITING, onExiting);
 
         dtANE.init(NativeApplication.nativeApplication.applicationID, "Toast ANE Sample");

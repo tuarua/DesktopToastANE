@@ -1,12 +1,11 @@
 package com.tuarua {
 import com.tuarua.toast.ToastEvent;
-import com.tuarua.toast.osx.ToastOSX;
-
 import com.tuarua.toast.constants.ToastInputSelection;
-import com.tuarua.toast.windows10.Toast10;
-import com.tuarua.toast.windows10.ToastAction;
+import com.tuarua.toast.osx.ToastOSX;
 import com.tuarua.toast.windows.ToastImage;
 import com.tuarua.toast.windows.ToastText;
+import com.tuarua.toast.windows10.Toast10;
+import com.tuarua.toast.windows10.ToastAction;
 import com.tuarua.toast.windows8.Toast8;
 import com.tuarua.toast.windows8.ToastCommand;
 
@@ -23,6 +22,7 @@ public class DesktopToastANE extends EventDispatcher {
     private var _xmlAsString:String;
     private var isInited:Boolean = false;
     private var _isSupported:Boolean = false;
+	private var _namespace:String;
     osx var _toast:ToastOSX;
 
     public function DesktopToastANE() {
@@ -59,10 +59,12 @@ public class DesktopToastANE extends EventDispatcher {
             extensionContext.call("init", appId, appName);
     }
 
+	
 
     protected function initiate():void {
         isInited = true;
 
+		
         if(Capabilities.os.toLowerCase() == "windows 10"){
             _isSupported = true;
         }else if(Capabilities.os.toLowerCase().indexOf("mac os") > -1){
@@ -70,13 +72,15 @@ public class DesktopToastANE extends EventDispatcher {
         }else if(Capabilities.os.toLowerCase() == "windows 8"){
             _isSupported = true;
         }
-
+		
         if(_isSupported){
             trace("["+name+"] Initalizing ANE...");
             try {
                 extensionContext = ExtensionContext.createExtensionContext("com.tuarua.DesktopToastANE", null);
                 extensionContext.addEventListener(StatusEvent.STATUS, gotEvent);
+				_namespace = extensionContext.call("getNamespace") as String;
             } catch (e:Error) {
+				_isSupported = false;
                 trace("["+name+"] ANE Not loaded properly.  Future calls will fail.");
             }
         }else{
@@ -369,8 +373,8 @@ public class DesktopToastANE extends EventDispatcher {
 	 * @return 
 	 * 
 	 */
-    public function get isSupported():Boolean {
-        return _isSupported;
+    public function get supportedNamespace():String {
+        return _namespace;
     }
 }
 }

@@ -24,6 +24,7 @@ SOFTWARE.*/
 #include <sstream>
 #include <windows.h>
 #include <conio.h>
+#include <VersionHelpers.h>
 
 #include "../include/ANEhelper.h"
 ANEHelper aneHelper = ANEHelper();
@@ -40,9 +41,8 @@ FREContext dllContext;
 
 std::wstring s2ws(const std::string& s) {
 	using namespace std;
-	int len;
 	auto slength = int(s.length()) + 1;
-	len = MultiByteToWideChar(CP_UTF8, 0, s.c_str(), slength, 0, 0);
+	auto len = MultiByteToWideChar(CP_UTF8, 0, s.c_str(), slength, 0, 0);
 	auto buf = new wchar_t[len];
 	MultiByteToWideChar(CP_UTF8, 0, s.c_str(), slength, buf, len);
 	wstring r(buf);
@@ -113,36 +113,37 @@ public:
 		_In_ LPCWSTR appUserModelI,
 		_In_ LPCWSTR invokedArgs,
 		_In_reads_(dataCount) const NOTIFICATION_USER_INPUT_DATA* data,
-		ULONG dataCount) 
+		ULONG dataCount)
 	{
 
 		if (invokedArgs == nullptr) {
 			// Start my app or just do nothing because COM started the app already.
-		} else {
-			using json = nlohmann::json;
-			json j;
-			json j2;
-			j["arguments"] = wcharToString(invokedArgs);
-			if (dataCount > 0) {
-				for (size_t i = 0; i < dataCount; i++) {
-					json j3;
-					j3["key"] = wcharToString(data[i].Key);
-					j3["value"] = wcharToString(data[i].Value);
-					j2.push_back(j3);
-				}
-			}
-			j["data"] = j2;
-
-			std::string evnt = "Toast.Clicked";
-			aneHelper.dispatchEvent(dllContext, j.dump(), evnt);
 		}
+ else {
+  using json = nlohmann::json;
+  json j;
+  json j2;
+  j["arguments"] = wcharToString(invokedArgs);
+  if (dataCount > 0) {
+	  for (size_t i = 0; i < dataCount; i++) {
+		  json j3;
+		  j3["key"] = wcharToString(data[i].Key);
+		  j3["value"] = wcharToString(data[i].Value);
+		  j2.push_back(j3);
+	  }
+  }
+  j["data"] = j2;
 
-		::SendMessage(_hEdit, WM_SETTEXT, reinterpret_cast<WPARAM>(nullptr), reinterpret_cast<LPARAM>(L"The user clicked on the toast."));
+  std::string evnt = "Toast.Clicked";
+  aneHelper.dispatchEvent(dllContext, j.dump(), evnt);
+}
 
-		return S_OK;
-	}
+::SendMessage(_hEdit, WM_SETTEXT, reinterpret_cast<WPARAM>(nullptr), reinterpret_cast<LPARAM>(L"The user clicked on the toast."));
 
-	
+return S_OK;
+}
+
+
 
 };
 CoCreatableClass(NotificationActivator);
@@ -225,11 +226,11 @@ HRESULT RegisterAppForNotificationSupport() {
 		auto concatError = wcscat_s(shortcutPath, ARRAYSIZE(shortcutPath), appShortcut);
 		hr = concatError == 0 ? S_OK : E_INVALIDARG;
 		if (SUCCEEDED(hr)) {
-			DWORD attributes = ::GetFileAttributes(shortcutPath);
-			bool fileExists = attributes < 0xFFFFFFF;
+			auto attributes = ::GetFileAttributes(shortcutPath);
+			auto fileExists = attributes < 0xFFFFFFF;
 			if (!fileExists) {
 				wchar_t exePath[MAX_PATH];
-				DWORD charWritten = ::GetModuleFileName(nullptr, exePath, ARRAYSIZE(exePath));
+				charWritten = ::GetModuleFileName(nullptr, exePath, ARRAYSIZE(exePath));
 				hr = charWritten > 0 ? S_OK : HRESULT_FROM_WIN32(::GetLastError());
 				if (SUCCEEDED(hr)) {
 					hr = InstallShortcut(shortcutPath, exePath);
@@ -321,7 +322,7 @@ HRESULT CreateToast(IToastNotificationManagerStatics* toastManager, IXmlDocument
 					//std::string msg = "";
 					//std::string evnt = "Toast.Clicked";
 					//FREDispatchStatusEventAsync(dllContext, (uint8_t*)msg.c_str(), (const uint8_t*)evnt.c_str());
-					
+
 					return S_OK;
 				}).Get(),
 					&activatedToken);
@@ -385,7 +386,7 @@ HRESULT CreateToast(IToastNotificationManagerStatics* toastManager, IXmlDocument
 // display the toast using the new C++ /ZW options (using handles, COM wrappers, etc.)
 HRESULT DisplayToast(const wchar_t *xmlString) {
 	ComPtr<IToastNotificationManagerStatics> toastStatics;
-	auto hr = Windows::Foundation::GetActivationFactory(HStringReference(RuntimeClass_Windows_UI_Notifications_ToastNotificationManager).Get(),&toastStatics);
+	auto hr = Windows::Foundation::GetActivationFactory(HStringReference(RuntimeClass_Windows_UI_Notifications_ToastNotificationManager).Get(), &toastStatics);
 
 	if (SUCCEEDED(hr)) {
 		ComPtr<IXmlDocument> toastXml;
@@ -407,7 +408,7 @@ extern "C" {
 	int logLevel = 1;
 	extern void trace(std::string msg) {
 		//if (logLevel > 0)
-			aneHelper.dispatchEvent(dllContext, msg, "TRACE");
+		aneHelper.dispatchEvent(dllContext, msg, "TRACE");
 	}
 
 	FREObject show(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[]) {
@@ -436,7 +437,19 @@ extern "C" {
 
 		return nullptr;
 	}
-	
+
+	FREObject getNamespace(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[]) {
+		//WIN10
+		if (IsWindowsVersionOrGreater(HIBYTE(0x0A00), LOBYTE(0x0A00), 0)) {
+			return aneHelper.getFREObject("win10");
+		}
+		//WIN8.1
+		if (IsWindowsVersionOrGreater(HIBYTE(_WIN32_WINNT_WINBLUE), LOBYTE(_WIN32_WINNT_WINBLUE), 0)) {
+			return aneHelper.getFREObject("win8");
+		}
+		return nullptr;
+	}
+
 	BOOL CALLBACK EnumProc(HWND hwnd, LPARAM lParam) {
 		GetWindowThreadProcessId(hwnd, &windowID);
 		if (windowID == lParam) {
@@ -447,14 +460,12 @@ extern "C" {
 	}
 
 	void contextInitializer(void* extData, const uint8_t* ctxType, FREContext ctx, uint32_t* numFunctionsToSet, const FRENamedFunction** functionsToSet) {
-		
-		DWORD processID = GetCurrentProcessId();
+		auto processID = GetCurrentProcessId();
 		EnumWindows(EnumProc, processID);
-
 		static FRENamedFunction extensionFunctions[] = {
 			{ reinterpret_cast<const uint8_t*>("init"),nullptr, &init }
 			,{ reinterpret_cast<const uint8_t*>("show"),nullptr, &show }
-
+			,{ reinterpret_cast<const uint8_t*>("getNamespace"),nullptr, &getNamespace }
 		};
 
 		*numFunctionsToSet = sizeof(extensionFunctions) / sizeof(FRENamedFunction);
@@ -472,9 +483,7 @@ extern "C" {
 	}
 
 	void TRDTTExtFinizer(void* extData) {
-		FREContext nullCTX;
-		nullCTX = 0;
 		UnregisterActivator();
-		contextFinalizer(nullCTX);
+		contextFinalizer(nullptr);
 	}
 }
