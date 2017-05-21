@@ -1,3 +1,6 @@
+### 0.0.4
+- WIN/OSX Issue #10 added getter supportedNamespace. This returns the namespace to use or null if OS is not supported. Removed isSupported getter.
+
 ### 0.0.3
 - WIN/OSX Issue#3 bring window to focus in example
 

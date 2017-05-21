@@ -35,10 +35,15 @@ FRE_FUNCTION (show) {
     return NULL;
 }
 
+FRE_FUNCTION (getNamespace) {
+    return [swft getNamespaceWithArgv:getFREargs(argc, argv)];
+}
+
 void contextInitializer(void *extData, const uint8_t *ctxType, FREContext ctx, uint32_t *numFunctionsToSet, const FRENamedFunction **functionsToSet) {
     static FRENamedFunction extensionFunctions[] = {
         {(const uint8_t *) "init", NULL, &init},
-        {(const uint8_t *) "show", NULL, &show}
+        {(const uint8_t *) "show", NULL, &show},
+        {(const uint8_t *) "getNamespace", NULL, &getNamespace}
     };
 
     *numFunctionsToSet = sizeof(extensionFunctions) / sizeof(FRENamedFunction);

@@ -70,7 +70,13 @@ import Foundation
         return true
     }
 
-    
+    func getNamespace(argv:NSPointerArray) -> FREObject? {
+        if #available(OSX 10.12.1, *) {
+            return aneHelper.getFreObject(string: "osx")
+        } else {
+            return nil
+        }
+    }
     
     func show(argv:NSPointerArray) {
         let inFRE:FREObject! = argv.pointer(at: 0)
@@ -137,9 +143,7 @@ import Foundation
     }
     
     func initNotification(argv:NSPointerArray) {
-        trace(value: "init called")
         NSUserNotificationCenter.default.delegate = self
-        trace(value: "delegate set")
     }
     
 

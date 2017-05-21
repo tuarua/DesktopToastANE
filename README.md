@@ -2,7 +2,7 @@
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6WW2HJLAQUBXU)
 
-Adobe Air Native Extension written in ActionScript 3 and C++ for displaying adaptive and interactive toast notifications in Windows 8, Windows 10 and UserNotificiations on OSX 10.12.1.
+Adobe Air Native Extension written in ActionScript 3 and C++ for displaying adaptive and interactive toast notifications in Windows 8.1, Windows 10 and UserNotificiations on OSX 10.12.1.
 Sample client included
 
 ![alt tag](https://raw.githubusercontent.com/tuarua/DesktopToastANE/master/screenshots/screenshot1.png)
@@ -26,7 +26,7 @@ C++
 You will need
  
  - Flash Builder 4.7 or IntelliJ IDEA
- - AIR 23 SDK
+ - AIR 25 SDK
  - MS Visual Studio 2015 if you wish to modify the ANE code on Windows
  - Xcode or AppCode if you wish to modify the ANE code on OSX
 

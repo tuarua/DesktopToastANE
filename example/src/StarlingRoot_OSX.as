@@ -30,7 +30,7 @@ import utils.GUID;
 import views.ScrollableContent;
 
 public class StarlingRoot_OSX extends Sprite {
-    private var dtANE:DesktopToastANE = new DesktopToastANE();
+    private var dtANE:DesktopToastANE;
     private var image1:Image = new Image(Assets.getAtlas().getTexture("osx_reply"));
     private var image2:Image = new Image(Assets.getAtlas().getTexture("osx_hello"));
     private var list:ScrollableContent;
@@ -43,7 +43,8 @@ public class StarlingRoot_OSX extends Sprite {
         TextField.registerCompositor(Fonts.getFont("fira-sans-semi-bold-13"), "Fira Sans Semi-Bold 13");
     }
 
-    public function start():void {
+    public function start(dtANE:DesktopToastANE):void {
+        this.dtANE = dtANE;
         NativeApplication.nativeApplication.addEventListener(flash.events.Event.EXITING, onExiting);
 
 
