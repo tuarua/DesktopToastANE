@@ -16,7 +16,8 @@ import starling.events.Event;
 [SWF(width="1024", height="720", frameRate="60", backgroundColor="#F1F1F1")]
 public class DesktopToastANESample extends Sprite {
     public var mStarling:Starling;
-	private var dtANE:DesktopToastANE = new DesktopToastANE()
+    private var dtANE:DesktopToastANE = new DesktopToastANE()
+
     public function DesktopToastANESample() {
 
         super();
@@ -28,11 +29,13 @@ public class DesktopToastANESample extends Sprite {
 
 
         var isSupported:Boolean = false;
-		try{
-			isSupported = (dtANE.supportedNamespace != null);
-		}catch(e:Error){
-			return;
-		}
+        try {
+            isSupported = (dtANE.supportedNamespace != null);
+        } catch (e:Error) {
+            return;
+        }
+
+        trace("dtANE.supportedNamespace", dtANE.supportedNamespace);
 
         if (dtANE.supportedNamespace == "win10") {
             mStarling = new Starling(StarlingRoot_Win10, stage, viewPort, null, "auto", "auto");

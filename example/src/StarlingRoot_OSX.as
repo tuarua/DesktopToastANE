@@ -45,7 +45,7 @@ public class StarlingRoot_OSX extends Sprite {
 
     public function start(dtANE:DesktopToastANE):void {
         this.dtANE = dtANE;
-		NativeApplication.nativeApplication.addEventListener(flash.events.Event.EXITING, onExiting);
+        NativeApplication.nativeApplication.addEventListener(flash.events.Event.EXITING, onExiting);
 
 
         dtANE.init();

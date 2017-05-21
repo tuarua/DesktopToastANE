@@ -82,9 +82,11 @@ public class DesktopToastANE extends EventDispatcher {
             } catch (e:Error) {
 				_isSupported = false;
                 trace("["+name+"] ANE Not loaded properly.  Future calls will fail.");
+                trace(e.getStackTrace());
+                trace(e.message);
             }
         }else{
-            trace("["+name+"] Can't initialize. Windows 8, 10 and OSX are supported");
+            trace("["+name+"] Can't initialize. Windows 8.1, 10 and OSX are supported");
         }
 
     }

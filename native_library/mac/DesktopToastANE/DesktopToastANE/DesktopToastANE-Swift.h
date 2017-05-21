@@ -128,6 +128,7 @@ SWIFT_CLASS("_TtC15DesktopToastANE15DesktopToastANE")
 @interface DesktopToastANE : NSObject
 - (void)showWithArgv:(NSPointerArray * _Nonnull)argv;
 - (void)initNotificationWithArgv:(NSPointerArray * _Nonnull)argv;
+- (FREObject _Nullable)getNamespaceWithArgv:(NSPointerArray * _Nullable)argv;
 - (void)setFREContextWithCtx:(FREContext _Nonnull)ctx;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
