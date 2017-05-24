@@ -135,7 +135,7 @@ public:
   j["data"] = j2;
 
   std::string evnt = "Toast.Clicked";
-  aneHelper.dispatchEvent(dllContext, j.dump(), evnt);
+  aneHelper.dispatchEvent(dllContext, evnt, j.dump());
 }
 
 ::SendMessage(_hEdit, WM_SETTEXT, reinterpret_cast<WPARAM>(nullptr), reinterpret_cast<LPARAM>(L"The user clicked on the toast."));
@@ -352,7 +352,7 @@ HRESULT CreateToast(IToastNotificationManagerStatics* toastManager, IXmlDocument
 								evnt = "Toast.NotActivated";
 								break;
 							}
-							aneHelper.dispatchEvent(dllContext, msg, evnt);
+							aneHelper.dispatchEvent(dllContext, evnt, msg);
 						}
 						return S_OK;
 					}).Get(),
@@ -365,7 +365,7 @@ HRESULT CreateToast(IToastNotificationManagerStatics* toastManager, IXmlDocument
 
 							std::string evnt = "Toast.Error";
 							std::string msg = "";
-							aneHelper.dispatchEvent(dllContext, msg, evnt);
+							aneHelper.dispatchEvent(dllContext, evnt, msg);
 							return S_OK;
 						}).Get(),
 							&failedToken);
@@ -408,7 +408,7 @@ extern "C" {
 	int logLevel = 1;
 	extern void trace(std::string msg) {
 		//if (logLevel > 0)
-		aneHelper.dispatchEvent(dllContext, msg, "TRACE");
+		aneHelper.dispatchEvent(dllContext, "TRACE", msg);
 	}
 
 	FREObject show(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[]) {
