@@ -1,4 +1,5 @@
-### 0.0.5 Issue #12 Events not propogated from ANE
+### 0.0.5
+- WIN Issue #12 Events not propogated from ANE
 
 ### 0.0.4
 - WIN/OSX Issue #10 added getter supportedNamespace. This returns the namespace to use or null if OS is not supported. Removed isSupported getter.
