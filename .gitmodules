@@ -1,0 +1,4 @@
+[submodule "native_library/mac/DesktopToastANE/FreSwift"]
+	path = native_library/mac/DesktopToastANE/FreSwift
+	url = https://github.com/tuarua/FreSwift
+	branch = 0.0.8
