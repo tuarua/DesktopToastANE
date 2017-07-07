@@ -1,5 +1,6 @@
 package {
 
+
 import com.tuarua.DesktopToastANE;
 import com.tuarua.toast.ToastEvent;
 import com.tuarua.toast.constants.ToastActivationType;
@@ -47,6 +48,7 @@ import views.ScrollableContent;
 
 //https://gist.github.com/CalvinLinTrend/8701312744f94bcd8701 -
 public class StarlingRoot_Win10 extends Sprite {
+
     private var dtANE:DesktopToastANE;
     private var image1:Image = new Image(Assets.getAtlas().getTexture("air_rocks"));
     private var image2:Image = new Image(Assets.getAtlas().getTexture("actions1"));

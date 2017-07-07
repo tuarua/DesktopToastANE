@@ -22,12 +22,13 @@ public class DesktopToastANE extends EventDispatcher {
     private var _xmlAsString:String;
     private var isInited:Boolean = false;
     private var _isSupported:Boolean = false;
-	private var _namespace:String;
+    private var _namespace:String;
     osx var _toast:ToastOSX;
 
     public function DesktopToastANE() {
         initiate();
     }
+
     /**
      *
      *
@@ -35,9 +36,10 @@ public class DesktopToastANE extends EventDispatcher {
      */
     osx function init():void {
         trace("OSX namespace");
-        if(_isSupported)
+        if (_isSupported)
             extensionContext.call("init");
     }
+
     /**
      *
      *
@@ -45,9 +47,10 @@ public class DesktopToastANE extends EventDispatcher {
      */
     windows10 function init(appId:String, appName:String):void {
         trace("Windows 10 namespace");
-        if(_isSupported)
+        if (_isSupported)
             extensionContext.call("init", appId, appName);
     }
+
     /**
      *
      *
@@ -55,38 +58,37 @@ public class DesktopToastANE extends EventDispatcher {
      */
     windows8 function init(appId:String, appName:String):void {
         trace("Windows 8 namespace");
-        if(_isSupported)
+        if (_isSupported)
             extensionContext.call("init", appId, appName);
     }
 
-	
 
     protected function initiate():void {
         isInited = true;
 
-		
-        if(Capabilities.os.toLowerCase() == "windows 10"){
+
+        if (Capabilities.os.toLowerCase() == "windows 10") {
             _isSupported = true;
-        }else if(Capabilities.os.toLowerCase().indexOf("mac os") > -1){
+        } else if (Capabilities.os.toLowerCase().indexOf("mac os") > -1) {
             _isSupported = true;
-        }else if(Capabilities.os.toLowerCase() == "windows 8"){
+        } else if (Capabilities.os.toLowerCase() == "windows 8") {
             _isSupported = true;
         }
-		
-        if(_isSupported){
-            trace("["+name+"] Initalizing ANE...");
+
+        if (_isSupported) {
+            trace("[" + name + "] Initalizing ANE...");
             try {
                 extensionContext = ExtensionContext.createExtensionContext("com.tuarua.DesktopToastANE", null);
                 extensionContext.addEventListener(StatusEvent.STATUS, gotEvent);
-				_namespace = extensionContext.call("getNamespace") as String;
+                _namespace = extensionContext.call("getNamespace") as String;
             } catch (e:Error) {
-				_isSupported = false;
-                trace("["+name+"] ANE Not loaded properly.  Future calls will fail.");
+                _isSupported = false;
+                trace("[" + name + "] ANE Not loaded properly.  Future calls will fail.");
                 trace(e.getStackTrace());
                 trace(e.message);
             }
-        }else{
-            trace("["+name+"] Can't initialize. Windows 8.1, 10 and OSX are supported");
+        } else {
+            trace("[" + name + "] Can't initialize. Windows 8.1, 10 and OSX are supported");
         }
 
     }
@@ -101,32 +103,38 @@ public class DesktopToastANE extends EventDispatcher {
                 trace("INFO:", event.code);
                 break;
             case ToastEvent.TOAST_CLICKED:
-                pObj = JSON.parse(event.code);
-                dispatchEvent(new ToastEvent(ToastEvent.TOAST_CLICKED,pObj));
+                try {
+                    pObj = JSON.parse(event.code);
+                } catch (e:Error) {
+                    trace(e.message);
+                }
+                dispatchEvent(new ToastEvent(ToastEvent.TOAST_CLICKED, pObj));
                 break;
             case ToastEvent.TOAST_DISMISSED:
-                dispatchEvent(new ToastEvent(ToastEvent.TOAST_DISMISSED,pObj));
+                dispatchEvent(new ToastEvent(ToastEvent.TOAST_DISMISSED, pObj));
                 break;
             case ToastEvent.TOAST_HIDDEN:
-                dispatchEvent(new ToastEvent(ToastEvent.TOAST_HIDDEN,pObj));
+                dispatchEvent(new ToastEvent(ToastEvent.TOAST_HIDDEN, pObj));
             case ToastEvent.TOAST_TIMED_OUT:
-                dispatchEvent(new ToastEvent(ToastEvent.TOAST_TIMED_OUT,pObj));
+                dispatchEvent(new ToastEvent(ToastEvent.TOAST_TIMED_OUT, pObj));
                 break;
             case ToastEvent.TOAST_NOT_ACTIVATED:
-                dispatchEvent(new ToastEvent(ToastEvent.TOAST_NOT_ACTIVATED,pObj));
+                dispatchEvent(new ToastEvent(ToastEvent.TOAST_NOT_ACTIVATED, pObj));
                 break;
             case ToastEvent.TOAST_ERROR:
-                dispatchEvent(new ToastEvent(ToastEvent.TOAST_ERROR,pObj));
+                dispatchEvent(new ToastEvent(ToastEvent.TOAST_ERROR, pObj));
         }
     }
-	/**
-	 * 
-	 * @param xml
-	 * 
-	 */
+
+    /**
+     *
+     * @param xml
+     *
+     */
 
     osx function createFromToast(toast:ToastOSX):void {
         use namespace osx;
+
         _toast = toast;
     }
 
@@ -140,6 +148,7 @@ public class DesktopToastANE extends EventDispatcher {
 
     windows8 function createFromToast(toast:Toast8):void {
         use namespace windows8;
+
         var toastNode:XML = <toast/>;
         var visualNode:XML = <visual/>;
         var bindingNode:XML = <binding/>;
@@ -176,7 +185,7 @@ public class DesktopToastANE extends EventDispatcher {
                 textNode.@id = t.id;
             bindingNode = bindingNode.appendChild(textNode);
             numLines++;
-            if(numLines > 4) break;
+            if (numLines > 4) break;
         }
 
         var hasImage:Boolean = false;
@@ -191,15 +200,15 @@ public class DesktopToastANE extends EventDispatcher {
             hasImage = true;
         }
 
-        if(hasImage)
-            bindingNode.@template = "ToastImageAndText0"+numLines.toString();
+        if (hasImage)
+            bindingNode.@template = "ToastImageAndText0" + numLines.toString();
         else
-            bindingNode.@template = "ToastText0"+numLines.toString();
+            bindingNode.@template = "ToastText0" + numLines.toString();
 
         visualNode = visualNode.appendChild(bindingNode);
         toastNode = toastNode.appendChild(visualNode);
 
-        if(toast.commands && toast.commands.scenario){
+        if (toast.commands && toast.commands.scenario) {
             commandsNode.@scenario = toast.commands.scenario;
             for each (var c:ToastCommand in toast.commands.commands) {
                 var commandNode:XML = <command />;
@@ -216,11 +225,11 @@ public class DesktopToastANE extends EventDispatcher {
         _xmlAsString = toastNode.toString();
 
 
-
     }
 
     windows10 function createFromToast(toast:Toast10):void {
         use namespace windows10
+
         var toastNode:XML = <toast/>;
         var visualNode:XML = <visual/>;
         var bindingNode:XML = <binding/>;
@@ -334,14 +343,16 @@ public class DesktopToastANE extends EventDispatcher {
          */
 
     }
-	/**
-	 * 
-	 * 
-	 */
+
+    /**
+     *
+     *
+     */
     osx function show():void {
         use namespace osx;
+
         if (isInited)
-            extensionContext.call("show",_toast);
+            extensionContext.call("show", _toast);
         else
             trace("You forgot to call .init() first");
     }
@@ -362,19 +373,20 @@ public class DesktopToastANE extends EventDispatcher {
 
     public function dispose():void {
         if (!extensionContext) {
-            trace("["+name+"] Error. ANE Already in a disposed or failed state...");
+            trace("[" + name + "] Error. ANE Already in a disposed or failed state...");
             return;
         }
-        trace("["+name+"] Unloading ANE...");
+        trace("[" + name + "] Unloading ANE...");
         extensionContext.removeEventListener(StatusEvent.STATUS, gotEvent);
         extensionContext.dispose();
         extensionContext = null;
     }
-	/**
-	 * 
-	 * @return 
-	 * 
-	 */
+
+    /**
+     *
+     * @return
+     *
+     */
     public function get supportedNamespace():String {
         return _namespace;
     }

@@ -2,11 +2,11 @@
  * Created by User on 11/12/2016.
  */
 package {
-import com.tuarua.ANEObject;
 import com.tuarua.DesktopToastANE;
 import com.tuarua.osx;
 import com.tuarua.toast.ToastEvent;
 import com.tuarua.toast.osx.ToastOSX;
+import com.tuarua.toast.osx.UserInfo;
 
 import flash.desktop.NativeApplication;
 import flash.display.NativeWindow;
@@ -115,7 +115,7 @@ public class StarlingRoot_OSX extends Sprite {
             toast.responsePlaceholder = "Please say yes";
             toast.hasReplyButton = true;
             toast.identifier = GUID.create();
-            var userInfo:ANEObject = new ANEObject();
+            var userInfo:UserInfo = new UserInfo();
             userInfo.arguments = "reply";
             toast.userInfo = userInfo;
 
@@ -135,7 +135,7 @@ public class StarlingRoot_OSX extends Sprite {
             toast.informativeText = "Check me out";
             toast.contentImage = File.applicationDirectory.resolvePath("imgs/air-icon.png").nativePath;
             toast.identifier = GUID.create();
-            var userInfo:ANEObject = new ANEObject();
+            var userInfo:UserInfo = new UserInfo();
             userInfo.arguments = "view";
             toast.userInfo = userInfo;
 
@@ -167,8 +167,10 @@ public class StarlingRoot_OSX extends Sprite {
         //handle protocol
         if (event.params.arguments) {
             var argsStr:String = event.params.arguments as String;
-            if (argsStr.indexOf("protocol") == 0)
+            if (argsStr.indexOf("protocol") == 0) {
                 navigateToURL(new URLRequest(argsStr.split("|")[1]));
+            }
+
         }
 
     }
