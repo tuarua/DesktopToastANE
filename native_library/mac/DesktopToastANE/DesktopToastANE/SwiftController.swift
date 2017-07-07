@@ -1,29 +1,51 @@
-//
-//  SwiftOSXANE.swift
-//  SwiftOSXANE
-//
-//  Created by User on 04/12/2016.
-//  Copyright © 2016 Tua Rua Ltd. All rights reserved.
-//
+/*@copyright The code is licensed under the[MIT
+ License](http://opensource.org/licenses/MIT):
+ 
+ Copyright © 2017 -  Tua Rua Ltd.
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files(the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions :
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.*/
 
-import Cocoa
 import Foundation
+import Cocoa
+import FreSwift
 
-@objc class DesktopToastANE: NSObject, NSUserNotificationCenterDelegate {
-
-    private var dllContext: FREContext!
-    private let aneHelper = ANEHelper()
-
-    private func trace(value:String) {
-        FREDispatchStatusEventAsync(self.dllContext, value, "TRACE")
+@objc class SwiftController: FreSwiftController , NSUserNotificationCenterDelegate {
+    
+    // Must have this function. It exposes the methods to our entry ObjC.
+    func getFunctions() -> Array<String> {
+        functionsToSet["init"] = initController
+        functionsToSet["show"] = show
+        functionsToSet["getNamespace"] = getNamespace
+        
+        var arr: Array<String> = []
+        for key in functionsToSet.keys {
+            arr.append(key)
+        }
+        return arr
     }
     
     func userNotificationCenter(_ center: NSUserNotificationCenter, didActivate notification: NSUserNotification) {
-        var jsonString = ""
+        var jsonString = "{\"arguments\" :\"\"}"
         if let userInfo = notification.userInfo {
             var dict:Dictionary = Dictionary<String, AnyObject>()
             if let arguments = userInfo["arguments"] {
-                
+                trace("let arguments")
                 dict.updateValue(arguments as AnyObject, forKey: "arguments")
                 
                 var array:Array<Dictionary<String,AnyObject>> = Array()
@@ -41,27 +63,22 @@ import Foundation
                     array.append(dataDict)
                 }
 
-                /*
-                for i in 0..<2 {
-                    var dataDict:Dictionary<String,AnyObject> = Dictionary()
-                    dataDict.updateValue(i as AnyObject , forKey: "key")
-                    dataDict.updateValue(i as AnyObject , forKey: "value")
-                    array.append(dataDict)
-                }
-                */
                 dict.updateValue(array as AnyObject, forKey: "data")
             }
-            
+
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted)
                 jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)! as String
                 
              } catch {
-                print(error.localizedDescription)
+                trace("Error reading reponse",error.localizedDescription)
             }
+  
         }
-        
-        FREDispatchStatusEventAsync(self.dllContext, jsonString, "Toast.Clicked")
+        do {
+            try context.dispatchStatusEventAsync(code: jsonString, level: "Toast.Clicked")
+        } catch {
+        }
         
     }
     
@@ -70,18 +87,31 @@ import Foundation
         return true
     }
 
-    func getNamespace(argv:NSPointerArray) -> FREObject? {
+    func getNamespace(ctx: FREContext, argc: FREArgc, argv: FREArgv) -> FREObject? {
+        var ret:FREObject? = nil
         if #available(OSX 10.12.1, *) {
-            return aneHelper.getFreObject(string: "osx")
-        } else {
-            return nil
+            do {
+                ret = try FreObjectSwift(string: "osx").rawValue
+            } catch {
+            }
         }
+        return ret
     }
     
-    func show(argv:NSPointerArray) {
-        let inFRE:FREObject! = argv.pointer(at: 0)
-        let toast:Dictionary<String, AnyObject> = aneHelper.getIdObjectFromFREObject(freObject: inFRE)
-            as! Dictionary<String, AnyObject>
+    func show(ctx: FREContext, argc: FREArgc, argv: FREArgv) -> FREObject? {
+        guard argc > 0,
+            let inFRE0 = argv[0],
+            let toast = FreObjectSwift.init(freObject: inFRE0).value as? Dictionary<String, AnyObject>
+            else {
+                traceError(message: "show - incorrect arguments", line: #line, column: #column, file: #file, freError: nil)
+                return nil
+        }
+        
+        let toast22 = FreObjectSwift.init(freObject: inFRE0)
+        
+        trace("toast.debugDescription",toast.debugDescription)
+        
+        trace("toast.debugDescription2",toast22.value)
         
         let notification = NSUserNotification.init()
         
@@ -133,23 +163,28 @@ import Foundation
         }
         
         if let userInfo = toast["userInfo"] {
-            notification.userInfo = userInfo as? [String : Any]
+            
+            notification.userInfo = userInfo as? [String : Any] //
         }
        
+        //trace(toast.debugDescription)
+        //trace("notification.userInfo:",notification.userInfo)
+        //trace("_____________");
         
         // Deliver the notification through the User Notification Center
         NSUserNotificationCenter.default.deliver(notification)
-        
+        return nil
     }
     
-    func initNotification(argv:NSPointerArray) {
+    func initController(ctx: FREContext, argc: FREArgc, argv: FREArgv) -> FREObject? {
         NSUserNotificationCenter.default.delegate = self
+        return nil
     }
+    
     
 
     func setFREContext(ctx: FREContext) {
-        dllContext = ctx
-        aneHelper.setFREContext(ctx:ctx)
+        context = FreContextSwift.init(freContext: ctx)
     }
 
 

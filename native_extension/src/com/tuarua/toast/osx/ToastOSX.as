@@ -2,9 +2,8 @@
  * Created by User on 11/12/2016.
  */
 package com.tuarua.toast.osx {
-import com.tuarua.ANEObject;
 
-public class ToastOSX extends ANEObject{
+public class ToastOSX {
     /**
      *
      * Specifies the title of the notification.
@@ -78,27 +77,12 @@ public class ToastOSX extends ANEObject{
      * Application-specific user info that can be attached to the notification.
      *
      */
-    public var userInfo:ANEObject;
+    public var userInfo:UserInfo;
 
     public function ToastOSX() {
         super();
-        super.addPropName("title");
-        super.addPropName("subtitle");
-        super.addPropName("informativeText");
-        super.addPropName("contentImage");
-        super.addPropName("identifier");
-        super.addPropName("responsePlaceholder");
-        super.addPropName("hasActionButton");
-        super.addPropName("hasReplyButton");
-        super.addPropName("actionButtonTitle");
-        super.addPropName("otherButtonTitle");
-        super.addPropName("playSound");
-        super.addPropName("userInfo");
     }
 
-    override public function getPropNames():Array {
-        return super._propNames;
-    }
 
 }
 }

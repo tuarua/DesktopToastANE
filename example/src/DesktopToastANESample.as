@@ -8,7 +8,7 @@ import flash.display.StageScaleMode;
 import flash.events.Event;
 import flash.geom.Rectangle;
 import flash.system.Capabilities;
-
+import com.tuarua.CommonDependencies;
 import starling.core.Starling;
 import starling.events.Event;
 
@@ -16,12 +16,13 @@ import starling.events.Event;
 [SWF(width="1024", height="720", frameRate="60", backgroundColor="#F1F1F1")]
 public class DesktopToastANESample extends Sprite {
     public var mStarling:Starling;
+    private var commonDependenciesANE:CommonDependencies = new CommonDependencies();//must create before all others
     private var dtANE:DesktopToastANE = new DesktopToastANE()
 
     public function DesktopToastANESample() {
 
         super();
-
+        NativeApplication.nativeApplication.addEventListener(flash.events.Event.EXITING, onExiting);
         stage.align = StageAlign.TOP_LEFT;
         stage.scaleMode = StageScaleMode.NO_SCALE;
         Starling.multitouchEnabled = false;
@@ -79,6 +80,11 @@ public class DesktopToastANESample extends Sprite {
 
         NativeApplication.nativeApplication.executeInBackground = true;
 
+    }
+
+    private function onExiting(event:flash.events.Event):void {
+        commonDependenciesANE.dispose();
+        dtANE.dispose();
     }
 
 }

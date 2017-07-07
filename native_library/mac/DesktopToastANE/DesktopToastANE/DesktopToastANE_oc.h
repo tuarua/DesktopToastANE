@@ -3,14 +3,12 @@
 // Copyright (c) 2016 Tua Rua Ltd. All rights reserved.
 //
 
-#ifndef SWIFTOSXANE_SWIFTOSXANE_H
-#define SWIFTOSXANE_SWIFTOSXANE_H
+#ifndef DESKTOPTOASTANE_DESKTOPTOASTANE_H
+#define DESKTOPTOASTANE_DESKTOPTOASTANE_H
 
 
 #import <Cocoa/Cocoa.h>
-
 #include <Adobe AIR/Adobe AIR.h>
-
 #define EXPORT __attribute__((visibility("default")))
 EXPORT
 void TRDTTExtInizer(void** extData, FREContextInitializer* ctxInitializer, FREContextFinalizer* ctxFinalizer);
@@ -19,4 +17,4 @@ EXPORT
 void TRDTTExtFinizer(void* extData);
 
 
-#endif //SWIFTOSXANE_SWIFTOSXANE_H
+#endif //DESKTOPTOASTANE_DESKTOPTOASTANE_H
