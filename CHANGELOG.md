@@ -1,3 +1,6 @@
+### 0.0.6
+- Use shared version of FreSwift
+
 ### 0.0.5
 - WIN Issue #12 Events not propogated from ANE
 
