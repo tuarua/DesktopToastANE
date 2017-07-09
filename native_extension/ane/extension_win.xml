@@ -3,8 +3,15 @@
     <id>com.tuarua.DesktopToastANE</id>
     <name>Desktop Toast ANE</name>
     <copyright>This work is licensed under The MIT License (MIT), Copyright 2016 Tua Rua Ltd.</copyright>
-    <versionNumber>0.0.6</versionNumber>
+    <versionNumber>0.0.7</versionNumber>
 	<platforms>
+        <platform name="Windows-x86-64">
+            <applicationDeployment>
+                <nativeLibrary>DesktopToastANE.dll</nativeLibrary>
+                <initializer>TRDTTExtInizer</initializer>
+                <finalizer>TRDTTExtFinizer</finalizer>
+            </applicationDeployment>
+        </platform>
         <platform name="Windows-x86">
             <applicationDeployment>
                 <nativeLibrary>DesktopToastANE.dll</nativeLibrary>

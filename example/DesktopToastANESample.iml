@@ -21,7 +21,7 @@
               <dependency linkage="Merged" />
             </entry>
           </entries>
-          <sdk name="AIRSDK_26" />
+          <sdk name="AIRSDK_26_64" />
         </dependencies>
         <compiler-options>
           <map>
@@ -29,6 +29,13 @@
           </map>
         </compiler-options>
         <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/DesktopToastANESample-app.xml" package-file-name="DesktopToastANESample">
+          <files-to-package>
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/imgs/air-icon.png" path-in-package="/imgs/air-icon.png" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/imgs/air.png" path-in-package="/imgs/air.png" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/imgs/app-icon.jpg" path-in-package="/imgs/app-icon.jpg" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/imgs/inline.jpg" path-in-package="/imgs/inline.jpg" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/imgs/send.png" path-in-package="/imgs/send.png" />
+          </files-to-package>
           <AirSigningOptions keystore-path="$DOCUMENTS$/tuaruaWin.p12" />
         </packaging-air-desktop>
         <packaging-android />
@@ -42,7 +49,7 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="AIRSDK_26" jdkType="Flex SDK Type (new)" />
+    <orderEntry type="jdk" jdkName="AIRSDK_26_64" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library" exported="">
       <library type="flex">

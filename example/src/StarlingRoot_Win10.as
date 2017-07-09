@@ -348,7 +348,7 @@ public class StarlingRoot_Win10 extends Sprite {
 
 
             var toastImage1:ToastImage = new ToastImage();
-            toastImage1.src = File.applicationDirectory.resolvePath("app-icon.jpg").nativePath;
+            toastImage1.src = File.applicationDirectory.resolvePath("imgs/app-icon.jpg").nativePath;
             toastImage1.placement = ToastPlacement.APP_LOGO_OVERRIDE;
             toastImage1.hintCrop = ToastHintCrop.CIRCLE;
 
