@@ -27,10 +27,6 @@ mkdir "$pathtome/platforms/mac"
 mkdir "$pathtome/platforms/mac/release"
 fi
 
-if [ ! -d "$pathtome/platforms/win" ]; then
-mkdir "$pathtome/platforms/win"
-mkdir "$pathtome/platforms/win/release"
-fi
 
 #Copy SWC into place.
 echo "Copying SWC into place."
@@ -61,7 +57,8 @@ echo "Building Release."
 -target ane "$pathtome/$PROJECT_NAME.ane" "$pathtome/extension_multi.xml" \
 -swc "$pathtome/$PROJECT_NAME.swc" \
 -platform MacOS-x86-64 -C "$pathtome/platforms/mac/release" "$PROJECT_NAME.framework" "library.swf" \
--platform Windows-x86 -C "$pathtome/platforms/win/release" "$PROJECT_NAME.dll" "library.swf"
+-platform Windows-x86 -C "$pathtome/platforms/win/x86/release" "$PROJECT_NAME.dll" "library.swf" \
+-platform Windows-x86-64 -C "$pathtome/platforms/win/x64/release" "$PROJECT_NAME.dll" "library.swf"
 
 
 

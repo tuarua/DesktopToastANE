@@ -45,7 +45,9 @@ import FreSwift
         if let userInfo = notification.userInfo {
             var dict:Dictionary = Dictionary<String, AnyObject>()
             if let arguments = userInfo["arguments"] {
-                trace("let arguments")
+                
+                
+                
                 dict.updateValue(arguments as AnyObject, forKey: "arguments")
                 
                 var array:Array<Dictionary<String,AnyObject>> = Array()
@@ -106,13 +108,7 @@ import FreSwift
                 traceError(message: "show - incorrect arguments", line: #line, column: #column, file: #file, freError: nil)
                 return nil
         }
-        
-        let toast22 = FreObjectSwift.init(freObject: inFRE0)
-        
-        trace("toast.debugDescription",toast.debugDescription)
-        
-        trace("toast.debugDescription2",toast22.value)
-        
+
         let notification = NSUserNotification.init()
         
         if let title = toast["title"] {
@@ -163,7 +159,6 @@ import FreSwift
         }
         
         if let userInfo = toast["userInfo"] {
-            
             notification.userInfo = userInfo as? [String : Any] //
         }
        

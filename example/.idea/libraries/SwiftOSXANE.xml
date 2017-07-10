@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="SwiftOSXANE" type="flex">
+    <CLASSES>
+      <root url="jar://$DOCUMENTS$/SwiftOSXANE/native_extension/ane/SwiftOSXANE.ane!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

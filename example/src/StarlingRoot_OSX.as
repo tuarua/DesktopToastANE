@@ -3,6 +3,7 @@
  */
 package {
 import com.tuarua.DesktopToastANE;
+import com.tuarua.SwiftOSXANE;
 import com.tuarua.osx;
 import com.tuarua.toast.ToastEvent;
 import com.tuarua.toast.osx.ToastOSX;
@@ -36,7 +37,7 @@ public class StarlingRoot_OSX extends Sprite {
     private var list:ScrollableContent;
     private var holder:Sprite = new Sprite();
     private var callbackTxt:TextField;
-
+    private var otherANE:SwiftOSXANE;
     use namespace osx;
 
     public function StarlingRoot_OSX() {
@@ -45,8 +46,8 @@ public class StarlingRoot_OSX extends Sprite {
 
     public function start(dtANE:DesktopToastANE):void {
         this.dtANE = dtANE;
-        NativeApplication.nativeApplication.addEventListener(flash.events.Event.EXITING, onExiting);
 
+        otherANE = new SwiftOSXANE();
 
         dtANE.init();
         dtANE.addEventListener(ToastEvent.TOAST_CLICKED, onToastClicked);
@@ -89,10 +90,7 @@ public class StarlingRoot_OSX extends Sprite {
 
     }
 
-    private function onExiting(event:Event):void {
-        trace("exiting app");
-        dtANE.dispose();
-    }
+
 
     private function createLbl(txt:String, x:int, y:int):TextField {
         var lbl:TextField = new TextField(360, 200, txt);
@@ -129,6 +127,7 @@ public class StarlingRoot_OSX extends Sprite {
     private function onImage2Touch(event:TouchEvent):void {
         var touch:Touch = event.getTouch(image2);
         if (touch != null && touch.phase == TouchPhase.ENDED) {
+            otherANE.runStringTests("I am string in TEst");
             var toast:ToastOSX = new ToastOSX();
             toast.title = "Well Hello !";
             toast.subtitle = "This is your ANE speaking";
@@ -151,6 +150,9 @@ public class StarlingRoot_OSX extends Sprite {
         if (window.displayState == NativeWindowDisplayState.MINIMIZED) {
             window.restore();
         }
+
+        otherANE.runStringTests("I am string in TEst 2");
+        otherANE.runNumberTests(1.0);
 
         window.visible = true;
 

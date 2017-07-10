@@ -7,7 +7,6 @@ import flash.display.StageAlign;
 import flash.display.StageScaleMode;
 import flash.events.Event;
 import flash.geom.Rectangle;
-import flash.system.Capabilities;
 import com.tuarua.CommonDependencies;
 import starling.core.Starling;
 import starling.events.Event;
@@ -17,7 +16,8 @@ import starling.events.Event;
 public class DesktopToastANESample extends Sprite {
     public var mStarling:Starling;
     private var commonDependenciesANE:CommonDependencies = new CommonDependencies();//must create before all others
-    private var dtANE:DesktopToastANE = new DesktopToastANE()
+    private var dtANE:DesktopToastANE = new DesktopToastANE();
+
 
     public function DesktopToastANESample() {
 

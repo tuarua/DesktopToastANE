@@ -282,5 +282,6 @@
 <extensions>
         <extensionID>com.tuarua.DesktopToastANE</extensionID>
 	<extensionID>com.tuarua.CommonDependencies</extensionID>
+	<extensionID>com.tuarua.SwiftOSXANE</extensionID>
     </extensions>
 </application>

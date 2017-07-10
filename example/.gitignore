@@ -20,6 +20,9 @@ bin-release-temp/
 # build files
 *.sh
 
+rundebug.sh
+rundebug.bat
+
 
 # Created by https://www.gitignore.io/api/intellij
 
