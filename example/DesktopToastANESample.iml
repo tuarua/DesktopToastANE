@@ -5,9 +5,6 @@
       <configuration name="DesktopToastANESample" target-platform="Desktop" pure-as="true" main-class="DesktopToastANESample" output-file="DesktopToastANESample.swf" output-folder="$MODULE_DIR$/bin-debug">
         <dependencies>
           <entries>
-            <entry library-id="e870a905-983c-446c-974d-503adccacd16">
-              <dependency linkage="Merged" />
-            </entry>
             <entry library-name="starling" library-level="project">
               <dependency linkage="Merged" />
             </entry>
@@ -18,9 +15,6 @@
               <dependency linkage="Merged" />
             </entry>
             <entry library-name="CommonDependencies" library-level="project">
-              <dependency linkage="Merged" />
-            </entry>
-            <entry library-name="SwiftOSXANE" library-level="project">
               <dependency linkage="Merged" />
             </entry>
           </entries>
@@ -54,18 +48,6 @@
     </content>
     <orderEntry type="jdk" jdkName="AIRSDK_26" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
-      <library type="flex">
-        <properties id="e870a905-983c-446c-974d-503adccacd16" />
-        <CLASSES>
-          <root url="jar://$DOCUMENTS$/DesktopToastANE/native_extension/ane/DesktopToastANE.ane!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="https://tuarua.github.io/DesktopToastANE/native_extension/docs/asdocs/" />
-        </JAVADOC>
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="library" exported="" name="starling" level="project" />
     <orderEntry type="library" exported="" name="FiraSansSemiBold" level="project" />
     <orderEntry type="library" exported="" name="DesktopToastANE" level="project" />

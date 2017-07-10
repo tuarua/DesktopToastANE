@@ -43,9 +43,6 @@ void TRDTT_contextInitializer(void *extData, const uint8_t *ctxType, FREContext 
     funcArray = [swft getFunctions];
     
     /**************************************************************************/
-    /********************* DO NO MODIFY ABOVE THIS LINE ***********************/
-    /**************************************************************************/
-    
     /******* MAKE SURE TO ADD FUNCTIONS HERE THE SAME AS SWIFT CONTROLLER *****/
     /**************************************************************************/
     static FRENamedFunction extensionFunctions[] =
