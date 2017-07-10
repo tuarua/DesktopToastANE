@@ -35,7 +35,7 @@ FRE_FUNCTION(callSwiftFunction) {
     return [swft callSwiftFunctionWithName:fName ctx:context argc:argc argv:argv];
 }
 
-void contextInitializer(void *extData, const uint8_t *ctxType, FREContext ctx, uint32_t *numFunctionsToSet,
+void TRDTT_contextInitializer(void *extData, const uint8_t *ctxType, FREContext ctx, uint32_t *numFunctionsToSet,
                         const FRENamedFunction **functionsToSet) {
     
     swft = [[SwiftController alloc] init];
@@ -43,9 +43,6 @@ void contextInitializer(void *extData, const uint8_t *ctxType, FREContext ctx, u
     funcArray = [swft getFunctions];
     
     /**************************************************************************/
-    /********************* DO NO MODIFY ABOVE THIS LINE ***********************/
-    /**************************************************************************/
-    
     /******* MAKE SURE TO ADD FUNCTIONS HERE THE SAME AS SWIFT CONTROLLER *****/
     /**************************************************************************/
     static FRENamedFunction extensionFunctions[] =
@@ -63,19 +60,19 @@ void contextInitializer(void *extData, const uint8_t *ctxType, FREContext ctx, u
     
 }
 
-void contextFinalizer(FREContext ctx) {
+void TRDTT_contextFinalizer(FREContext ctx) {
     return;
 }
 
 
 void TRDTTExtInizer(void **extData, FREContextInitializer *ctxInitializer, FREContextFinalizer *ctxFinalizer) {
-    *ctxInitializer = &contextInitializer;
-    *ctxFinalizer = &contextFinalizer;
+    *ctxInitializer = &TRDTT_contextInitializer;
+    *ctxFinalizer = &TRDTT_contextFinalizer;
 }
 
 void TRDTTExtFinizer(void *extData) {
     FREContext nullCTX;
     nullCTX = 0;
-    contextFinalizer(nullCTX);
+    TRDTT_contextFinalizer(nullCTX);
     return;
 }

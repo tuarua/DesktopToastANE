@@ -18,7 +18,7 @@ package views {
 		private var _fullHeight:uint;
 		private var _spr:Sprite;
 		private var _moveBy:int;
-		public function ScrollableContent(w:int, h:int, spr:Sprite=null, moveBy:int=50) {
+		public function ScrollableContent(w:int, h:int, spr:Sprite=null, moveBy:int=80) {
 			super();
 			_w = w;
 			_h = h;
@@ -45,8 +45,8 @@ package views {
 				if(sby > (_h - scrollBarVertical.height))
 					sby = _h - scrollBarVertical.height;
 				
-				Starling.juggler.tween(scrollBarVertical, (Math.abs(lastY - cY) * 0.2)/_moveBy, {transition: Transitions.LINEAR,y: Math.round(sby)});
-				Starling.juggler.tween(_spr, (Math.abs(lastY - cY) * 0.2)/_moveBy, {transition: Transitions.LINEAR,y: cY});
+				Starling.juggler.tween(scrollBarVertical, (Math.abs(lastY - cY) * 0.05)/_moveBy, {transition: Transitions.LINEAR,y: Math.round(sby)});
+				Starling.juggler.tween(_spr, (Math.abs(lastY - cY) * 0.05)/_moveBy, {transition: Transitions.LINEAR,y: cY});
 			}
 			
 		}

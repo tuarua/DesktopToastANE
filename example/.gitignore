@@ -3,7 +3,7 @@
 ### FlashBuilder ###
 # Build and Release Folders
 bin/
-#bin-debug/
+bin-debug/
 bin-release/
 bin-release-temp/
 
@@ -19,6 +19,9 @@ bin-release-temp/
 
 # build files
 *.sh
+
+rundebug.sh
+rundebug.bat
 
 
 # Created by https://www.gitignore.io/api/intellij

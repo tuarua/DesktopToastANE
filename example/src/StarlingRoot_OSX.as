@@ -36,7 +36,6 @@ public class StarlingRoot_OSX extends Sprite {
     private var list:ScrollableContent;
     private var holder:Sprite = new Sprite();
     private var callbackTxt:TextField;
-
     use namespace osx;
 
     public function StarlingRoot_OSX() {
@@ -45,8 +44,6 @@ public class StarlingRoot_OSX extends Sprite {
 
     public function start(dtANE:DesktopToastANE):void {
         this.dtANE = dtANE;
-        NativeApplication.nativeApplication.addEventListener(flash.events.Event.EXITING, onExiting);
-
 
         dtANE.init();
         dtANE.addEventListener(ToastEvent.TOAST_CLICKED, onToastClicked);
@@ -89,10 +86,7 @@ public class StarlingRoot_OSX extends Sprite {
 
     }
 
-    private function onExiting(event:Event):void {
-        trace("exiting app");
-        dtANE.dispose();
-    }
+
 
     private function createLbl(txt:String, x:int, y:int):TextField {
         var lbl:TextField = new TextField(360, 200, txt);

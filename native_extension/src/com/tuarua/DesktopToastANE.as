@@ -97,10 +97,7 @@ public class DesktopToastANE extends EventDispatcher {
         var pObj:Object;
         switch (event.level) {
             case "TRACE":
-                trace(event.code);
-                break;
-            case "INFO":
-                trace("INFO:", event.code);
+                trace("[" + name + "]" ,event.code);
                 break;
             case ToastEvent.TOAST_CLICKED:
                 try {

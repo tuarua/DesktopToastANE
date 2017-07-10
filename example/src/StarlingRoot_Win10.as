@@ -70,7 +70,6 @@ public class StarlingRoot_Win10 extends Sprite {
 
     public function start(dtANE:DesktopToastANE):void {
         this.dtANE = dtANE;
-        NativeApplication.nativeApplication.addEventListener(flash.events.Event.EXITING, onExiting);
 
         dtANE.init(NativeApplication.nativeApplication.applicationID, "Toast ANE Sample");
         dtANE.addEventListener(ToastEvent.TOAST_CLICKED, onToastClicked);
@@ -348,7 +347,7 @@ public class StarlingRoot_Win10 extends Sprite {
 
 
             var toastImage1:ToastImage = new ToastImage();
-            toastImage1.src = File.applicationDirectory.resolvePath("app-icon.jpg").nativePath;
+            toastImage1.src = File.applicationDirectory.resolvePath("imgs/app-icon.jpg").nativePath;
             toastImage1.placement = ToastPlacement.APP_LOGO_OVERRIDE;
             toastImage1.hintCrop = ToastHintCrop.CIRCLE;
 
@@ -548,10 +547,6 @@ public class StarlingRoot_Win10 extends Sprite {
         }
     }
 
-    private function onExiting(event:Event):void {
-        trace("exiting app");
-        dtANE.dispose();
-    }
 
 }
 }

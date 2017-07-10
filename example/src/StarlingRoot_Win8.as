@@ -65,7 +65,6 @@ public class StarlingRoot_Win8 extends Sprite {
 
     public function start(dtANE:DesktopToastANE):void {
         this.dtANE = dtANE;
-        NativeApplication.nativeApplication.addEventListener(flash.events.Event.EXITING, onExiting);
 
         dtANE.init(NativeApplication.nativeApplication.applicationID, "Toast ANE Sample");
         dtANE.addEventListener(ToastEvent.TOAST_CLICKED, onToastClicked);
@@ -223,10 +222,6 @@ public class StarlingRoot_Win8 extends Sprite {
         }
     }
 
-    private function onExiting(event:Event):void {
-        trace("exiting app");
-        dtANE.dispose();
-    }
 
 }
 }

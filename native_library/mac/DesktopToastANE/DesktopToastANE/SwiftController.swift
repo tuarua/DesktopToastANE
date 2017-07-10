@@ -27,6 +27,11 @@ import FreSwift
 
 @objc class SwiftController: FreSwiftController , NSUserNotificationCenterDelegate {
     
+    private var context: FreContextSwift!
+    private func trace(_ value: Any...){
+        freTrace(ctx: context, value: value)
+    }
+    
     // Must have this function. It exposes the methods to our entry ObjC.
     func getFunctions() -> Array<String> {
         functionsToSet["init"] = initController
@@ -45,9 +50,7 @@ import FreSwift
         if let userInfo = notification.userInfo {
             var dict:Dictionary = Dictionary<String, AnyObject>()
             if let arguments = userInfo["arguments"] {
-                trace("let arguments")
                 dict.updateValue(arguments as AnyObject, forKey: "arguments")
-                
                 var array:Array<Dictionary<String,AnyObject>> = Array()
                 if let response = notification.response {
                     var dataDict:Dictionary<String,AnyObject> = Dictionary()
@@ -103,16 +106,10 @@ import FreSwift
             let inFRE0 = argv[0],
             let toast = FreObjectSwift.init(freObject: inFRE0).value as? Dictionary<String, AnyObject>
             else {
-                traceError(message: "show - incorrect arguments", line: #line, column: #column, file: #file, freError: nil)
+                traceError(ctx:context, message: "show - incorrect arguments", line: #line, column: #column, file: #file, freError: nil)
                 return nil
         }
-        
-        let toast22 = FreObjectSwift.init(freObject: inFRE0)
-        
-        trace("toast.debugDescription",toast.debugDescription)
-        
-        trace("toast.debugDescription2",toast22.value)
-        
+
         let notification = NSUserNotification.init()
         
         if let title = toast["title"] {
@@ -163,13 +160,8 @@ import FreSwift
         }
         
         if let userInfo = toast["userInfo"] {
-            
             notification.userInfo = userInfo as? [String : Any] //
         }
-       
-        //trace(toast.debugDescription)
-        //trace("notification.userInfo:",notification.userInfo)
-        //trace("_____________");
         
         // Deliver the notification through the User Notification Center
         NSUserNotificationCenter.default.deliver(notification)

@@ -5,9 +5,6 @@
       <configuration name="DesktopToastANESample" target-platform="Desktop" pure-as="true" main-class="DesktopToastANESample" output-file="DesktopToastANESample.swf" output-folder="$MODULE_DIR$/bin-debug">
         <dependencies>
           <entries>
-            <entry library-id="e870a905-983c-446c-974d-503adccacd16">
-              <dependency linkage="Merged" />
-            </entry>
             <entry library-name="starling" library-level="project">
               <dependency linkage="Merged" />
             </entry>
@@ -29,6 +26,13 @@
           </map>
         </compiler-options>
         <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/DesktopToastANESample-app.xml" package-file-name="DesktopToastANESample">
+          <files-to-package>
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/imgs/air-icon.png" path-in-package="/imgs/air-icon.png" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/imgs/air.png" path-in-package="/imgs/air.png" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/imgs/app-icon.jpg" path-in-package="/imgs/app-icon.jpg" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/imgs/inline.jpg" path-in-package="/imgs/inline.jpg" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/imgs/send.png" path-in-package="/imgs/send.png" />
+          </files-to-package>
           <AirSigningOptions keystore-path="$DOCUMENTS$/tuaruaWin.p12" />
         </packaging-air-desktop>
         <packaging-android />
@@ -44,21 +48,10 @@
     </content>
     <orderEntry type="jdk" jdkName="AIRSDK_26" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
-      <library type="flex">
-        <properties id="e870a905-983c-446c-974d-503adccacd16" />
-        <CLASSES>
-          <root url="jar://$DOCUMENTS$/DesktopToastANE/native_extension/ane/DesktopToastANE.ane!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="https://tuarua.github.io/DesktopToastANE/native_extension/docs/asdocs/" />
-        </JAVADOC>
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="library" exported="" name="starling" level="project" />
     <orderEntry type="library" exported="" name="FiraSansSemiBold" level="project" />
     <orderEntry type="library" exported="" name="DesktopToastANE" level="project" />
     <orderEntry type="library" exported="" name="CommonDependencies" level="project" />
+    <orderEntry type="library" exported="" name="SwiftOSXANE" level="project" />
   </component>
 </module>
