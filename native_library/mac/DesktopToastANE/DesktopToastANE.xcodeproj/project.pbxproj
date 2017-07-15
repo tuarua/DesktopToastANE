@@ -12,12 +12,13 @@
 		CE36AF4D1DF47DBD003C224B /* Adobe AIR_64 in Frameworks */ = {isa = PBXBuildFile; fileRef = CE36AF4B1DF47DBD003C224B /* Adobe AIR_64 */; };
 		CE36AF4E1DF47DBD003C224B /* Adobe AIR in Frameworks */ = {isa = PBXBuildFile; fileRef = CE36AF4C1DF47DBD003C224B /* Adobe AIR */; };
 		CE36AF501DF47E4E003C224B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE36AF4F1DF47E4E003C224B /* Cocoa.framework */; };
+		CE72FF481F1A8698000A7D96 /* FreMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = CE72FF461F1A8697000A7D96 /* FreMacros.h */; };
+		CE72FF491F1A8698000A7D96 /* FreSwift-OSX-Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = CE72FF471F1A8697000A7D96 /* FreSwift-OSX-Swift.h */; };
 		CE95AE0C1F0EE417002971A5 /* Adobe AIR in Frameworks */ = {isa = PBXBuildFile; fileRef = CE36AF4C1DF47DBD003C224B /* Adobe AIR */; };
 		CE95AE0D1F0EE417002971A5 /* Adobe AIR_64 in Frameworks */ = {isa = PBXBuildFile; fileRef = CE36AF4B1DF47DBD003C224B /* Adobe AIR_64 */; };
 		CE95AE0E1F0EE417002971A5 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE36AF4F1DF47E4E003C224B /* Cocoa.framework */; };
 		CE95AE2F1F0EE77F002971A5 /* FlashRuntimeExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = CE95AE1F1F0EE77F002971A5 /* FlashRuntimeExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE95AE301F0EE77F002971A5 /* FlashRuntimeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE95AE201F0EE77F002971A5 /* FlashRuntimeExtensions.swift */; };
-		CE95AE331F0EE77F002971A5 /* FreSwift-Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = CE95AE231F0EE77F002971A5 /* FreSwift-Swift.h */; };
 		CE95AE341F0EE77F002971A5 /* FreSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = CE95AE241F0EE77F002971A5 /* FreSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE95AE351F0EE77F002971A5 /* FreSwift.m in Sources */ = {isa = PBXBuildFile; fileRef = CE95AE251F0EE77F002971A5 /* FreSwift.m */; };
 		CE95AE361F0EE77F002971A5 /* FreSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE95AE261F0EE77F002971A5 /* FreSwift.swift */; };
@@ -48,10 +49,11 @@
 		CE36AF4B1DF47DBD003C224B /* Adobe AIR_64 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "Adobe AIR_64"; path = "/Users/User/sdks/AIR/AIRSDK_23/runtimes/air/mac/Adobe AIR.framework/Versions/1.0/Adobe AIR_64"; sourceTree = "<absolute>"; };
 		CE36AF4C1DF47DBD003C224B /* Adobe AIR */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "Adobe AIR"; path = "/Users/User/sdks/AIR/AIRSDK_23/runtimes/air/mac/Adobe AIR.framework/Versions/1.0/Adobe AIR"; sourceTree = "<absolute>"; };
 		CE36AF4F1DF47E4E003C224B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		CE72FF461F1A8697000A7D96 /* FreMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreMacros.h; sourceTree = "<group>"; };
+		CE72FF471F1A8697000A7D96 /* FreSwift-OSX-Swift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FreSwift-OSX-Swift.h"; sourceTree = "<group>"; };
 		CE95AE1C1F0EE417002971A5 /* FreSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FreSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE95AE1F1F0EE77F002971A5 /* FlashRuntimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashRuntimeExtensions.h; sourceTree = "<group>"; };
 		CE95AE201F0EE77F002971A5 /* FlashRuntimeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlashRuntimeExtensions.swift; sourceTree = "<group>"; };
-		CE95AE231F0EE77F002971A5 /* FreSwift-Swift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FreSwift-Swift.h"; sourceTree = "<group>"; };
 		CE95AE241F0EE77F002971A5 /* FreSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreSwift.h; sourceTree = "<group>"; };
 		CE95AE251F0EE77F002971A5 /* FreSwift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreSwift.m; sourceTree = "<group>"; };
 		CE95AE261F0EE77F002971A5 /* FreSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FreSwift.swift; sourceTree = "<group>"; };
@@ -122,13 +124,14 @@
 		CE95AE1E1F0EE77F002971A5 /* FreSwift */ = {
 			isa = PBXGroup;
 			children = (
+				CE72FF461F1A8697000A7D96 /* FreMacros.h */,
+				CE72FF471F1A8697000A7D96 /* FreSwift-OSX-Swift.h */,
 				CE95AE251F0EE77F002971A5 /* FreSwift.m */,
 				CE95AE271F0EE77F002971A5 /* FreSwift_oc.h */,
 				CE95AE261F0EE77F002971A5 /* FreSwift.swift */,
 				CE95AE201F0EE77F002971A5 /* FlashRuntimeExtensions.swift */,
 				CE95AE1F1F0EE77F002971A5 /* FlashRuntimeExtensions.h */,
 				CE95AE291F0EE77F002971A5 /* Geom */,
-				CE95AE231F0EE77F002971A5 /* FreSwift-Swift.h */,
 				CE95AE2C1F0EE77F002971A5 /* Info.plist */,
 				CE95AE241F0EE77F002971A5 /* FreSwift.h */,
 			);
@@ -190,9 +193,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE95AE2F1F0EE77F002971A5 /* FlashRuntimeExtensions.h in Headers */,
+				CE72FF481F1A8698000A7D96 /* FreMacros.h in Headers */,
 				CE95AE341F0EE77F002971A5 /* FreSwift.h in Headers */,
+				CE72FF491F1A8698000A7D96 /* FreSwift-OSX-Swift.h in Headers */,
 				CE95AE371F0EE77F002971A5 /* FreSwift_oc.h in Headers */,
-				CE95AE331F0EE77F002971A5 /* FreSwift-Swift.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,14 +296,14 @@
 /* Begin PBXShellScriptBuildPhase section */
 		CE95AE181F0EE417002971A5 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = ../../../native_extension/ane/build_multi.sh;
 		};
@@ -546,7 +550,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_OBJC_INTERFACE_HEADER_NAME = "FreSwift-Swift.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "FreSwift-OSX-Swift.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -581,7 +585,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_OBJC_INTERFACE_HEADER_NAME = "FreSwift-Swift.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "FreSwift-OSX-Swift.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

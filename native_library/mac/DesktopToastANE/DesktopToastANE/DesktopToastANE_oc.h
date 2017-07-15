@@ -10,11 +10,11 @@
 #import <Cocoa/Cocoa.h>
 #include <Adobe AIR/Adobe AIR.h>
 #define EXPORT __attribute__((visibility("default")))
-EXPORT
-void TRDTTExtInizer(void** extData, FREContextInitializer* ctxInitializer, FREContextFinalizer* ctxFinalizer);
 
 EXPORT
-void TRDTTExtFinizer(void* extData);
+EXTENSION_FIN_DECL(TRDTT);
 
+EXPORT
+EXTENSION_INIT_DECL(TRDTT);
 
 #endif //DESKTOPTOASTANE_DESKTOPTOASTANE_H
