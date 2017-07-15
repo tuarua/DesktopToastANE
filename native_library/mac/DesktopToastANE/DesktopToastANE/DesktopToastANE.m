@@ -22,57 +22,35 @@
  SOFTWARE.*/
 
 #import <Foundation/Foundation.h>
+
+#import "FreMacros.h"
 #include "DesktopToastANE_oc.h"
 #import "DesktopToastANE-Swift.h"
-#import <FreSwift/FlashRuntimeExtensions.h>
+#include <Adobe AIR/Adobe AIR.h>
 
-SwiftController *swft;
-NSArray * funcArray;
-#define FRE_FUNCTION(fn) FREObject (fn)(FREContext context, void* functionData, uint32_t argc, FREObject argv[])
+SWIFT_DECL(TRDTT) // use unique prefix throughout to prevent clashes with other ANEs
 
-FRE_FUNCTION(callSwiftFunction) {
-    NSString* fName = (__bridge NSString *)(functionData);
-    return [swft callSwiftFunctionWithName:fName ctx:context argc:argc argv:argv];
-}
-
-void TRDTT_contextInitializer(void *extData, const uint8_t *ctxType, FREContext ctx, uint32_t *numFunctionsToSet,
-                        const FRENamedFunction **functionsToSet) {
-    
-    swft = [[SwiftController alloc] init];
-    [swft setFREContextWithCtx:ctx];
-    funcArray = [swft getFunctions];
+CONTEXT_INIT(TRDTT) {
+    SWIFT_INITS(TRDTT)
     
     /**************************************************************************/
     /******* MAKE SURE TO ADD FUNCTIONS HERE THE SAME AS SWIFT CONTROLLER *****/
     /**************************************************************************/
     static FRENamedFunction extensionFunctions[] =
     {
-        { (const uint8_t*) "init", (__bridge void *)@"init", &callSwiftFunction }
-        ,{ (const uint8_t*) "show", (__bridge void *)@"show", &callSwiftFunction }
-        ,{ (const uint8_t*) "getNamespace", (__bridge void *)@"getNamespace", &callSwiftFunction }
+         MAP_FUNCTION(TRDTT, init)
+        ,MAP_FUNCTION(TRDTT, show)
+        ,MAP_FUNCTION(TRDTT, getNamespace)
     };
     /**************************************************************************/
     /**************************************************************************/
     
-    
-    *numFunctionsToSet = sizeof(extensionFunctions) / sizeof(FRENamedFunction);
-    *functionsToSet = extensionFunctions;
+    SET_FUNCTIONS
     
 }
 
-void TRDTT_contextFinalizer(FREContext ctx) {
-    return;
+CONTEXT_FIN(TRDTT) {
+    //any clean up code here
 }
-
-
-void TRDTTExtInizer(void **extData, FREContextInitializer *ctxInitializer, FREContextFinalizer *ctxFinalizer) {
-    *ctxInitializer = &TRDTT_contextInitializer;
-    *ctxFinalizer = &TRDTT_contextFinalizer;
-}
-
-void TRDTTExtFinizer(void *extData) {
-    FREContext nullCTX;
-    nullCTX = 0;
-    TRDTT_contextFinalizer(nullCTX);
-    return;
-}
+EXTENSION_INIT(TRDTT)
+EXTENSION_FIN(TRDTT)

@@ -33,10 +33,11 @@ import FreSwift
     }
     
     // Must have this function. It exposes the methods to our entry ObjC.
-    func getFunctions() -> Array<String> {
-        functionsToSet["init"] = initController
-        functionsToSet["show"] = show
-        functionsToSet["getNamespace"] = getNamespace
+    public func getFunctions(prefix: String) -> Array<String> {
+        
+        functionsToSet["\(prefix)init"] = initController
+        functionsToSet["\(prefix)show"] = show
+        functionsToSet["\(prefix)getNamespace"] = getNamespace
         
         var arr: Array<String> = []
         for key in functionsToSet.keys {
@@ -175,7 +176,7 @@ import FreSwift
     
     
 
-    func setFREContext(ctx: FREContext) {
+    public func setFREContext(ctx: FREContext) {
         context = FreContextSwift.init(freContext: ctx)
     }
 

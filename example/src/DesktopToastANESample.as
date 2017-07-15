@@ -83,8 +83,9 @@ public class DesktopToastANESample extends Sprite {
     }
 
     private function onExiting(event:flash.events.Event):void {
-        commonDependenciesANE.dispose();
         dtANE.dispose();
+        commonDependenciesANE.dispose();
+
     }
 
 }
