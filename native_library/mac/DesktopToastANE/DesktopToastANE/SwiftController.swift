@@ -25,12 +25,9 @@ import Foundation
 import Cocoa
 import FreSwift
 
-@objc class SwiftController: FreSwiftController , NSUserNotificationCenterDelegate {
-    
-    private var context: FreContextSwift!
-    private func trace(_ value: Any...){
-        freTrace(ctx: context, value: value)
-    }
+@objc class SwiftController: NSObject, FreSwiftMainController, NSUserNotificationCenterDelegate {
+    internal var context: FreContextSwift!
+    var functionsToSet: FREFunctionMap = [:]
     
     // Must have this function. It exposes the methods to our entry ObjC.
     public func getFunctions(prefix: String) -> Array<String> {
@@ -107,8 +104,7 @@ import FreSwift
             let inFRE0 = argv[0],
             let toast = FreObjectSwift.init(freObject: inFRE0).value as? Dictionary<String, AnyObject>
             else {
-                traceError(ctx:context, message: "show - incorrect arguments", line: #line, column: #column, file: #file, freError: nil)
-                return nil
+                return FreError(stackTrace: "", message: "show - incorrect arguments", type: FreError.Code.invalidArgument).getError(#file, #line, #column)
         }
 
         let notification = NSUserNotification.init()
@@ -174,10 +170,16 @@ import FreSwift
         return nil
     }
     
+    // Must have this function. It exposes the methods to our entry ObjC.
+    func callSwiftFunction(name: String, ctx: FREContext, argc: FREArgc, argv: FREArgv) -> FREObject? {
+        if let fm = functionsToSet[name] {
+            return fm(ctx, argc, argv)
+        }
+        return nil
+    }
     
-
-    public func setFREContext(ctx: FREContext) {
-        context = FreContextSwift.init(freContext: ctx)
+    func setFREContext(ctx: FREContext) {
+        self.context = FreContextSwift.init(freContext: ctx)
     }
 
 
