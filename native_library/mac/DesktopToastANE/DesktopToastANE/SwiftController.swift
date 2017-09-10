@@ -26,6 +26,7 @@ import Cocoa
 import FreSwift
 
 @objc class SwiftController: NSObject, FreSwiftMainController, NSUserNotificationCenterDelegate {
+    public var TAG: String? = "DesktopToastANE"
     internal var context: FreContextSwift!
     var functionsToSet: FREFunctionMap = [:]
     
@@ -104,7 +105,7 @@ import FreSwift
             let inFRE0 = argv[0],
             let toast = FreObjectSwift.init(freObject: inFRE0).value as? Dictionary<String, AnyObject>
             else {
-                return FreError(stackTrace: "", message: "show - incorrect arguments", type: FreError.Code.invalidArgument).getError(#file, #line, #column)
+                return ArgCountError(message: "show").getError(#file, #line, #column)
         }
 
         let notification = NSUserNotification.init()
