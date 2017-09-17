@@ -1,3 +1,9 @@
+### 0.0.9
+FreSwift 1.2
+
+### 0.0.8
+FreSwift 1.1
+
 ### 0.0.7
 - Added 64bit Windows version
 

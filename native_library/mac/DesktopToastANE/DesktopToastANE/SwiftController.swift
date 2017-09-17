@@ -90,14 +90,11 @@ import FreSwift
     }
 
     func getNamespace(ctx: FREContext, argc: FREArgc, argv: FREArgv) -> FREObject? {
-        var ret:FREObject? = nil
         if #available(OSX 10.12.1, *) {
-            do {
-                ret = try FreObjectSwift(string: "osx").rawValue
-            } catch {
-            }
+            let ret = "osx"
+            return ret.toFREObject()
         }
-        return ret
+        return nil
     }
     
     func show(ctx: FREContext, argc: FREArgc, argv: FREArgv) -> FREObject? {

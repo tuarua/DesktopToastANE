@@ -77,9 +77,11 @@ prefix##_funcArray = [prefix##_swft getFunctionsWithPrefix:NSStringize(prefix)"_
 #define SWIFT_DECL(prefix) SwiftController * prefix##_swft; \
 NSArray * prefix##_funcArray; \
 FREObject (prefix##_callSwiftFunction) (FREContext context, void* functionData, uint32_t argc, FREObject argv[]) {\
+@autoreleasepool { \
 NSString* name = (__bridge NSString *)(functionData); \
 NSString* fName = [NSString stringWithFormat:@"%@%@", NSStringize(prefix)"_", name]; \
 return [prefix##_swft callSwiftFunctionWithName:fName ctx:context argc:argc argv:argv]; \
+}\
 }
 #define SWIFT_INITS(prefix) prefix##_swft = [[SwiftController alloc] init]; \
 [prefix##_swft setFREContextWithCtx:ctx]; \
