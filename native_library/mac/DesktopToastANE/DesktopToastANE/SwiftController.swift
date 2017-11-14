@@ -169,15 +169,19 @@ import FreSwift
     }
     
     // Must have this function. It exposes the methods to our entry ObjC.
-    func callSwiftFunction(name: String, ctx: FREContext, argc: FREArgc, argv: FREArgv) -> FREObject? {
+    @objc public func callSwiftFunction(name: String, ctx: FREContext, argc: FREArgc, argv: FREArgv) -> FREObject? {
         if let fm = functionsToSet[name] {
             return fm(ctx, argc, argv)
         }
         return nil
     }
     
-    func setFREContext(ctx: FREContext) {
+    @objc public func setFREContext(ctx: FREContext) {
         self.context = FreContextSwift.init(freContext: ctx)
+    }
+    
+    
+    @objc public func onLoad() {
     }
 
 
