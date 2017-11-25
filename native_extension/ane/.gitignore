@@ -1,3 +1,5 @@
 debug/
 docs/
-build_osx_debug.sh
+CommonDependencies.ane
+platforms/mac/
+build_asdocs.bat

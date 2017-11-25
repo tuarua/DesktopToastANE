@@ -2,8 +2,8 @@
 <extension xmlns="http://ns.adobe.com/air/extension/19.0">
     <id>com.tuarua.DesktopToastANE</id>
     <name>Desktop Toast ANE</name>
-    <copyright>This work is licensed under The MIT License (MIT), Copyright 2016 Tua Rua Ltd.</copyright>
-    <versionNumber>0.0.6</versionNumber>
+    <copyright>This work is licensed under Apache License, Copyright (c) 2017 Tua Rua Ltd.</copyright>
+    <versionNumber>1.0.0</versionNumber>
 	<platforms>
          <platform name="Windows-x86-64">
             <applicationDeployment>

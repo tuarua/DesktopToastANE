@@ -8,7 +8,7 @@ echo $pathtome
 
 PROJECT_NAME=DesktopToastANE
 
-AIR_SDK="/Users/User/sdks/AIR/AIRSDK_26"
+AIR_SDK="/Users/User/sdks/AIR/AIRSDK_27"
 echo $AIR_SDK
 
 #Setup the directory.
@@ -39,14 +39,14 @@ unzip "$pathtome/$PROJECT_NAME.swc" "library.swf" -d "$pathtome"
 #Copy library.swf to folders.
 echo "Copying library.swf into place."
 cp "$pathtome/library.swf" "$pathtome/platforms/mac/release"
-cp "$pathtome/library.swf" "$pathtome/platforms/win/release"
+cp "$pathtome/library.swf" "$pathtome/platforms/win/x86/release"
+cp "$pathtome/library.swf" "$pathtome/platforms/win/x64/release"
 
 #Copy native libraries into place.
 echo "Copying native libraries into place."
 
 #Copy native libraries into place.
 echo "Copying native libraries into place."
-cp -R -L "$pathtome/../../native_library/mac/$PROJECT_NAME/$PROJECT_NAME/$PROJECT_NAME-Swift.h" "$pathtome/../../native_library/mac/$PROJECT_NAME/Build/Products/Release/$PROJECT_NAME.framework/Versions/A/Headers/$PROJECT_NAME-Swift.h"
 cp -R -L "$pathtome/../../native_library/mac/$PROJECT_NAME/Build/Products/Release/$PROJECT_NAME.framework" "$pathtome/platforms/mac/release"
 rm -r "$pathtome/platforms/mac/release/$PROJECT_NAME.framework/Versions"
 

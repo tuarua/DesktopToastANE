@@ -201,3 +201,4 @@ return FRESetObjectProperty(object, (const uint8_t *) [propertyName UTF8String],
 };
 #endif
 #endif /* FreMacros_h */
+
