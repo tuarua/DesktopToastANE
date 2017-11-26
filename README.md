@@ -15,6 +15,17 @@ Sample client included
  - Interactive toasts for Windows 8.1.
  - User notifications on OSX.
 
+##### Dependencies
+From the command line cd into /example and run:
+- OSX
+````shell
+bash get_dependencies.sh
+`````
+- Windows Powershell
+````shell
+PS get_dependencies.ps1
+`````
+
 ### Windows Installation - Important!
 
 * This ANE was built with MS Visual Studio 2015. As such your machine (and user's machines) will need to have Microsoft Visual C++ 2015 Redistributable (x86) runtime installed.
@@ -31,15 +42,12 @@ C++
 You will need
  
  - Flash Builder 4.7 or IntelliJ IDEA
- - AIR 25 SDK
- - MS Visual Studio 2015 if you wish to modify the ANE code on Windows
- - Xcode or AppCode if you wish to modify the ANE code on OSX
+ - AIR 27 SDK
+ - MS Visual Studio 2017 if you wish to modify the ANE code on Windows
+ - Xcode 9.1 if you wish to modify the ANE code on OSX
 
 ### Known Issues
 You should use a different appName when debugging. The required .lnk file created in \AppData\Roaming\Microsoft\Windows\Start Menu\Programs will point to adl initially.
-
-### Todos
-Complete ASdocs
 
 ### References
 https://blogs.msdn.microsoft.com/tiles_and_toasts/2015/07/02/adaptive-and-interactive-toast-notifications-for-windows-10/  
