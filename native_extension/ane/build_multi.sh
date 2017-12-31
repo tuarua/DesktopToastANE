@@ -8,7 +8,7 @@ echo $pathtome
 
 PROJECT_NAME=DesktopToastANE
 
-AIR_SDK="/Users/User/sdks/AIR/AIRSDK_27"
+AIR_SDK="/Users/User/sdks/AIR/AIRSDK_28"
 echo $AIR_SDK
 
 #Setup the directory.

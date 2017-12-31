@@ -82,16 +82,14 @@ public class SwiftController: NSObject, FreSwiftMainController, NSUserNotificati
 
     func getNamespace(ctx: FREContext, argc: FREArgc, argv: FREArgv) -> FREObject? {
         if #available(OSX 10.12.1, *) {
-            let ret = "osx"
-            return ret.toFREObject()
+            return "osx".toFREObject()
         }
         return nil
     }
     
     func show(ctx: FREContext, argc: FREArgc, argv: FREArgv) -> FREObject? {
         guard argc > 0,
-            let inFRE0 = argv[0],
-            let toast = FreObjectSwift.init(freObject: inFRE0).value as? Dictionary<String, AnyObject>
+            let toast:Dictionary<String, AnyObject> = Dictionary.init(argv[0])
             else {
                 return ArgCountError(message: "show").getError(#file, #line, #column)
         }
