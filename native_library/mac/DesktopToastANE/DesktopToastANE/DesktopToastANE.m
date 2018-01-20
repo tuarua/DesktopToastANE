@@ -39,7 +39,9 @@ CONTEXT_INIT(TRDTT) {
 }
 
 CONTEXT_FIN(TRDTT) {
-    //any clean up code here
+    [TRDTT_swft dispose];
+    TRDTT_swft = nil;
+    TRDTT_funcArray = nil;
 }
 EXTENSION_INIT(TRDTT)
 EXTENSION_FIN(TRDTT)

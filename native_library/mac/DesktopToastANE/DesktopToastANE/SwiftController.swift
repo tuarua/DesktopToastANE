@@ -157,6 +157,10 @@ public class SwiftController: NSObject, FreSwiftMainController, NSUserNotificati
         return nil
     }
     
+    @objc public func dispose() {
+        NSUserNotificationCenter.default.delegate = nil
+    }
+    
     // Must have this function. It exposes the methods to our entry ObjC.
     @objc public func callSwiftFunction(name: String, ctx: FREContext, argc: FREArgc, argv: FREArgv) -> FREObject? {
         if let fm = functionsToSet[name] {
