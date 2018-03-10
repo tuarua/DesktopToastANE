@@ -38,7 +38,7 @@ public class Toast8 {
      */
     public function addText(text:ToastText):void {
         if (_texts == null)
-            _texts = new Vector.<ToastText>
+            _texts = new Vector.<ToastText>;
         _texts.push(text);
     }
 
@@ -49,7 +49,7 @@ public class Toast8 {
      */
     public function addImage(image:ToastImage):void {
         if (_images == null)
-            _images = new Vector.<ToastImage>
+            _images = new Vector.<ToastImage>;
         _images.push(image);
     }
 
