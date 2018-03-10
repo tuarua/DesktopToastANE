@@ -22,13 +22,13 @@ public class SwiftController: NSObject, FreSwiftMainController, NSUserNotificati
     public var functionsToSet: FREFunctionMap = [:]
     
     // Must have this function. It exposes the methods to our entry ObjC.
-    @objc public func getFunctions(prefix: String) -> Array<String> {
+    @objc public func getFunctions(prefix: String) -> [String] {
         
         functionsToSet["\(prefix)init"] = initController
         functionsToSet["\(prefix)show"] = show
         functionsToSet["\(prefix)getNamespace"] = getNamespace
         
-        var arr: Array<String> = []
+        var arr: [String] = []
         for key in functionsToSet.keys {
             arr.append(key)
         }
@@ -38,21 +38,21 @@ public class SwiftController: NSObject, FreSwiftMainController, NSUserNotificati
     public func userNotificationCenter(_ center: NSUserNotificationCenter, didActivate notification: NSUserNotification) {
         var jsonString = "{\"arguments\" :\"\"}"
         if let userInfo = notification.userInfo {
-            var dict:Dictionary = Dictionary<String, AnyObject>()
+            var dict: [String: AnyObject] = Dictionary()
             if let arguments = userInfo["arguments"] {
                 dict.updateValue(arguments as AnyObject, forKey: "arguments")
-                var array:Array<Dictionary<String,AnyObject>> = Array()
+                var array: [[String: AnyObject]] = Array()
                 if let response = notification.response {
-                    var dataDict:Dictionary<String,AnyObject> = Dictionary()
-                    dataDict.updateValue("response" as AnyObject , forKey: "key")
-                    dataDict.updateValue(response.string as AnyObject , forKey: "value")
+                    var dataDict: [String: AnyObject] = Dictionary()
+                    dataDict.updateValue("response" as AnyObject, forKey: "key")
+                    dataDict.updateValue(response.string as AnyObject, forKey: "value")
                     array.append(dataDict)
                 }
                 
                 if notification.identifier != nil {
-                    var dataDict:Dictionary<String,AnyObject> = Dictionary()
-                    dataDict.updateValue("id" as AnyObject , forKey: "key")
-                    dataDict.updateValue(notification.identifier as AnyObject , forKey: "value")
+                    var dataDict: [String: AnyObject] = Dictionary()
+                    dataDict.updateValue("id" as AnyObject, forKey: "key")
+                    dataDict.updateValue(notification.identifier as AnyObject, forKey: "value")
                     array.append(dataDict)
                 }
 
@@ -64,7 +64,7 @@ public class SwiftController: NSObject, FreSwiftMainController, NSUserNotificati
                 jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)! as String
                 
              } catch {
-                trace("Error reading reponse",error.localizedDescription)
+                trace("Error reading reponse", error.localizedDescription)
             }
   
         }
@@ -75,8 +75,7 @@ public class SwiftController: NSObject, FreSwiftMainController, NSUserNotificati
         
     }
     
-    public func userNotificationCenter(_ center: NSUserNotificationCenter,
-                                shouldPresent notification: NSUserNotification) -> Bool {
+    public func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
         return true
     }
 
@@ -89,7 +88,7 @@ public class SwiftController: NSObject, FreSwiftMainController, NSUserNotificati
     
     func show(ctx: FREContext, argc: FREArgc, argv: FREArgv) -> FREObject? {
         guard argc > 0,
-            let toast:Dictionary<String, AnyObject> = Dictionary.init(argv[0])
+            let toast: [String: AnyObject] = Dictionary.init(argv[0])
             else {
                 return ArgCountError(message: "show").getError(#file, #line, #column)
         }
@@ -108,8 +107,8 @@ public class SwiftController: NSObject, FreSwiftMainController, NSUserNotificati
             notification.informativeText = informativeText as? String
         }
         
-        if let contentImage = toast["contentImage"] {
-            let image:NSImage? = NSImage(byReferencingFile: contentImage as! String)
+        if let contentImage = toast["contentImage"] as? String {
+            let image: NSImage? = NSImage(byReferencingFile: contentImage)
             notification.contentImage = image
         }
         
@@ -121,12 +120,12 @@ public class SwiftController: NSObject, FreSwiftMainController, NSUserNotificati
             notification.responsePlaceholder = responsePlaceholder as? String
         }
         
-        if let hasActionButton = toast["hasActionButton"] {
-            notification.hasActionButton = hasActionButton as! Bool
+        if let hasActionButton = toast["hasActionButton"] as? Bool {
+            notification.hasActionButton = hasActionButton
         }
         
-        if let hasReplyButton = toast["hasReplyButton"] {
-            notification.hasReplyButton = hasReplyButton as! Bool
+        if let hasReplyButton = toast["hasReplyButton"] as? Bool {
+            notification.hasReplyButton = hasReplyButton
         }
         
         if let actionButtonTitle = toast["actionButtonTitle"] {
@@ -137,14 +136,14 @@ public class SwiftController: NSObject, FreSwiftMainController, NSUserNotificati
             notification.otherButtonTitle = (otherButtonTitle as? String)!
         }
         
-        if let playSound:Bool = toast["playSound"] as! Bool? {
+        if let playSound: Bool = toast["playSound"] as? Bool {
             if playSound {
                 notification.soundName = NSUserNotificationDefaultSoundName
             }
         }
         
-        if let userInfo = toast["userInfo"] {
-            notification.userInfo = userInfo as? [String : Any] //
+        if let userInfo = toast["userInfo"] as? [String: Any] {
+            notification.userInfo = userInfo
         }
         
         // Deliver the notification through the User Notification Center
@@ -177,12 +176,4 @@ public class SwiftController: NSObject, FreSwiftMainController, NSUserNotificati
         
     }
 
-
 }
-
-
-
-
-
-
-
