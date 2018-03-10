@@ -17,8 +17,6 @@ import flash.system.Capabilities;
 public class DesktopToastANE extends EventDispatcher {
     private static const name:String = "DesktopToastANE";
     private var extensionContext:ExtensionContext;
-    private var _appId:String;
-    private var _xml:XML;
     private var _xmlAsString:String;
     private var isInited:Boolean = false;
     private var _isSupported:Boolean = false;
@@ -97,7 +95,7 @@ public class DesktopToastANE extends EventDispatcher {
         var pObj:Object;
         switch (event.level) {
             case "TRACE":
-                trace("[" + name + "]" ,event.code);
+                trace("[" + name + "]", event.code);
                 break;
             case ToastEvent.TOAST_CLICKED:
                 try {
@@ -112,6 +110,7 @@ public class DesktopToastANE extends EventDispatcher {
                 break;
             case ToastEvent.TOAST_HIDDEN:
                 dispatchEvent(new ToastEvent(ToastEvent.TOAST_HIDDEN, pObj));
+                break;
             case ToastEvent.TOAST_TIMED_OUT:
                 dispatchEvent(new ToastEvent(ToastEvent.TOAST_TIMED_OUT, pObj));
                 break;
@@ -125,8 +124,8 @@ public class DesktopToastANE extends EventDispatcher {
 
     /**
      *
-     * @param xml
      *
+     * @param toast
      */
 
     osx function createFromToast(toast:ToastOSX):void {
@@ -185,7 +184,7 @@ public class DesktopToastANE extends EventDispatcher {
             if (numLines > 4) break;
         }
 
-        var hasImage:Boolean = false;
+        var hasImage:Boolean;
         for each (var i:ToastImage in toast.images) {
             var imageNode:XML = <image/>;
             imageNode.@src = i.src;
@@ -208,7 +207,7 @@ public class DesktopToastANE extends EventDispatcher {
         if (toast.commands && toast.commands.scenario) {
             commandsNode.@scenario = toast.commands.scenario;
             for each (var c:ToastCommand in toast.commands.commands) {
-                var commandNode:XML = <command />;
+                var commandNode:XML = <command/>;
                 if (c.arguments)
                     commandNode.@arguments = c.arguments;
                 if (c.id)
@@ -295,7 +294,7 @@ public class DesktopToastANE extends EventDispatcher {
                 actionsNode.appendChild(inputNode);
             }
             for each (var a:ToastAction in toast.actions) {
-                var actionNode:XML = <action />;
+                var actionNode:XML = <action/>;
                 actionNode.@activationType = a.activationType;
                 actionNode.@content = a.content;
                 if (a.arguments)
