@@ -42,9 +42,9 @@ C++
 You will need
  
  - Flash Builder 4.7 or IntelliJ IDEA
- - AIR 27 SDK
+ - AIR 29
  - MS Visual Studio 2017 if you wish to modify the ANE code on Windows
- - Xcode 9.1 if you wish to modify the ANE code on OSX
+ - Xcode 9.3 if you wish to modify the ANE code on OSX
 
 ### Known Issues
 You should use a different appName when debugging. The required .lnk file created in \AppData\Roaming\Microsoft\Windows\Start Menu\Programs will point to adl initially.
