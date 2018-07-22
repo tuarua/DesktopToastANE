@@ -90,7 +90,7 @@ public class SwiftController: NSObject, FreSwiftMainController, NSUserNotificati
         guard argc > 0,
             let toast: [String: AnyObject] = Dictionary.init(argv[0])
             else {
-                return ArgCountError(message: "show").getError(#file, #line, #column)
+                return FreArgError(message: "show").getError(#file, #line, #column)
         }
 
         let notification = NSUserNotification.init()
