@@ -26,6 +26,7 @@ public class DesktopToastANESample extends Sprite {
         stage.align = StageAlign.TOP_LEFT;
         stage.scaleMode = StageScaleMode.NO_SCALE;
         Starling.multitouchEnabled = false;
+
         var viewPort:Rectangle = new Rectangle(0, 0, stage.stageWidth, stage.stageHeight);
 
 
@@ -75,6 +76,7 @@ public class DesktopToastANESample extends Sprite {
             mStarling.enableErrorChecking = false;
             mStarling.antiAliasing = 16;
             mStarling.skipUnchangedFrames = true;
+            mStarling.supportHighResolutions = true;
         }
 
 
