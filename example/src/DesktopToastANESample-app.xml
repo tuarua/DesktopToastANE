@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<application xmlns="http://ns.adobe.com/air/application/30.0">
+<application xmlns="http://ns.adobe.com/air/application/32.0">
 
-	<id>com.tuarua.desktoptoastanesample</id>
+    <id>com.tuarua.desktoptoastanesample</id>
 
-	<!-- Used as the filename for the application. Required. -->
-	<filename>DesktopToastANESample</filename>
+    <!-- Used as the filename for the application. Required. -->
+    <filename>DesktopToastANESample</filename>
 
-	<name>DesktopToastANESample</name>
+    <name>DesktopToastANESample</name>
 
-	<versionNumber>0.0.0</versionNumber>
-		         
+    <versionNumber>0.0.0</versionNumber>
 
-	<initialWindow>
 
-		<depthAndStencil>true</depthAndStencil>
-		<renderMode>direct</renderMode>
-		<autoOrients>false</autoOrients>
-		<fullScreen>false</fullScreen>
-		<visible>true</visible>
+    <initialWindow>
+
+        <depthAndStencil>true</depthAndStencil>
+        <renderMode>direct</renderMode>
+        <autoOrients>false</autoOrients>
+        <fullScreen>false</fullScreen>
+        <visible>true</visible>
     </initialWindow>
-    
+
     <supportedProfiles>extendedDesktop</supportedProfiles>
 
-<extensions>
+    <extensions>
+        <extensionID>com.tuarua.FreSwift</extensionID>
         <extensionID>com.tuarua.DesktopToastANE</extensionID>
-	<extensionID>com.tuarua.CommonDependencies</extensionID>
+
     </extensions>
 </application>

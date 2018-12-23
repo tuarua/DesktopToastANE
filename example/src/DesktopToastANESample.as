@@ -7,7 +7,7 @@ import flash.display.StageAlign;
 import flash.display.StageScaleMode;
 import flash.events.Event;
 import flash.geom.Rectangle;
-import com.tuarua.CommonDependencies;
+import com.tuarua.FreSwift;
 import starling.core.Starling;
 import starling.events.Event;
 
@@ -15,7 +15,7 @@ import starling.events.Event;
 [SWF(width="1024", height="720", frameRate="60", backgroundColor="#F1F1F1")]
 public class DesktopToastANESample extends Sprite {
     public var mStarling:Starling;
-    private var commonDependenciesANE:CommonDependencies = new CommonDependencies();//must create before all others
+    private var freSwiftANE:FreSwift = new FreSwift();//must create before all others
     private var dtANE:DesktopToastANE = new DesktopToastANE();
 
 
@@ -86,7 +86,7 @@ public class DesktopToastANESample extends Sprite {
 
     private function onExiting(event:flash.events.Event):void {
         dtANE.dispose();
-        commonDependenciesANE.dispose();
+        freSwiftANE.dispose();
 
     }
 

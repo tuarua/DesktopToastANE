@@ -17,7 +17,7 @@ import Cocoa
 import FreSwift
 
 public class SwiftController: NSObject, FreSwiftMainController, NSUserNotificationCenterDelegate {
-    public var TAG: String? = "DesktopToastANE"
+    public static var TAG = "DesktopToastANE"
     public var context: FreContextSwift!
     public var functionsToSet: FREFunctionMap = [:]
     
@@ -68,11 +68,7 @@ public class SwiftController: NSObject, FreSwiftMainController, NSUserNotificati
             }
   
         }
-        do {
-            try context.dispatchStatusEventAsync(code: jsonString, level: "Toast.Clicked")
-        } catch {
-        }
-        
+        dispatchEvent(name: "Toast.Clicked", value: jsonString)
     }
     
     public func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {

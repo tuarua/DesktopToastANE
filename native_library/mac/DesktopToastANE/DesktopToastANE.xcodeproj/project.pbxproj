@@ -24,8 +24,8 @@
 		CE05BF101F657F1F0019899B /* FreSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FreSwift.framework; path = Carthage/Build/Mac/FreSwift.framework; sourceTree = "<group>"; };
 		CE36AF401DF47B7B003C224B /* DesktopToastANE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DesktopToastANE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE36AF441DF47B7C003C224B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CE36AF4B1DF47DBD003C224B /* Adobe AIR_64 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "Adobe AIR_64"; path = "/Users/eoinlandy/SDKs/AIRSDK_30/runtimes/air-captive/mac/Adobe AIR.framework/Versions/1.0/Adobe AIR_64"; sourceTree = "<absolute>"; };
-		CE36AF4C1DF47DBD003C224B /* Adobe AIR */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "Adobe AIR"; path = "/Users/eoinlandy/SDKs/AIRSDK_30/runtimes/air-captive/mac/Adobe AIR.framework/Versions/1.0/Adobe AIR"; sourceTree = "<absolute>"; };
+		CE36AF4B1DF47DBD003C224B /* Adobe AIR_64 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "Adobe AIR_64"; path = "/Users/eoinlandy/SDKs/AIRSDK_32/runtimes/air-captive/mac/Adobe AIR.framework/Versions/1.0/Adobe AIR_64"; sourceTree = "<absolute>"; };
+		CE36AF4C1DF47DBD003C224B /* Adobe AIR */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "Adobe AIR"; path = "/Users/eoinlandy/SDKs/AIRSDK_32/runtimes/air-captive/mac/Adobe AIR.framework/Versions/1.0/Adobe AIR"; sourceTree = "<absolute>"; };
 		CE36AF4F1DF47E4E003C224B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		CEE7AB111DF4D45D0047E083 /* SwiftController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -123,7 +123,6 @@
 				CE36AF3B1DF47B7B003C224B /* Sources */,
 				CE36AF3C1DF47B7B003C224B /* Frameworks */,
 				CE36AF3D1DF47B7B003C224B /* Headers */,
-				CE36AF3E1DF47B7B003C224B /* Resources */,
 				CEA0897520538886005C5E9A /* ShellScript */,
 				CEE7AB171DF4E5760047E083 /* ShellScript */,
 			);
@@ -169,20 +168,10 @@
 		};
 /* End PBXProject section */
 
-/* Begin PBXResourcesBuildPhase section */
-		CE36AF3E1DF47B7B003C224B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
 /* Begin PBXShellScriptBuildPhase section */
 		CEA0897520538886005C5E9A /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -191,7 +180,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 		CEE7AB171DF4E5760047E083 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -204,7 +193,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = ../../../native_extension/ane/build_multi.sh;
+			shellScript = "../../../native_extension/ane/build_multi.sh\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -343,6 +332,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -374,7 +365,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -382,6 +373,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -412,7 +405,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
