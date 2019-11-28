@@ -16,65 +16,11 @@ import Foundation
 import Cocoa
 import FreSwift
 
-public class SwiftController: NSObject, FreSwiftMainController, NSUserNotificationCenterDelegate {
+public class SwiftController: NSObject {
     public static var TAG = "DesktopToastANE"
     public var context: FreContextSwift!
     public var functionsToSet: FREFunctionMap = [:]
     
-    // Must have this function. It exposes the methods to our entry ObjC.
-    @objc public func getFunctions(prefix: String) -> [String] {
-        
-        functionsToSet["\(prefix)init"] = initController
-        functionsToSet["\(prefix)show"] = show
-        functionsToSet["\(prefix)getNamespace"] = getNamespace
-        
-        var arr: [String] = []
-        for key in functionsToSet.keys {
-            arr.append(key)
-        }
-        return arr
-    }
-    
-    public func userNotificationCenter(_ center: NSUserNotificationCenter, didActivate notification: NSUserNotification) {
-        var jsonString = "{\"arguments\" :\"\"}"
-        if let userInfo = notification.userInfo {
-            var dict: [String: AnyObject] = Dictionary()
-            if let arguments = userInfo["arguments"] {
-                dict.updateValue(arguments as AnyObject, forKey: "arguments")
-                var array: [[String: AnyObject]] = Array()
-                if let response = notification.response {
-                    var dataDict: [String: AnyObject] = Dictionary()
-                    dataDict.updateValue("response" as AnyObject, forKey: "key")
-                    dataDict.updateValue(response.string as AnyObject, forKey: "value")
-                    array.append(dataDict)
-                }
-                
-                if notification.identifier != nil {
-                    var dataDict: [String: AnyObject] = Dictionary()
-                    dataDict.updateValue("id" as AnyObject, forKey: "key")
-                    dataDict.updateValue(notification.identifier as AnyObject, forKey: "value")
-                    array.append(dataDict)
-                }
-
-                dict.updateValue(array as AnyObject, forKey: "data")
-            }
-
-            do {
-                let jsonData = try JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted)
-                jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)! as String
-                
-             } catch {
-                trace("Error reading reponse", error.localizedDescription)
-            }
-  
-        }
-        dispatchEvent(name: "Toast.Clicked", value: jsonString)
-    }
-    
-    public func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
-        return true
-    }
-
     func getNamespace(ctx: FREContext, argc: FREArgc, argv: FREArgv) -> FREObject? {
         if #available(OSX 10.12.1, *) {
             return "osx".toFREObject()
@@ -84,12 +30,12 @@ public class SwiftController: NSObject, FreSwiftMainController, NSUserNotificati
     
     func show(ctx: FREContext, argc: FREArgc, argv: FREArgv) -> FREObject? {
         guard argc > 0,
-            let toast: [String: AnyObject] = Dictionary.init(argv[0])
+            let toast: [String: AnyObject] = Dictionary(argv[0])
             else {
-                return FreArgError(message: "show").getError(#file, #line, #column)
+                return FreArgError().getError()
         }
 
-        let notification = NSUserNotification.init()
+        let notification = NSUserNotification()
         
         if let title = toast["title"] {
             notification.title = title as? String
@@ -152,24 +98,4 @@ public class SwiftController: NSObject, FreSwiftMainController, NSUserNotificati
         return nil
     }
     
-    @objc public func dispose() {
-        NSUserNotificationCenter.default.delegate = nil
-    }
-    
-    // Must have this function. It exposes the methods to our entry ObjC.
-    @objc public func callSwiftFunction(name: String, ctx: FREContext, argc: FREArgc, argv: FREArgv) -> FREObject? {
-        if let fm = functionsToSet[name] {
-            return fm(ctx, argc, argv)
-        }
-        return nil
-    }
-    
-    @objc public func setFREContext(ctx: FREContext) {
-        self.context = FreContextSwift.init(freContext: ctx)
-    }
-    
-    @objc public func onLoad() {
-        
-    }
-
 }

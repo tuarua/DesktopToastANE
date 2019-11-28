@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		285FE53DB9D50C815BCD0DFF /* DesktopToastANE_oc.h in Headers */ = {isa = PBXBuildFile; fileRef = 285FEAB02EF710CE1ED2BC9A /* DesktopToastANE_oc.h */; };
 		285FEAB0481294474F21BE5D /* DesktopToastANE.m in Sources */ = {isa = PBXBuildFile; fileRef = 285FEA208428C0509C440EE0 /* DesktopToastANE.m */; };
+		90B843D123523EF50009FB87 /* SwiftController+FreSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B843D023523EF50009FB87 /* SwiftController+FreSwift.swift */; };
+		90B843D323523F660009FB87 /* SwiftController+NSUserNotificationCenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B843D223523F660009FB87 /* SwiftController+NSUserNotificationCenterDelegate.swift */; };
 		CE05BF0F1F657F120019899B /* FreMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = CE05BF0E1F657F120019899B /* FreMacros.h */; };
 		CE05BF111F657F1F0019899B /* FreSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE05BF101F657F1F0019899B /* FreSwift.framework */; };
 		CE36AF4D1DF47DBD003C224B /* Adobe AIR_64 in Frameworks */ = {isa = PBXBuildFile; fileRef = CE36AF4B1DF47DBD003C224B /* Adobe AIR_64 */; };
@@ -20,6 +22,8 @@
 /* Begin PBXFileReference section */
 		285FEA208428C0509C440EE0 /* DesktopToastANE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DesktopToastANE.m; sourceTree = "<group>"; };
 		285FEAB02EF710CE1ED2BC9A /* DesktopToastANE_oc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DesktopToastANE_oc.h; sourceTree = "<group>"; };
+		90B843D023523EF50009FB87 /* SwiftController+FreSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftController+FreSwift.swift"; sourceTree = "<group>"; };
+		90B843D223523F660009FB87 /* SwiftController+NSUserNotificationCenterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftController+NSUserNotificationCenterDelegate.swift"; sourceTree = "<group>"; };
 		CE05BF0E1F657F120019899B /* FreMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreMacros.h; sourceTree = "<group>"; };
 		CE05BF101F657F1F0019899B /* FreSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FreSwift.framework; path = Carthage/Build/Mac/FreSwift.framework; sourceTree = "<group>"; };
 		CE36AF401DF47B7B003C224B /* DesktopToastANE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DesktopToastANE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,6 +73,8 @@
 				CEE7AB1D1DF4F8110047E083 /* Misc */,
 				285FEA208428C0509C440EE0 /* DesktopToastANE.m */,
 				CEE7AB111DF4D45D0047E083 /* SwiftController.swift */,
+				90B843D023523EF50009FB87 /* SwiftController+FreSwift.swift */,
+				90B843D223523F660009FB87 /* SwiftController+NSUserNotificationCenterDelegate.swift */,
 			);
 			path = DesktopToastANE;
 			sourceTree = "<group>";
@@ -141,22 +147,23 @@
 		CE36AF371DF47B7B003C224B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = "Tua Rua Ltd";
 				TargetAttributes = {
 					CE36AF3F1DF47B7B003C224B = {
 						CreatedOnToolsVersion = 8.1;
-						LastSwiftMigration = 0910;
+						LastSwiftMigration = 1100;
 						ProvisioningStyle = Manual;
 					};
 				};
 			};
 			buildConfigurationList = CE36AF3A1DF47B7B003C224B /* Build configuration list for PBXProject "DesktopToastANE" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = CE36AF361DF47B7B003C224B;
 			productRefGroup = CE36AF411DF47B7B003C224B /* Products */;
@@ -202,8 +209,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90B843D323523F660009FB87 /* SwiftController+NSUserNotificationCenterDelegate.swift in Sources */,
 				285FEAB0481294474F21BE5D /* DesktopToastANE.m in Sources */,
 				CEE7AB121DF4D45D0047E083 /* SwiftController.swift in Sources */,
+				90B843D123523EF50009FB87 /* SwiftController+FreSwift.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,6 +223,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -276,6 +286,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -353,6 +364,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = /Users/eoinlandy/SDKs/AIRSDK_30/runtimes/air/mac;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MARKETING_VERSION = 1.8.0;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-weak_framework",
@@ -365,7 +377,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -394,6 +406,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = /Users/eoinlandy/SDKs/AIRSDK_30/runtimes/air/mac;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MARKETING_VERSION = 1.8.0;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-weak_framework",
@@ -405,7 +418,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
