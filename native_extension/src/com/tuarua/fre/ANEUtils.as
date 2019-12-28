@@ -16,10 +16,13 @@
  */
 
 package com.tuarua.fre {
+import avmplus.DescribeTypeJSON;
+
 import flash.utils.describeType;
 import flash.utils.getDefinitionByName;
 import flash.utils.getQualifiedClassName;
 
+/** @private */
 public class ANEUtils {
     public function ANEUtils() {
     }
@@ -32,72 +35,62 @@ public class ANEUtils {
         return Class(getDefinitionByName(getQualifiedClassName(obj)));
     }
 
-    public static function getClassProps(clz:*):Vector.<Object> {
+    private static function _getClassProps(clz:*):Vector.<Object> {
         var ret:Vector.<Object> = new <Object>[];
-        var xml:XML = describeType(clz);
-        if (xml.variable && xml.variable.length() > 0) {
-            for each (var prop:XML in xml.variable) {
-                var obj:Object = {};
-                obj.name = prop.@name.toString();
-                obj.type = prop.@type.toString();
-                obj.cls = obj.type == "*" ? null : getClass(Class(getDefinitionByName(obj.type)));
-                ret.push(obj);
+        var isObject:Boolean = false;
+        for (var id:String in clz) {
+            var objc:Object = {};
+            objc.name = id;
+            if (clz.hasOwnProperty(id)) {
+                objc.type = getClassType(clz[id]);
+                objc.cls = objc.type == "*" ? null : getClass(Class(getDefinitionByName(objc.type)));
+                ret.push(objc);
+                isObject = true;
             }
-        } else if (xml.factory && xml.factory.variable && xml.factory.variable.length() > 0) {
-            for each (var propb:XML in xml.factory.variable) {
-                var objb:Object = {};
-                objb.name = propb.@name.toString();
-                objb.type = propb.@type.toString();
-                objb.cls = objb.type == "*" ? null : getClass(Class(getDefinitionByName(objb.type)));
-                ret.push(objb);
+        }
+        if (isObject) {
+            return ret;
+        }
+        if (DescribeTypeJSON.available) {
+            var json:Object = DescribeTypeJSON.run(clz);
+            if (json.traits.variables) {
+                for each (var propd:Object in json.traits.variables) {
+                    var objd:Object = {};
+                    objd.name = propd.name;
+                    objd.type = propd.type;
+                    objd.cls = objd.type == "*" ? null : getClass(Class(getDefinitionByName(objd.type)));
+                    ret.push(objd);
+                }
             }
         } else {
-            for (var id:String in clz) {
-                var objc:Object = {};
-                objc.name = id;
-                if (clz.hasOwnProperty(id)) {
-                    objc.type = getClassType(clz[id]);
-                    objc.cls = objc.type == "*" ? null : getClass(Class(getDefinitionByName(objc.type)));
-                    ret.push(objc);
+            var xml:XML = describeType(clz);
+            if (xml.variable && xml.variable.length() > 0) {
+                for each (var prop:XML in xml.variable) {
+                    var obj:Object = {};
+                    obj.name = prop.@name.toString();
+                    obj.type = prop.@type.toString();
+                    obj.cls = obj.type == "*" ? null : getClass(Class(getDefinitionByName(obj.type)));
+                    ret.push(obj);
                 }
-
+            } else if (xml.factory && xml.factory.variable && xml.factory.variable.length() > 0) {
+                for each (var propb:XML in xml.factory.variable) {
+                    var objb:Object = {};
+                    objb.name = propb.@name.toString();
+                    objb.type = propb.@type.toString();
+                    objb.cls = objb.type == "*" ? null : getClass(Class(getDefinitionByName(objb.type)));
+                    ret.push(objb);
+                }
             }
         }
         return ret;
     }
 
-    public function getClassProps(clz:*):Vector.<Object> {
-        var ret:Vector.<Object> = new <Object>[];
-        var xml:XML = describeType(clz);
-        if (xml.variable && xml.variable.length() > 0) {
-            for each (var prop:XML in xml.variable) {
-                var obj:Object = {};
-                obj.name = prop.@name.toString();
-                obj.type = prop.@type.toString();
-                obj.cls = obj.type == "*" ? null : getClass(Class(getDefinitionByName(obj.type)));
-                ret.push(obj);
-            }
-        } else if (xml.factory && xml.factory.variable && xml.factory.variable.length() > 0) {
-            for each (var propb:XML in xml.factory.variable) {
-                var objb:Object = {};
-                objb.name = propb.@name.toString();
-                objb.type = propb.@type.toString();
-                objb.cls = objb.type == "*" ? null : getClass(Class(getDefinitionByName(objb.type)));
-                ret.push(objb);
-            }
-        } else {
-            for (var id:String in clz) {
-                var objc:Object = {};
-                objc.name = id;
-                if (clz.hasOwnProperty(id)) {
-                    objc.type = getClassType(clz[id]);
-                    objc.cls = objc.type == "*" ? null : getClass(Class(getDefinitionByName(objc.type)));
-                    ret.push(objc);
-                }
+    public static function getClassProps(clz:*):Vector.<Object> {
+        return _getClassProps(clz);
+    }
 
-            }
-        }
-        return ret;
+    public function getClassProps(clz:*):Vector.<Object> {
+        return _getClassProps(clz);
     }
 
     private static function getPropClass(name:String, cls:Class):Class {
@@ -110,13 +103,23 @@ public class ANEUtils {
         return null;
     }
 
-    //noinspection ReservedWordAsName
     public static function map(from:Object, to:Class):Object {
         var classInstance:Object;
         classInstance = new to();
         for (var id:String in from) {
             var name:String = id;
-            var propCls:Class = getPropClass(name, to);
+            var propCls:Class;
+            if (from[name] is String) {
+                propCls = String;
+            } else if (from[name] is Boolean) {
+                propCls = Boolean;
+            } else if (from[name] is int) {
+                propCls = int;
+            } else if (from[name] is Number) {
+                propCls = Number;
+            } else {
+                propCls = getPropClass(name, to);
+            }
 
             switch (propCls) {
                 case String:
