@@ -12,12 +12,17 @@
 
 
     <initialWindow>
+        <!-- The main SWF or HTML file of the application. Required. -->
+        <!-- Note: In Flash Builder, the SWF reference is set automatically. -->
+        <content>[This value will be overwritten by Flash Builder in the output app.xml]</content>
 
-        <depthAndStencil>true</depthAndStencil>
-        <renderMode>direct</renderMode>
+
         <autoOrients>false</autoOrients>
         <fullScreen>false</fullScreen>
         <visible>true</visible>
+        <depthAndStencil>true</depthAndStencil>
+        <renderMode>direct</renderMode>
+        <requestedDisplayResolution>high</requestedDisplayResolution>
     </initialWindow>
 
     <supportedProfiles>extendedDesktop</supportedProfiles>
