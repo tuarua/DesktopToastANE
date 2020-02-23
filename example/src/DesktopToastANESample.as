@@ -86,7 +86,7 @@ public class DesktopToastANESample extends Sprite {
 
     private function onExiting(event:flash.events.Event):void {
         dtANE.dispose();
-        freSwiftANE.dispose();
+        FreSwift.dispose();
 
     }
 

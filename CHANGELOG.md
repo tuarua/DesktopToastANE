@@ -1,5 +1,5 @@
 ### 1.8.0
-- macOS: Updated to FreSwift 4.2.0
+- macOS: Updated to FreSwift 4.3.0
 
 ### 1.7.0
 - Upgraded to AIR 32.0.0.116

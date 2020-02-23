@@ -1,3 +1,19 @@
+/*
+ *  Copyright 2017 Tua Rua Ltd.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
 package com.tuarua {
 import com.tuarua.toast.ToastEvent;
 import com.tuarua.toast.constants.ToastInputSelection;
@@ -27,43 +43,23 @@ public class DesktopToastANE extends EventDispatcher {
         initiate();
     }
 
-    /**
-     *
-     *
-     *
-     */
     osx function init():void {
         trace("OSX namespace");
-        if (_isSupported)
-            extensionContext.call("init");
+        if (_isSupported) extensionContext.call("init");
     }
 
-    /**
-     *
-     *
-     *
-     */
     windows10 function init(appId:String, appName:String):void {
         trace("Windows 10 namespace");
-        if (_isSupported)
-            extensionContext.call("init", appId, appName);
+        if (_isSupported) extensionContext.call("init", appId, appName);
     }
 
-    /**
-     *
-     *
-     *
-     */
     windows8 function init(appId:String, appName:String):void {
         trace("Windows 8 namespace");
-        if (_isSupported)
-            extensionContext.call("init", appId, appName);
+        if (_isSupported) extensionContext.call("init", appId, appName);
     }
-
 
     protected function initiate():void {
         isInited = true;
-
 
         if (Capabilities.os.toLowerCase() == "windows 10") {
             _isSupported = true;
@@ -122,12 +118,6 @@ public class DesktopToastANE extends EventDispatcher {
         }
     }
 
-    /**
-     *
-     *
-     * @param toast
-     */
-
     osx function createFromToast(toast:ToastOSX):void {
         use namespace osx;
 
@@ -151,17 +141,14 @@ public class DesktopToastANE extends EventDispatcher {
         var commandsNode:XML = <commands/>;
         var audioNode:XML = <audio/>;
 
-        if (toast.visual.language)
-            visualNode.@lang = toast.visual.language;
+        if (toast.visual.language) visualNode.@lang = toast.visual.language;
         visualNode.@baseUri = toast.visual.baseUri;
         visualNode.@addImageQuery = toast.visual.addImageQuery;
 
         bindingNode.@template = toast.binding.template;
-        if (toast.binding.language)
-            bindingNode.@lang = toast.binding.language;
+        if (toast.binding.language) bindingNode.@lang = toast.binding.language;
         bindingNode.@baseUri = toast.binding.baseUri;
         bindingNode.@addImageQuery = toast.binding.addImageQuery;
-
 
         if (toast.audio) {
             audioNode.@src = toast.audio.src;
@@ -175,10 +162,8 @@ public class DesktopToastANE extends EventDispatcher {
         for each (var t:ToastText in toast.texts) {
             var textNode:XML = <text/>;
             textNode = textNode.appendChild(t.content);
-            if (t.language)
-                textNode.@lang = t.language;
-            if (t.id > 0)
-                textNode.@id = t.id;
+            if (t.language) textNode.@lang = t.language;
+            if (t.id > 0) textNode.@id = t.id;
             bindingNode = bindingNode.appendChild(textNode);
             numLines++;
             if (numLines > 4) break;
@@ -189,17 +174,13 @@ public class DesktopToastANE extends EventDispatcher {
             var imageNode:XML = <image/>;
             imageNode.@src = i.src;
             imageNode.@id = i.id;
-            if (i.alt)
-                imageNode.@alt = i.alt;
+            if (i.alt) imageNode.@alt = i.alt;
             imageNode.@addImageQuery = i.addImageQuery;
             bindingNode = bindingNode.appendChild(imageNode);
             hasImage = true;
         }
 
-        if (hasImage)
-            bindingNode.@template = "ToastImageAndText0" + numLines.toString();
-        else
-            bindingNode.@template = "ToastText0" + numLines.toString();
+        if (hasImage) bindingNode.@template = "ToastImageAndText0" + numLines.toString(); else bindingNode.@template = "ToastText0" + numLines.toString();
 
         visualNode = visualNode.appendChild(bindingNode);
         toastNode = toastNode.appendChild(visualNode);
@@ -208,19 +189,14 @@ public class DesktopToastANE extends EventDispatcher {
             commandsNode.@scenario = toast.commands.scenario;
             for each (var c:ToastCommand in toast.commands.commands) {
                 var commandNode:XML = <command/>;
-                if (c.arguments)
-                    commandNode.@arguments = c.arguments;
-                if (c.id)
-                    commandNode.@id = c.id;
+                if (c.arguments) commandNode.@arguments = c.arguments;
+                if (c.id) commandNode.@id = c.id;
                 commandsNode = commandsNode.appendChild(commandNode);
             }
             toastNode = toastNode.appendChild(commandsNode);
         }
 
-
         _xmlAsString = toastNode.toString();
-
-
     }
 
     windows10 function createFromToast(toast:Toast10):void {
@@ -233,31 +209,25 @@ public class DesktopToastANE extends EventDispatcher {
         var audioNode:XML = <audio/>;
         var inputNode:XML = <input/>;
 
-        if (toast.launch)
-            toastNode.@launch = toast.launch;
+        if (toast.launch) toastNode.@launch = toast.launch;
         toastNode.@duration = toast.duration;
         toastNode.@activationType = toast.activationType;
         toastNode.@scenario = toast.scenario;
 
-        if (toast.visual.language)
-            visualNode.@lang = toast.visual.language;
+        if (toast.visual.language) visualNode.@lang = toast.visual.language;
         visualNode.@baseUri = toast.visual.baseUri;
         visualNode.@addImageQuery = toast.visual.addImageQuery;
 
         bindingNode.@template = toast.binding.template;
-        if (toast.binding.language)
-            bindingNode.@lang = toast.binding.language;
+        if (toast.binding.language) bindingNode.@lang = toast.binding.language;
         bindingNode.@baseUri = toast.binding.baseUri;
         bindingNode.@addImageQuery = toast.binding.addImageQuery;
-
 
         for each (var t:ToastText in toast.texts) {
             var textNode:XML = <text/>;
             textNode = textNode.appendChild(t.content);
-            if (t.language)
-                textNode.@lang = t.language;
-            if (t.hintMaxLines > 0)
-                textNode.@["hint-maxLines"] = t.hintMaxLines;
+            if (t.language) textNode.@lang = t.language;
+            if (t.hintMaxLines > 0) textNode.@["hint-maxLines"] = t.hintMaxLines;
             bindingNode = bindingNode.appendChild(textNode);
         }
 
@@ -265,8 +235,7 @@ public class DesktopToastANE extends EventDispatcher {
             var imageNode:XML = <image/>;
             imageNode.@src = i.src;
             imageNode.@placement = i.placement;
-            if (i.alt)
-                imageNode.@alt = i.alt;
+            if (i.alt) imageNode.@alt = i.alt;
             imageNode.@addImageQuery = i.addImageQuery;
             imageNode.@["hint-crop"] = i.hintCrop;
             bindingNode = bindingNode.appendChild(imageNode);
@@ -279,11 +248,9 @@ public class DesktopToastANE extends EventDispatcher {
             if (toast.input) {
                 inputNode.@id = toast.input.id;
                 inputNode.@type = toast.input.type;
-                if (toast.input.title)
-                    inputNode.@title = toast.input.title;
+                if (toast.input.title) inputNode.@title = toast.input.title;
                 inputNode.@placeHolderContent = toast.input.placeHolderContent;
-                if (toast.input.defaultInput)
-                    inputNode.@defaultInput = toast.input.defaultInput;
+                if (toast.input.defaultInput) inputNode.@defaultInput = toast.input.defaultInput;
 
                 for each (var sel:ToastInputSelection in toast.input.selections) {
                     var selectionNode:XML = <selection/>;
@@ -297,18 +264,14 @@ public class DesktopToastANE extends EventDispatcher {
                 var actionNode:XML = <action/>;
                 actionNode.@activationType = a.activationType;
                 actionNode.@content = a.content;
-                if (a.arguments)
-                    actionNode.@arguments = a.arguments;
-                if (a.hintInputId)
-                    actionNode.@["hint-inputId"] = a.hintInputId;
-                if (a.imageUri)
-                    actionNode.@imageUri = a.imageUri;
+                if (a.arguments) actionNode.@arguments = a.arguments;
+                if (a.hintInputId) actionNode.@["hint-inputId"] = a.hintInputId;
+                if (a.imageUri) actionNode.@imageUri = a.imageUri;
 
                 actionsNode = actionsNode.appendChild(actionNode);
             }
             toastNode = toastNode.appendChild(actionsNode);
         }
-
 
         if (toast.audio) {
             audioNode.@src = toast.audio.src;
@@ -340,31 +303,18 @@ public class DesktopToastANE extends EventDispatcher {
 
     }
 
-    /**
-     *
-     *
-     */
     osx function show():void {
         use namespace osx;
 
-        if (isInited)
-            extensionContext.call("show", _toast);
-        else
-            trace("You forgot to call .init() first");
+        if (isInited) extensionContext.call("show", _toast); else trace("You forgot to call .init() first");
     }
 
     windows8 function show():void {
-        if (isInited)
-            extensionContext.call("show", _xmlAsString);
-        else
-            trace("You forgot to call .init() first");
+        if (isInited) extensionContext.call("show", _xmlAsString); else trace("You forgot to call .init() first");
     }
 
     windows10 function show():void {
-        if (isInited)
-            extensionContext.call("show", _xmlAsString);
-        else
-            trace("You forgot to call .init() first");
+        if (isInited) extensionContext.call("show", _xmlAsString); else trace("You forgot to call .init() first");
     }
 
     public function dispose():void {
@@ -378,11 +328,6 @@ public class DesktopToastANE extends EventDispatcher {
         extensionContext = null;
     }
 
-    /**
-     *
-     * @return
-     *
-     */
     public function get supportedNamespace():String {
         return _namespace;
     }
