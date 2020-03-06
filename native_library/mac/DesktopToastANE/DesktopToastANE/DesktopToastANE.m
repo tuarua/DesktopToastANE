@@ -17,23 +17,18 @@
 #import "DesktopToastANE_oc.h"
 #import <DesktopToastANE/DesktopToastANE-Swift.h>
 
-SWIFT_DECL(TRDTT) // use unique prefix throughout to prevent clashes with other ANEs
+SWIFT_DECL(TRDTT)
 
 CONTEXT_INIT(TRDTT) {
     SWIFT_INITS(TRDTT)
     
-    /**************************************************************************/
-    /******* MAKE SURE TO ADD FUNCTIONS HERE THE SAME AS SWIFT CONTROLLER *****/
-    /**************************************************************************/
     static FRENamedFunction extensionFunctions[] =
     {
          MAP_FUNCTION(TRDTT, init)
         ,MAP_FUNCTION(TRDTT, show)
         ,MAP_FUNCTION(TRDTT, getNamespace)
     };
-    /**************************************************************************/
-    /**************************************************************************/
-    
+
     SET_FUNCTIONS
     
 }

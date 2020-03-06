@@ -12,7 +12,6 @@ package views {
 	public class ScrollableContent extends Sprite {
 		private var _w:int = 1200;
 		private var scrollBarVertical:Quad;
-		private var scrollBarHorizontal:Quad;
 		private var scrollBeganY:int;
 		private var _h:int = 255;
 		private var _fullHeight:uint;

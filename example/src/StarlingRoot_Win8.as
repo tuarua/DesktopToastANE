@@ -2,14 +2,8 @@ package {
 
 import com.tuarua.DesktopToastANE;
 import com.tuarua.toast.ToastEvent;
-import com.tuarua.toast.constants.ToastActivationType;
 import com.tuarua.toast.constants.ToastAudioSrc;
 import com.tuarua.toast.constants.ToastDuration;
-import com.tuarua.toast.constants.ToastHintCrop;
-import com.tuarua.toast.constants.ToastInputSelection;
-import com.tuarua.toast.constants.ToastInputType;
-import com.tuarua.toast.constants.ToastPlacement;
-import com.tuarua.toast.constants.ToastScenario;
 import com.tuarua.toast.windows.ToastAudio;
 import com.tuarua.toast.windows.ToastImage;
 import com.tuarua.toast.windows.ToastText;
@@ -21,8 +15,6 @@ import com.tuarua.windows8;
 import flash.desktop.NativeApplication;
 import flash.display.NativeWindow;
 import flash.display.NativeWindowDisplayState;
-import flash.events.Event;
-
 import flash.filesystem.File;
 import flash.net.URLRequest;
 import flash.net.navigateToURL;
@@ -33,7 +25,6 @@ import starling.events.Touch;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
 import starling.text.TextField;
-import starling.text.TextFormat;
 import starling.utils.Align;
 
 import views.ScrollableContent;
@@ -52,7 +43,6 @@ public class StarlingRoot_Win8 extends Sprite {
     private var dtANE:DesktopToastANE;
     private var image1:Image = new Image(Assets.getAtlas().getTexture("air_rocks"));
     private var image7:Image = new Image(Assets.getAtlas().getTexture("reminder1"));
-    private var list:ScrollableContent;
     private var holder:Sprite = new Sprite();
     private var callbackTxt:TextField;
 
@@ -77,7 +67,7 @@ public class StarlingRoot_Win8 extends Sprite {
         image1.addEventListener(TouchEvent.TOUCH, onImage1Touch);
         image1.useHandCursor = true;
         holder.addChild(image1);
-        holder.addChild(createLbl("Notification with rich visual contents\nYou can have multiple lines of text, an " +
+        holder.addChild(createLabel("Notification with rich visual contents\nYou can have multiple lines of text, an " +
                 "optional small image to override the application logo, and an optional inline image thumbnail in " +
                 "a toast.", 400, 0));
 
@@ -86,17 +76,16 @@ public class StarlingRoot_Win8 extends Sprite {
         image7.useHandCursor = true;
         image7.y = image1.y + image1.height + 20;
         holder.addChild(image7);
-        holder.addChild(createLbl("Reminder Notification\nINotifications with scenario “reminder” will appear " +
+        holder.addChild(createLabel("Reminder Notification\nINotifications with scenario “reminder” will appear " +
                 "pre-expanded and remain on the user’s screen till dismissed or interacted with.", 400, image7.y));
 
-        list = new ScrollableContent(840, 600, holder);
+
+        var list:ScrollableContent = new ScrollableContent(840, 600, holder);
         list.x = 50;
         list.y = 90;
         list.fullHeight = holder.height;
         list.init();
         addChild(list);
-
-        var tf:TextFormat = new TextFormat()
 
         callbackTxt = new TextField(600, 200, "Callback text will appear here");
         callbackTxt.format.setTo("Fira Sans Semi-Bold 13", 13);
@@ -114,7 +103,7 @@ public class StarlingRoot_Win8 extends Sprite {
     }
 
 
-    private function createLbl(txt:String, x:int, y:int):TextField {
+    private function createLabel(txt:String, x:int, y:int):TextField {
         var lbl:TextField = new TextField(360, 200, txt);
         lbl.format.setTo("Fira Sans Semi-Bold 13", 13);
         lbl.format.horizontalAlign = Align.LEFT;

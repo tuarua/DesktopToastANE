@@ -11,7 +11,6 @@ import com.tuarua.toast.osx.UserInfo;
 import flash.desktop.NativeApplication;
 import flash.display.NativeWindow;
 import flash.display.NativeWindowDisplayState;
-import flash.events.Event;
 import flash.filesystem.File;
 import flash.net.URLRequest;
 import flash.net.navigateToURL;
@@ -22,7 +21,6 @@ import starling.events.Touch;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
 import starling.text.TextField;
-import starling.text.TextFormat;
 import starling.utils.Align;
 
 import utils.GUID;
@@ -33,7 +31,6 @@ public class StarlingRoot_OSX extends Sprite {
     private var dtANE:DesktopToastANE;
     private var image1:Image = new Image(Assets.getAtlas().getTexture("osx_reply"));
     private var image2:Image = new Image(Assets.getAtlas().getTexture("osx_hello"));
-    private var list:ScrollableContent;
     private var holder:Sprite = new Sprite();
     private var callbackTxt:TextField;
     use namespace osx;
@@ -51,7 +48,7 @@ public class StarlingRoot_OSX extends Sprite {
         image1.addEventListener(TouchEvent.TOUCH, onImage1Touch);
         image1.useHandCursor = true;
         holder.addChild(image1);
-        holder.addChild(createLbl("Notification with Reply button and response", 400, 0));
+        holder.addChild(createLabel("Notification with Reply button and response", 400, 0));
 
 
         image2.addEventListener(TouchEvent.TOUCH, onImage2Touch);
@@ -59,17 +56,15 @@ public class StarlingRoot_OSX extends Sprite {
         image2.y = image1.height + 20;
         holder.addChild(image2);
 
-        holder.addChild(createLbl("Notification with title, subtitle, informative text and image", 400, image2.y));
+        holder.addChild(createLabel("Notification with title, subtitle, informative text and image", 400, image2.y));
 
 
-        list = new ScrollableContent(840, 600, holder);
+        var list:ScrollableContent = new ScrollableContent(840, 600, holder);
         list.x = 50;
         list.y = 150;
         list.fullHeight = holder.height;
         list.init();
         addChild(list);
-
-        var tf:TextFormat = new TextFormat()
 
         callbackTxt = new TextField(600, 200, "Callback text will appear here");
         callbackTxt.format.setTo("Fira Sans Semi-Bold 13", 13);
@@ -86,9 +81,7 @@ public class StarlingRoot_OSX extends Sprite {
 
     }
 
-
-
-    private function createLbl(txt:String, x:int, y:int):TextField {
+    private function createLabel(txt:String, x:int, y:int):TextField {
         var lbl:TextField = new TextField(360, 200, txt);
         lbl.format.setTo("Fira Sans Semi-Bold 13", 13);
         lbl.format.horizontalAlign = Align.LEFT;

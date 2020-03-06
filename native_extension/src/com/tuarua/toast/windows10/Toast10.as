@@ -1,5 +1,17 @@
-/**
- * Created by Eoin Landy on 30/11/2016.
+/*
+ *  Copyright 2017 Tua Rua Ltd.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 package com.tuarua.toast.windows10 {
 import com.tuarua.toast.constants.ToastActivationType;
@@ -11,12 +23,6 @@ import com.tuarua.toast.windows.ToastImage;
 import com.tuarua.toast.windows.ToastText;
 import com.tuarua.toast.windows.ToastVisual;
 import com.tuarua.windows10;
-
-/**
- *
- * @author Eoin Landy
- *
- */
 
 use namespace windows10;
 
@@ -42,8 +48,7 @@ public class Toast10 {
      * @param scenario
      *
      */
-    public function Toast10(launch:String = null, duration:String = "short",
-                            activationType:String = "foreground", scenario:String = "default") {
+    public function Toast10(launch:String = null, duration:String = "short", activationType:String = "foreground", scenario:String = "default") {
         this.launch = launch;
         this.duration = duration;
         this.activationType = activationType;
@@ -56,8 +61,7 @@ public class Toast10 {
      *
      */
     public function addText(text:ToastText):void {
-        if (_texts == null)
-            _texts = new Vector.<ToastText>;
+        if (_texts == null) _texts = new Vector.<ToastText>;
         _texts.push(text);
     }
 
@@ -67,8 +71,7 @@ public class Toast10 {
      *
      */
     public function addImage(image:ToastImage):void {
-        if (_images == null)
-            _images = new Vector.<ToastImage>;
+        if (_images == null) _images = new Vector.<ToastImage>;
         _images.push(image);
     }
 
@@ -78,11 +81,9 @@ public class Toast10 {
      *
      */
     public function addAction(action:ToastAction):void {
-        if (_actions == null)
-            _actions = new Vector.<ToastAction>;
+        if (_actions == null) _actions = new Vector.<ToastAction>;
         _actions.push(action);
     }
-
 
 
     /**

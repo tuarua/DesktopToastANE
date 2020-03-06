@@ -13,16 +13,14 @@ import com.tuarua.toast.constants.ToastScenario;
 import com.tuarua.toast.windows.ToastAudio;
 import com.tuarua.toast.windows.ToastImage;
 import com.tuarua.toast.windows.ToastText;
+import com.tuarua.toast.windows10.Toast10;
 import com.tuarua.toast.windows10.ToastAction;
 import com.tuarua.toast.windows10.ToastInput;
-import com.tuarua.toast.windows10.Toast10;
 import com.tuarua.windows10;
 
 import flash.desktop.NativeApplication;
 import flash.display.NativeWindow;
 import flash.display.NativeWindowDisplayState;
-import flash.events.Event;
-
 import flash.filesystem.File;
 import flash.net.URLRequest;
 import flash.net.navigateToURL;
@@ -33,7 +31,6 @@ import starling.events.Touch;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
 import starling.text.TextField;
-import starling.text.TextFormat;
 import starling.utils.Align;
 
 import views.ScrollableContent;
@@ -57,7 +54,6 @@ public class StarlingRoot_Win10 extends Sprite {
     private var image5:Image = new Image(Assets.getAtlas().getTexture("textinput2"));
     private var image6:Image = new Image(Assets.getAtlas().getTexture("selection1"));
     private var image7:Image = new Image(Assets.getAtlas().getTexture("reminder1"));
-    private var list:ScrollableContent;
     private var holder:Sprite = new Sprite();
     private var callbackTxt:TextField;
 
@@ -82,7 +78,7 @@ public class StarlingRoot_Win10 extends Sprite {
         image1.addEventListener(TouchEvent.TOUCH, onImage1Touch);
         image1.useHandCursor = true;
         holder.addChild(image1);
-        holder.addChild(createLbl("Notification with rich visual contents\nYou can have multiple lines of text, an " +
+        holder.addChild(createLabel("Notification with rich visual contents\nYou can have multiple lines of text, an " +
                 "optional small image to override the application logo, and an optional inline image thumbnail in " +
                 "a toast.", 400, 0));
 
@@ -91,27 +87,27 @@ public class StarlingRoot_Win10 extends Sprite {
         image2.y = image1.height + 20;
         holder.addChild(image2);
 
-        holder.addChild(createLbl("Notification with actions (sample 1)", 400, image2.y));
+        holder.addChild(createLabel("Notification with actions (sample 1)", 400, image2.y));
 
         image3.addEventListener(TouchEvent.TOUCH, onImage3Touch);
         image3.useHandCursor = true;
         image3.y = image2.y + image2.height + 20;
         holder.addChild(image3);
-        holder.addChild(createLbl("Notification with actions (sample 2)\nIn this sample you can open a browser url or " +
+        holder.addChild(createLabel("Notification with actions (sample 2)\nIn this sample you can open a browser url or " +
                 "app url", 400, image3.y));
 
         image4.addEventListener(TouchEvent.TOUCH, onImage4Touch);
         image4.useHandCursor = true;
         image4.y = image3.y + image3.height + 20;
         holder.addChild(image4);
-        holder.addChild(createLbl("Notification with text input and actions (sample 1)\nIn this sample, you can add " +
+        holder.addChild(createLabel("Notification with text input and actions (sample 1)\nIn this sample, you can add " +
                 "a textbox that allows the user to input text.", 400, image4.y));
 
         image5.addEventListener(TouchEvent.TOUCH, onImage5Touch);
         image5.useHandCursor = true;
         image5.y = image4.y + image4.height + 20;
         holder.addChild(image5);
-        holder.addChild(createLbl("Notification with text input and actions (sample 2)\nIf allowing user to reply " +
+        holder.addChild(createLabel("Notification with text input and actions (sample 2)\nIf allowing user to reply " +
                 "with text input is the only scenario you care about, you can also use the below layout. This only " +
                 "works if your action specifies an image icon.", 400, image5.y));
 
@@ -119,24 +115,22 @@ public class StarlingRoot_Win10 extends Sprite {
         image6.useHandCursor = true;
         image6.y = image5.y + image5.height + 20;
         holder.addChild(image6);
-        holder.addChild(createLbl("Notification with selection input and actions\nIn this sample, you can add a " +
+        holder.addChild(createLabel("Notification with selection input and actions\nIn this sample, you can add a " +
                 "dropdown list with pre-defined selections for the user to select.", 400, image6.y));
 
         image7.addEventListener(TouchEvent.TOUCH, onImage7Touch);
         image7.useHandCursor = true;
         image7.y = image6.y + image6.height + 20;
         holder.addChild(image7);
-        holder.addChild(createLbl("Reminder Notification\nINotifications with scenario “reminder” will appear " +
+        holder.addChild(createLabel("Reminder Notification\nINotifications with scenario “reminder” will appear " +
                 "pre-expanded and remain on the user’s screen till dismissed or interacted with.", 400, image7.y));
 
-        list = new ScrollableContent(840, 600, holder);
+        var list:ScrollableContent = new ScrollableContent(840, 600, holder);
         list.x = 50;
         list.y = 90;
         list.fullHeight = holder.height;
         list.init();
         addChild(list);
-
-        var tf:TextFormat = new TextFormat()
 
         callbackTxt = new TextField(600, 200, "Callback text will appear here");
         callbackTxt.format.setTo("Fira Sans Semi-Bold 13", 13);
@@ -153,8 +147,7 @@ public class StarlingRoot_Win10 extends Sprite {
 
     }
 
-
-    private function createLbl(txt:String, x:int, y:int):TextField {
+    private function createLabel(txt:String, x:int, y:int):TextField {
         var lbl:TextField = new TextField(360, 200, txt);
         lbl.format.setTo("Fira Sans Semi-Bold 13", 13);
         lbl.format.horizontalAlign = Align.LEFT;
@@ -164,7 +157,6 @@ public class StarlingRoot_Win10 extends Sprite {
         lbl.y = y;
         return lbl;
     }
-
 
     private function onToastClicked(event:ToastEvent):void {
         trace(event);
@@ -177,7 +169,6 @@ public class StarlingRoot_Win10 extends Sprite {
         window.visible = true;
 
         NativeApplication.nativeApplication.activate();
-
 
         callbackTxt.text = "Toast Clicked - arguments: " + event.params.arguments;
         if (event.params.data) {
@@ -205,7 +196,7 @@ public class StarlingRoot_Win10 extends Sprite {
     }
 
     private function onToastHidden(event:ToastEvent):void {
-        callbackTxt.text = "Toast Hidden"; //TODO
+        callbackTxt.text = "Toast Hidden";
     }
 
     private function onToastNotActivated(event:ToastEvent):void {
@@ -237,8 +228,7 @@ public class StarlingRoot_Win10 extends Sprite {
 
             dtANE.createFromToast(toast);
             dtANE.show();
-
-
+            
         }
     }
 
