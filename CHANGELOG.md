@@ -1,3 +1,6 @@
+### 1.9.0
+- macOS: Updated to FreSwift 4.4.0
+
 ### 1.8.0
 - macOS: Updated to FreSwift 4.3.0
 
