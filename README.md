@@ -9,22 +9,35 @@ Sample client included
 
 ![alt tag](https://raw.githubusercontent.com/tuarua/DesktopToastANE/master/screenshots/screenshot2.jpg)
 
-### Features  
- - Windows 32 and 64 bit.
- - Adaptive and interactive toast notifications are new features added in Version 1607 of Windows 10.
- - Interactive toasts for Windows 8.1.
- - User notifications on macOS.
 
-##### Dependencies
-From the command line cd into /example and run:
-- macOS
-```shell
-bash get_dependencies.sh
+## Prerequisites
+
+You will need:
+
+- IntelliJ IDEA
+- AIR 33.1.1.217+
+- [.Net Core Runtime](https://dotnet.microsoft.com/download/dotnet-core/3.1)
+- [AIR-Tools](https://github.com/tuarua/AIR-Tools/)
+
+##### The ANE + Dependencies
+ 
+Change directory into the _example_ folder eg
+
+```bash
+cd /MyMac/dev/AIR/DesktopToast-ANE/example
 ```
-- Windows Powershell
-```shell
-PS get_dependencies.ps1
+
+Run the _"air-tools"_ command (You will need [AIR-Tools](https://github.com/tuarua/AIR-Tools/) installed)
+
+```bash
+air-tools install
 ```
+
+
+**NEW** This tool now: 
+
+1. Downloads the ANE and dependencies.
+1. Applies all required Android Manifest, InfoAdditons and Entitlements to your app.xml. See air package.json
 
 ### Windows Installation - Important!
 

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<application xmlns="http://ns.adobe.com/air/application/32.0">
+  <id>com.tuarua.desktoptoastanesample</id>
+  <!-- Used as the filename for the application. Required. -->
+  <filename>DesktopToastANESample</filename>
+  <name>DesktopToastANESample</name>
+  <versionNumber>2.0.0</versionNumber>
+  <initialWindow>
+    <!-- The main SWF or HTML file of the application. Required. -->
+    <!-- Note: In Flash Builder, the SWF reference is set automatically. -->
+    <content>[This value will be overwritten by Flash Builder in the output app.xml]</content>
+    <autoOrients>false</autoOrients>
+    <fullScreen>false</fullScreen>
+    <visible>true</visible>
+    <depthAndStencil>true</depthAndStencil>
+    <renderMode>direct</renderMode>
+    <requestedDisplayResolution>high</requestedDisplayResolution>
+  </initialWindow>
+  <supportedProfiles>extendedDesktop</supportedProfiles>
+  <extensions>
+    <extensionID>com.tuarua.DesktopToastANE</extensionID>
+    <extensionID>com.tuarua.FreSwift</extensionID>
+  </extensions>
+</application>

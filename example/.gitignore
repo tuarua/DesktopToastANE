@@ -16,6 +16,7 @@ mac_packaging/signTR.sh
 mac_packaging/signTR_store.sh
 mac_packaging/signTR_developerId.sh
 mac_packaging/Assets.xcassets/AppIcon.appiconset/*.png
+air_package.resolved.json
 
 # Other files and folders
 .settings/
