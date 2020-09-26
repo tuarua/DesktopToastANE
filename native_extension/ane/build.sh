@@ -54,13 +54,14 @@ rm -r "$pathtome/platforms/mac/release/$PROJECT_NAME.framework/Versions"
 #Run the build command.
 echo "Building Release."
 "$AIR_SDK"/bin/adt -package \
--target ane "$pathtome/$PROJECT_NAME.ane" "$pathtome/extension_multi.xml" \
+-target ane "$pathtome/$PROJECT_NAME.ane" "$pathtome/extension.xml" \
 -swc "$pathtome/$PROJECT_NAME.swc" \
 -platform MacOS-x86-64 -C "$pathtome/platforms/mac/release" "$PROJECT_NAME.framework" "library.swf" \
 -platform Windows-x86 -C "$pathtome/platforms/win/x86/release" "$PROJECT_NAME.dll" "library.swf" \
 -platform Windows-x86-64 -C "$pathtome/platforms/win/x64/release" "$PROJECT_NAME.dll" "library.swf"
 
-
+zip "$pathtome/$PROJECT_NAME.ane" -u "air_package.json"
+cp "$pathtome/$PROJECT_NAME.ane" "$pathtome/../../example/extensions/$PROJECT_NAME.ane"
 
 #rm -r "$pathtome/platforms/mac"
 rm "$pathtome/$PROJECT_NAME.swc"

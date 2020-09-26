@@ -1,0 +1,10 @@
+{
+  "name": "com.tuarua.DesktopToastANE",
+  "version": "2.0.0",
+  "repository": {
+    "url": "https://tuarua.github.io/air/air_packages.json"
+  },
+  "dependencies": {
+    "com.tuarua.FreSwift": "4.5.0"
+  }
+}

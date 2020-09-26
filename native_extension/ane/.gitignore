@@ -1,5 +1,5 @@
 debug/
 docs/
-FreSwift.ane
+*.ane
 platforms/mac/
 build_asdocs.bat

@@ -1,0 +1,15 @@
+{
+  "name": "toast-sample",
+  "version": "2.0.0",
+  "appDescriptor": "src/Main-app.xml",
+  "variables": {
+  },
+  "airDotPrefix": true,
+  "appleTeamId": "XXXXXX",
+  "repository": {
+    "url": "https://tuarua.github.io/air/air_packages.json"
+  },
+  "dependencies": {
+    "com.tuarua.DesktopToastANE": "2.0.0"
+  }
+}

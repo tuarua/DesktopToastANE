@@ -8,13 +8,10 @@
             <entry library-name="starling" library-level="project">
               <dependency linkage="Merged" />
             </entry>
-            <entry library-name="DesktopToastANE" library-level="project">
-              <dependency linkage="Merged" />
-            </entry>
             <entry library-name="FiraSansSemiBold" library-level="project">
               <dependency linkage="Merged" />
             </entry>
-            <entry library-name="FreSwift" library-level="project">
+            <entry library-name="extensions" library-level="project">
               <dependency linkage="Merged" />
             </entry>
           </entries>
@@ -25,7 +22,7 @@
             <entry key="compiler.locale" value="en_US" />
           </map>
         </compiler-options>
-        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/DesktopToastANESample-app.xml" package-file-name="DesktopToastANESample">
+        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/Main-app.xml" package-file-name="DesktopToastANESample">
           <files-to-package>
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/imgs/air-icon.png" path-in-package="/imgs/air-icon.png" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/imgs/air.png" path-in-package="/imgs/air.png" />
@@ -54,5 +51,6 @@
     <orderEntry type="library" exported="" name="CommonDependencies" level="project" />
     <orderEntry type="library" exported="" name="SwiftOSXANE" level="project" />
     <orderEntry type="library" exported="" name="FreSwift" level="project" />
+    <orderEntry type="library" exported="" name="extensions" level="project" />
   </component>
 </module>
