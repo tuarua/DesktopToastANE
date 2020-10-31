@@ -1,6 +1,6 @@
 {
   "name": "toast-sample",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "appDescriptor": "src/Main-app.xml",
   "variables": {
   },
@@ -10,6 +10,6 @@
     "url": "https://tuarua.github.io/air/air_packages.json"
   },
   "dependencies": {
-    "com.tuarua.DesktopToastANE": "2.0.0"
+    "com.tuarua.DesktopToastANE": "2.1.0"
   }
 }
