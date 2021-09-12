@@ -147,7 +147,7 @@
 		CE36AF371DF47B7B003C224B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = "Tua Rua Ltd";
 				TargetAttributes = {
 					CE36AF3F1DF47B7B003C224B = {
@@ -369,7 +369,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = /Users/eoinlandy/SDKs/AIRSDK_32/runtimes/air/mac;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.3.0;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-weak_framework",
@@ -412,7 +412,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = /Users/eoinlandy/SDKs/AIRSDK_32/runtimes/air/mac;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.3.0;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-weak_framework",
