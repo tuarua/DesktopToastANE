@@ -4,7 +4,7 @@
   <!-- Used as the filename for the application. Required. -->
   <filename>DesktopToastANESample</filename>
   <name>DesktopToastANESample</name>
-  <versionNumber>2.3.0</versionNumber>
+  <versionNumber>2.4.0</versionNumber>
   <initialWindow>
     <!-- The main SWF or HTML file of the application. Required. -->
     <!-- Note: In Flash Builder, the SWF reference is set automatically. -->
