@@ -1,3 +1,6 @@
+### 2.5.0
+- Updated to FreSwift 5.7.2
+
 ### 2.4.0
 - Updated to FreSwift 5.5.1
 - Support Apple Silicon M1

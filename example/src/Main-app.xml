@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
-<application xmlns="http://ns.adobe.com/air/application/33.1">
+<application xmlns="http://ns.adobe.com/air/application/50.1">
   <id>com.tuarua.desktoptoastanesample</id>
   <!-- Used as the filename for the application. Required. -->
   <filename>DesktopToastANESample</filename>
   <name>DesktopToastANESample</name>
-  <versionNumber>2.4.0</versionNumber>
+  <versionNumber>2.5.0</versionNumber>
   <initialWindow>
     <!-- The main SWF or HTML file of the application. Required. -->
     <!-- Note: In Flash Builder, the SWF reference is set automatically. -->
