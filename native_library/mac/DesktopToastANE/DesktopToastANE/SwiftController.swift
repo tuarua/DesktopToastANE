@@ -22,10 +22,7 @@ public class SwiftController: NSObject {
     public var functionsToSet: FREFunctionMap = [:]
     
     func getNamespace(ctx: FREContext, argc: FREArgc, argv: FREArgv) -> FREObject? {
-        if #available(OSX 10.12.1, *) {
-            return "osx".toFREObject()
-        }
-        return nil
+        return "osx".toFREObject()
     }
     
     func show(ctx: FREContext, argc: FREArgc, argv: FREArgv) -> FREObject? {
